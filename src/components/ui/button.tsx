@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -5,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-x-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -18,6 +19,14 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // New soft variants
+        soft: "border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:bg-gray-200",
+        "soft-muted": "border border-transparent bg-gray-100 text-gray-500 hover:bg-gray-200 focus:bg-gray-200",
+        "soft-teal": "border border-transparent bg-teal-100 text-teal-800 hover:bg-teal-200 focus:bg-teal-200",
+        "soft-blue": "border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:bg-blue-200",
+        "soft-red": "border border-transparent bg-red-100 text-red-800 hover:bg-red-200 focus:bg-red-200",
+        "soft-yellow": "border border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-200 focus:bg-yellow-200",
+        "soft-white": "border border-transparent bg-white/10 text-white hover:bg-white/20 focus:bg-white/20",
       },
       size: {
         default: "h-10 px-4 py-2",
