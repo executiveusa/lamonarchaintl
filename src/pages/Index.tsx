@@ -12,6 +12,8 @@ import AIInnovationSection from '@/components/AIInnovationSection';
 import VolumeSlider from '@/components/VolumeSlider';
 import NewsletterSubscription from '@/components/NewsletterSubscription';
 import WeatherInfoCard from '@/components/WeatherInfoCard';
+import ResponsiveSearchBar from '@/components/ResponsiveSearchBar';
+import CompanyIconsGrid from '@/components/CompanyIconsGrid';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
 import { getMockArticles } from '@/utils/mockArticles';
 
@@ -62,6 +64,10 @@ const Index = () => {
       
       <Hero />
       
+      <div className="container mx-auto">
+        <ResponsiveSearchBar />
+      </div>
+      
       <div id="articles">
         <ArticleSection articles={articles} isLoading={isLoading} />
       </div>
@@ -105,6 +111,13 @@ const Index = () => {
               : 'Nuestra misión es conectar a las personas a través de experiencias culturales compartidas y contenido innovador.'}
           </p>
         </div>
+      </div>
+      
+      <div className="container mx-auto px-6 py-8">
+        <h2 className="text-3xl font-display mb-6 text-monarca-black text-center">
+          {language === 'en' ? 'Our Partners' : 'Nuestros Socios'}
+        </h2>
+        <CompanyIconsGrid />
       </div>
       
       <div id="contact" className="container mx-auto px-6 py-12 mb-8">
