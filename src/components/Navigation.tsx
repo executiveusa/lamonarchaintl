@@ -25,7 +25,7 @@ const Navigation: React.FC = () => {
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <Link to="/" className="flex items-center">
           <span className="self-center text-xl font-semibold whitespace-nowrap">
-            {language === 'en' ? 'Monarca International' : 'Monarca Internacional'}
+            {language === 'en' ? 'LA Monarca International' : 'LA Monarca Internacional'}
           </span>
         </Link>
         <div className="flex items-center lg:order-2 gap-3">
