@@ -16,6 +16,7 @@ import ResponsiveSearchBar from '@/components/ResponsiveSearchBar';
 import CompanyIconsGrid from '@/components/CompanyIconsGrid';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
 import { getMockArticles } from '@/utils/mockArticles';
+import { Calendar, Music, Video, Mail, Phone, Info } from 'lucide-react';
 
 const Index = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -78,7 +79,10 @@ const Index = () => {
       
       <div className="container mx-auto px-6 py-8">
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-display mb-4">Audio Settings</h3>
+          <h3 className="text-xl font-display mb-4 flex items-center">
+            <Music className="mr-2 h-5 w-5 text-monarca-terracotta" />
+            {language === 'en' ? 'Audio Settings' : 'Configuración de Audio'}
+          </h3>
           <VolumeSlider onChange={(vol) => console.log(`Volume set to ${vol}%`)} />
         </div>
       </div>
@@ -97,13 +101,14 @@ const Index = () => {
       
       <div id="about" className="container mx-auto px-6 py-12">
         <div className="bg-white p-8 rounded-lg shadow-sm">
-          <h2 className="text-3xl font-display mb-6 text-monarca-black">
+          <h2 className="text-3xl font-display mb-6 text-monarca-black flex items-center">
+            <Info className="mr-2 h-6 w-6 text-monarca-terracotta" />
             {language === 'en' ? 'About Us' : 'Acerca de Nosotros'}
           </h2>
           <p className="text-monarca-black mb-4">
             {language === 'en' 
-              ? 'LA Monarca International is a cultural platform dedicated to promoting art, music, and travel experiences across borders.'
-              : 'LA Monarca Internacional es una plataforma cultural dedicada a promover el arte, la música y las experiencias de viaje más allá de las fronteras.'}
+              ? 'LA MONARCA INTERNACIONAL is a cultural platform dedicated to promoting art, music, and travel experiences across borders.'
+              : 'LA MONARCA INTERNACIONAL es una plataforma cultural dedicada a promover el arte, la música y las experiencias de viaje más allá de las fronteras.'}
           </p>
           <p className="text-monarca-black">
             {language === 'en'
@@ -122,7 +127,8 @@ const Index = () => {
       
       <div id="contact" className="container mx-auto px-6 py-12 mb-8">
         <div className="bg-white p-8 rounded-lg shadow-sm">
-          <h2 className="text-3xl font-display mb-6 text-monarca-black">
+          <h2 className="text-3xl font-display mb-6 text-monarca-black flex items-center">
+            <Mail className="mr-2 h-6 w-6 text-monarca-terracotta" />
             {language === 'en' ? 'Contact Us' : 'Contáctanos'}
           </h2>
           <p className="text-monarca-black mb-6">
@@ -136,9 +142,15 @@ const Index = () => {
               placeholder={language === 'en' ? 'Your email' : 'Tu correo electrónico'} 
               className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-monarca-amber"
             />
-            <Button className="bg-monarca-terracotta hover:bg-monarca-orange">
+            <Button className="bg-monarca-terracotta hover:bg-monarca-orange flex items-center gap-2">
               {language === 'en' ? 'Send Message' : 'Enviar Mensaje'}
+              <Mail className="h-4 w-4" />
             </Button>
+          </div>
+          
+          <div className="mt-8 flex items-center text-monarca-black">
+            <Phone className="mr-2 h-5 w-5 text-monarca-terracotta" />
+            <span>{language === 'en' ? 'Call us:' : 'Llámanos:'} +1 (555) 123-4567</span>
           </div>
         </div>
       </div>

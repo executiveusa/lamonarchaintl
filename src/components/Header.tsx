@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({
         )}>
           <h1 
             ref={titleRef}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-medium mb-4 opacity-0"
+            className="text-4xl md:text-5xl lg:text-6xl font-display font-medium mb-4 opacity-0 tracking-wider uppercase"
           >
             {title}
           </h1>

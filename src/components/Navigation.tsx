@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthButton from './AuthButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguageStore } from '@/services/articleService';
+import { Search, Calendar, Music, Camera, Newspaper, MapPin, Sparkles, Info, Mail } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const { language } = useLanguageStore();
@@ -35,8 +36,8 @@ const Navigation: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-display text-monarca-black hover:text-monarca-terracotta transition-colors">
-              {language === 'en' ? 'LA Monarca International' : 'LA Monarca Internacional'}
+            <Link to="/" className="text-2xl font-display text-monarca-black hover:text-monarca-terracotta transition-colors uppercase tracking-wider">
+              LA MONARCA INTERNACIONAL
             </Link>
           </div>
           
@@ -59,28 +60,35 @@ const Navigation: React.FC = () => {
           {/* Desktop menu */}
           <nav className="hidden md:flex space-x-2 lg:space-x-4">
             <div className="flex items-center justify-between space-x-2 lg:space-x-4">
-              <Link to="/" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <Link to="/" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
                 {menuItems.home}
               </Link>
-              <a href="#articles" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#articles" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <Newspaper className="mr-1 h-4 w-4" />
                 {menuItems.articles}
               </a>
-              <a href="#art" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#art" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <Camera className="mr-1 h-4 w-4" />
                 {menuItems.art}
               </a>
-              <a href="#music" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#music" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <Music className="mr-1 h-4 w-4" />
                 {menuItems.music}
               </a>
-              <a href="#travel" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#travel" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <MapPin className="mr-1 h-4 w-4" />
                 {menuItems.travel}
               </a>
-              <a href="#innovation" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#innovation" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <Sparkles className="mr-1 h-4 w-4" />
                 {menuItems.innovation}
               </a>
-              <a href="#about" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#about" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <Info className="mr-1 h-4 w-4" />
                 {menuItems.about}
               </a>
-              <a href="#contact" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide">
+              <a href="#contact" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta px-3 py-2 rounded-md text-sm tracking-wide flex items-center">
+                <Mail className="mr-1 h-4 w-4" />
                 {menuItems.contact}
               </a>
             </div>
@@ -97,28 +105,35 @@ const Navigation: React.FC = () => {
       {/* Mobile menu, show/hide based on menu state */}
       <div className="md:hidden hidden hs-collapse" id="mobile-menu">
         <div className="px-4 pt-2 pb-3 space-y-1 border-t border-gray-200">
-          <Link to="/" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <Link to="/" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
             {menuItems.home}
           </Link>
-          <a href="#articles" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#articles" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <Newspaper className="mr-1 h-4 w-4" />
             {menuItems.articles}
           </a>
-          <a href="#art" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#art" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <Camera className="mr-1 h-4 w-4" />
             {menuItems.art}
           </a>
-          <a href="#music" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#music" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <Music className="mr-1 h-4 w-4" />
             {menuItems.music}
           </a>
-          <a href="#travel" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#travel" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <MapPin className="mr-1 h-4 w-4" />
             {menuItems.travel}
           </a>
-          <a href="#innovation" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#innovation" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <Sparkles className="mr-1 h-4 w-4" />
             {menuItems.innovation}
           </a>
-          <a href="#about" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#about" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <Info className="mr-1 h-4 w-4" />
             {menuItems.about}
           </a>
-          <a href="#contact" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base">
+          <a href="#contact" className="font-montserrat font-bold text-monarca-black hover:text-monarca-terracotta block px-3 py-2 rounded-md text-base flex items-center">
+            <Mail className="mr-1 h-4 w-4" />
             {menuItems.contact}
           </a>
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-300">

@@ -1,7 +1,11 @@
 
 import React from "react";
+import { Search } from "lucide-react";
+import { useLanguageStore } from '@/services/articleService';
 
 const ResponsiveSearchBar = () => {
+  const { language } = useLanguageStore();
+  
   return (
     <label
       className="mx-auto my-20 relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300"
@@ -9,10 +13,10 @@ const ResponsiveSearchBar = () => {
     >
       <input
         id="search-bar"
-        placeholder="your keyword here"
+        placeholder={language === 'en' ? "Enter your search term..." : "Ingrese su término de búsqueda..."}
         className="px-6 py-2 w-full rounded-md flex-1 outline-none bg-white"
       />
-      <button className="w-full md:w-auto px-6 py-3 bg-black border-black text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-xl transition-all disabled:opacity-70">
+      <button className="w-full md:w-auto px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white fill-white active:scale-95 duration-100 border border-monarca-terracotta will-change-transform overflow-hidden relative rounded-xl transition-all disabled:opacity-70 flex items-center justify-center">
         <div className="relative">
           <div className="flex items-center justify-center h-3 w-3 absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
             <svg
@@ -37,10 +41,11 @@ const ResponsiveSearchBar = () => {
             </svg>
           </div>
 
-          <div className="flex items-center transition-all opacity-1 valid:">
+          <div className="flex items-center transition-all opacity-1 gap-2">
             <span className="text-sm font-semibold whitespace-nowrap truncate mx-auto">
-              Search
+              {language === 'en' ? "Search" : "Buscar"}
             </span>
+            <Search className="h-4 w-4" />
           </div>
         </div>
       </button>
