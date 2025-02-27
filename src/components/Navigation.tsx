@@ -95,56 +95,58 @@ const Navigation: React.FC = () => {
           aria-labelledby="hs-navbar-collapse"
         >
           <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-            <Link
-              to="/"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-              aria-current="page"
-            >
-              {menuItems.home}
-            </Link>
-            <a
-              href="#articles"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.articles}
-            </a>
-            <a
-              href="#art"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.art}
-            </a>
-            <a
-              href="#music"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.music}
-            </a>
-            <a
-              href="#travel"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.travel}
-            </a>
-            <a
-              href="#innovation"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.innovation}
-            </a>
-            <a
-              href="#about"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.about}
-            </a>
-            <a
-              href="#contact"
-              className="font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
-            >
-              {menuItems.contact}
-            </a>
-            <div className="flex items-center gap-3">
+            <div className="sm:flex sm:items-center sm:justify-between sm:gap-x-6 lg:gap-x-8">
+              <Link
+                to="/"
+                className="nav-link font-medium"
+                aria-current="page"
+              >
+                {menuItems.home}
+              </Link>
+              <a
+                href="#articles"
+                className="nav-link font-medium"
+              >
+                {menuItems.articles}
+              </a>
+              <a
+                href="#art"
+                className="nav-link font-medium"
+              >
+                {menuItems.art}
+              </a>
+              <a
+                href="#music"
+                className="nav-link font-medium"
+              >
+                {menuItems.music}
+              </a>
+              <a
+                href="#travel"
+                className="nav-link font-medium"
+              >
+                {menuItems.travel}
+              </a>
+              <a
+                href="#innovation"
+                className="nav-link font-medium"
+              >
+                {menuItems.innovation}
+              </a>
+              <a
+                href="#about"
+                className="nav-link font-medium"
+              >
+                {menuItems.about}
+              </a>
+              <a
+                href="#contact"
+                className="nav-link font-medium"
+              >
+                {menuItems.contact}
+              </a>
+            </div>
+            <div className="flex items-center gap-3 sm:ml-6">
               <LanguageSwitcher />
               <AuthButton />
             </div>
