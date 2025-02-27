@@ -10,11 +10,11 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* About */}
           <div>
-            <h3 className="text-xl font-display font-medium mb-4">La Monarca Internacional</h3>
+            <h3 className="text-xl font-display font-medium mb-4">La Monarca International</h3>
             <p className="text-monarca-gray/90 mb-4">
-              Explorando la intersección entre tecnología, arte y ciencia en México.
-              Una plataforma dedicada a destacar la innovación y creatividad que define
-              el espíritu de nuestro país.
+              Exploring the intersection between technology, art, and science in Mexico.
+              A platform dedicated to highlighting the innovation and creativity that defines
+              the spirit of our country.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-monarca-gray hover:text-white transition-colors">
@@ -38,50 +38,50 @@ const Footer: React.FC = () => {
           
           {/* Navigation */}
           <div>
-            <h3 className="text-xl font-display font-medium mb-4">Navegación</h3>
+            <h3 className="text-xl font-display font-medium mb-4">Navigation</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#noticias" className="text-monarca-gray hover:text-white transition-colors">Noticias</a>
+                <a href="#noticias" className="text-monarca-gray hover:text-white transition-colors">News</a>
               </li>
               <li>
-                <a href="#arte" className="text-monarca-gray hover:text-white transition-colors">Arte</a>
+                <a href="#arte" className="text-monarca-gray hover:text-white transition-colors">Art</a>
               </li>
               <li>
-                <a href="#ciencia" className="text-monarca-gray hover:text-white transition-colors">Ciencia</a>
+                <a href="#ciencia" className="text-monarca-gray hover:text-white transition-colors">Science</a>
               </li>
               <li>
-                <a href="#monarca" className="text-monarca-gray hover:text-white transition-colors">Monarcas</a>
+                <a href="#monarca" className="text-monarca-gray hover:text-white transition-colors">Monarchs</a>
               </li>
               <li>
-                <a href="#contacto" className="text-monarca-gray hover:text-white transition-colors">Contacto</a>
+                <a href="#contacto" className="text-monarca-gray hover:text-white transition-colors">Contact</a>
               </li>
             </ul>
           </div>
           
           {/* Subscribe */}
           <div>
-            <h3 className="text-xl font-display font-medium mb-4">Suscríbete</h3>
+            <h3 className="text-xl font-display font-medium mb-4">Subscribe</h3>
             <p className="text-monarca-gray/90 mb-4">
-              Recibe nuestras últimas noticias y actualizaciones en tu correo electrónico.
+              Receive our latest news and updates directly in your email.
             </p>
             <form className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
-                placeholder="Tu correo electrónico"
+                placeholder="Your email address"
                 className="px-4 py-2 bg-monarca-black/60 border border-monarca-gray/30 rounded-md focus:outline-none focus:border-monarca-terracotta transition-colors"
               />
               <button 
                 type="submit" 
                 className="px-4 py-2 bg-monarca-terracotta hover:bg-monarca-orange text-white rounded-md transition-colors"
               >
-                Suscribir
+                Subscribe
               </button>
             </form>
           </div>
         </div>
         
         <div className="mt-12 pt-8 border-t border-white/10 text-center text-monarca-gray/70">
-          <p>© {currentYear} La Monarca Internacional - Todos los derechos reservados.</p>
+          <p>© {currentYear} La Monarca International - All rights reserved.</p>
         </div>
       </div>
     </footer>

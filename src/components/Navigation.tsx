@@ -59,11 +59,11 @@ const Navigation: React.FC<NavigationProps> = ({ transparent = false }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            <a href="#noticias" className="nav-link">Noticias</a>
-            <a href="#arte" className="nav-link">Arte</a>
-            <a href="#ciencia" className="nav-link">Ciencia</a>
-            <a href="#monarca" className="nav-link">Monarcas</a>
-            <a href="#contacto" className="nav-link">Contacto</a>
+            <a href="#noticias" className="nav-link">News</a>
+            <a href="#arte" className="nav-link">Art</a>
+            <a href="#ciencia" className="nav-link">Science</a>
+            <a href="#monarca" className="nav-link">Monarchs</a>
+            <a href="#contacto" className="nav-link">Contact</a>
           </div>
 
           {/* Mobile menu button */}
@@ -94,35 +94,35 @@ const Navigation: React.FC<NavigationProps> = ({ transparent = false }) => {
             className="text-2xl py-2 border-b border-monarca-cream"
             onClick={toggleMenu}
           >
-            Noticias
+            News
           </a>
           <a 
             href="#arte" 
             className="text-2xl py-2 border-b border-monarca-cream"
             onClick={toggleMenu}
           >
-            Arte
+            Art
           </a>
           <a 
             href="#ciencia" 
             className="text-2xl py-2 border-b border-monarca-cream"
             onClick={toggleMenu}
           >
-            Ciencia
+            Science
           </a>
           <a 
             href="#monarca" 
             className="text-2xl py-2 border-b border-monarca-cream"
             onClick={toggleMenu}
           >
-            Monarcas
+            Monarchs
           </a>
           <a 
             href="#contacto" 
             className="text-2xl py-2"
             onClick={toggleMenu}
           >
-            Contacto
+            Contact
           </a>
         </div>
       </div>

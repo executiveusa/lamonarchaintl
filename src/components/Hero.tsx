@@ -65,13 +65,13 @@ const Hero: React.FC = () => {
             ref={titleRef} 
             className="text-5xl md:text-7xl font-display font-semibold mb-6 opacity-0"
           >
-            La Monarca Internacional
+            La Monarca International
           </h1>
           <p 
             ref={subtitleRef} 
             className="text-xl md:text-2xl font-light mb-8 opacity-0 delay-200"
           >
-            El corazón de la innovación en México
+            The heart of innovation in Mexico
           </p>
           
           <div className="flex justify-center space-x-4">
@@ -79,13 +79,13 @@ const Hero: React.FC = () => {
               href="#noticias" 
               className="opacity-0 animate-fade-in-up delay-300 bg-monarca-terracotta hover:bg-monarca-orange text-white py-3 px-8 rounded-md transition-all duration-300 hover:shadow-lg"
             >
-              Descubrir
+              Discover
             </a>
             <a 
               href="#contacto" 
               className="opacity-0 animate-fade-in-up delay-400 bg-transparent hover:bg-white/10 text-white border border-white py-3 px-8 rounded-md transition-all duration-300"
             >
-              Contáctanos
+              Contact Us
             </a>
           </div>
         </div>
