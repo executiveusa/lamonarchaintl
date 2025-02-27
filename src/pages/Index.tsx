@@ -1,3 +1,4 @@
+<lov-code>
 import React, { useState, useEffect } from 'react';
 import { 
   Button as MuiButton, 
@@ -265,19 +266,19 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
               {[...Array(6)].map((_, index) => (
                 <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md h-[400px] animate-pulse">
-                  <div className="bg-monarca-gray/20 h-60" />
+                  <div className="bg-monarca-gray/20 h-60"></div>
                   <div className="p-6">
-                    <div className="h-4 bg-monarca-gray/20 rounded w-1/4 mb-4" />
-                    <div className="h-6 bg-monarca-gray/20 rounded w-3/4 mb-4" />
-                    <div className="h-4 bg-monarca-gray/20 rounded w-full mb-2" />
-                    <div className="h-4 bg-monarca-gray/20 rounded w-2/3" />
+                    <div className="h-4 bg-monarca-gray/20 rounded w-1/4 mb-4"></div>
+                    <div className="h-6 bg-monarca-gray/20 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-monarca-gray/20 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-monarca-gray/20 rounded w-2/3"></div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-              {articles.map((article, index) => (
+              {articles.map((article) => (
                 <Card key={article.id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <CardMedia
                     component="img"
@@ -504,4 +505,4 @@ const Index = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div className="flex items-start">
                     <div className="mr-4 p-3 bg-monarca-orange/10 text-monarca-orange rounded-full">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="1
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="
