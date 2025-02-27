@@ -2,6 +2,7 @@
 import { supabase } from "../integrations/supabase/client";
 import axios from 'axios';
 import { toast } from 'sonner';
+import { create } from 'zustand';
 
 export interface Article {
   id?: string;
@@ -13,14 +14,37 @@ export interface Article {
   created_at?: string; // Changed from Date to string to match Supabase
   updated_at?: string; // Changed from Date to string to match Supabase
   author?: string;
+  language?: string; // Add language field
+  original_article_id?: string; // Reference to original article
 }
 
-export const fetchArticles = async () => {
+// Language store to manage the current language
+interface LanguageState {
+  language: string;
+  setLanguage: (language: string) => void;
+}
+
+export const useLanguageStore = create<LanguageState>((set) => ({
+  language: localStorage.getItem('preferredLanguage') || 'en',
+  setLanguage: (language: string) => {
+    localStorage.setItem('preferredLanguage', language);
+    set({ language });
+  },
+}));
+
+export const fetchArticles = async (language = 'en') => {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from('articles')
       .select('*')
       .order('created_at', { ascending: false });
+    
+    // Filter by language if provided
+    if (language) {
+      query = query.eq('language', language);
+    }
+    
+    const { data, error } = await query;
 
     if (error) throw error;
     return data;
@@ -151,7 +175,10 @@ export const triggerMakeWebhook = async (articleId: string) => {
 export const publishMultilingualArticle = async (article: Article, languages: string[]) => {
   try {
     // Create the original article first
-    const originalArticle = await createArticle(article);
+    const originalArticle = await createArticle({
+      ...article,
+      language: 'en', // Set language for original article
+    });
     
     if (!originalArticle || !originalArticle.id) {
       throw new Error('Failed to create original article');
@@ -175,6 +202,8 @@ export const publishMultilingualArticle = async (article: Article, languages: st
         image_url: article.image_url,
         category: article.category,
         author: article.author,
+        language: langCode,
+        original_article_id: originalArticle.id
       });
     });
     
@@ -189,6 +218,23 @@ export const publishMultilingualArticle = async (article: Article, languages: st
   } catch (error) {
     console.error('Error in publishMultilingualArticle:', error);
     toast.error('Failed to publish multilingual article');
+    throw error;
+  }
+};
+
+// Function to fetch article translations
+export const fetchArticleTranslations = async (originalArticleId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('original_article_id', originalArticleId);
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Error fetching article translations:', error);
+    toast.error('Failed to fetch article translations');
     throw error;
   }
 };
