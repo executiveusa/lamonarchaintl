@@ -56,7 +56,7 @@ const Index = () => {
     <div className="min-h-screen bg-monarca-cream relative">
       <Navigation />
       
-      <div className="fixed top-20 right-4 z-10 w-64 md:w-72 lg:w-80">
+      <div className="fixed top-20 right-4 z-10 w-40 md:w-44 lg:w-48 transform-gpu scale-60">
         <WeatherInfoCard />
       </div>
       
