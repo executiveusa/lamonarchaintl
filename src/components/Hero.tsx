@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 const Hero: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     // Animate on load
@@ -15,8 +15,8 @@ const Hero: React.FC = () => {
       if (subtitleRef.current) {
         subtitleRef.current.classList.add('animate-fade-in-up');
       }
-      if (imageRef.current) {
-        imageRef.current.classList.add('animate-blur-in');
+      if (videoContainerRef.current) {
+        videoContainerRef.current.classList.add('animate-blur-in');
       }
     };
     
@@ -27,39 +27,32 @@ const Hero: React.FC = () => {
     
     return () => clearTimeout(timer);
   }, []);
-  
-  // Parallax effect on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      if (imageRef.current) {
-        imageRef.current.style.transform = `translateY(${scrollPosition * 0.2}px)`;
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image with parallax effect */}
+      {/* YouTube video background */}
       <div 
-        ref={imageRef}
-        className="absolute inset-0 w-full h-full opacity-0"
-        style={{ 
-          backgroundImage: 'url(https://images.unsplash.com/photo-1527576539890-dfa815648363?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          filter: 'brightness(0.7)'
-        }}
-      />
+        ref={videoContainerRef}
+        className="absolute inset-0 w-full h-full opacity-0 pointer-events-none"
+      >
+        <div className="relative w-full h-full overflow-hidden">
+          <iframe 
+            src="https://www.youtube.com/embed/V9Zv3ZsX4A8?autoplay=1&mute=1&loop=1&playlist=V9Zv3ZsX4A8&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&enablejsapi=1&vq=hd1080"
+            className="absolute top-1/2 left-1/2 min-w-[150%] min-h-[150%] w-auto h-auto transform -translate-x-1/2 -translate-y-1/2 scale-125"
+            style={{ filter: 'brightness(0.7)' }}
+            title="La Monarca International Background"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
       
       {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent z-10" />
       
       {/* Content */}
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-20">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h1 
             ref={titleRef} 
@@ -92,7 +85,7 @@ const Hero: React.FC = () => {
       </div>
       
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 animate-fade-in delay-500">
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 animate-fade-in delay-500 z-20">
         <div className="w-6 h-10 rounded-full border-2 border-white flex justify-center">
           <div className="w-1 h-3 bg-white rounded-full animate-[bounce_1.5s_infinite] mt-2" />
         </div>
