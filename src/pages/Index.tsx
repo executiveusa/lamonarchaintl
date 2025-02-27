@@ -11,6 +11,7 @@ import TravelSection from '@/components/TravelSection';
 import AIInnovationSection from '@/components/AIInnovationSection';
 import VolumeSlider from '@/components/VolumeSlider';
 import NewsletterSubscription from '@/components/NewsletterSubscription';
+import WeatherInfoCard from '@/components/WeatherInfoCard';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
 import { getMockArticles } from '@/utils/mockArticles';
 
@@ -52,8 +53,12 @@ const Index = () => {
   };
   
   return (
-    <div className="min-h-screen bg-monarca-cream">
+    <div className="min-h-screen bg-monarca-cream relative">
       <Navigation />
+      
+      <div className="fixed top-20 right-4 z-10 w-64 md:w-72 lg:w-80">
+        <WeatherInfoCard />
+      </div>
       
       <Hero />
       
