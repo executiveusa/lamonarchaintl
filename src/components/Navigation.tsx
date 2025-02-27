@@ -98,50 +98,50 @@ const Navigation: React.FC = () => {
             <div className="sm:flex sm:items-center sm:justify-between sm:gap-x-6 lg:gap-x-8">
               <Link
                 to="/"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
                 aria-current="page"
               >
                 {menuItems.home}
               </Link>
               <a
                 href="#articles"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.articles}
               </a>
               <a
                 href="#art"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.art}
               </a>
               <a
                 href="#music"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.music}
               </a>
               <a
                 href="#travel"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.travel}
               </a>
               <a
                 href="#innovation"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.innovation}
               </a>
               <a
                 href="#about"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.about}
               </a>
               <a
                 href="#contact"
-                className="nav-link font-medium"
+                className="nav-link font-medium text-monarca-black hover:text-monarca-terracotta transition-colors"
               >
                 {menuItems.contact}
               </a>

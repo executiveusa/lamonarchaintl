@@ -8,7 +8,7 @@ const MusicSection: React.FC = () => {
   const { language } = useLanguageStore();
 
   return (
-    <section id="musica" className="py-20 bg-monarca-cream">
+    <section id="music" className="py-20 bg-monarca-cream">
       <div className="container mx-auto px-6">
         <Header 
           title={language === 'en' ? "Music Innovation" : "Innovación Musical"}
@@ -37,6 +37,7 @@ const MusicSection: React.FC = () => {
             <Button 
               variant="outline"
               className="text-monarca-terracotta hover:text-monarca-orange border-monarca-terracotta hover:border-monarca-orange hover:bg-monarca-orange/5 group flex items-center"
+              onClick={() => window.open('#', '_blank')}
             >
               {language === 'en' ? "Discover musical innovations" : "Descubrir innovaciones musicales"}
               <svg 

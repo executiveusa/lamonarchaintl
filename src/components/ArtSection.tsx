@@ -35,7 +35,7 @@ const ArtSection: React.FC = () => {
   };
 
   return (
-    <section id="arte" className="py-20 bg-white">
+    <section id="art" className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -54,6 +54,7 @@ const ArtSection: React.FC = () => {
             <Button 
               variant="outline"
               className="text-monarca-terracotta hover:text-monarca-orange border-monarca-terracotta hover:border-monarca-orange hover:bg-monarca-orange/5 group flex items-center"
+              onClick={() => window.open('#', '_blank')}
             >
               {getTranslatedContent('explore_trends')}
               <svg 
