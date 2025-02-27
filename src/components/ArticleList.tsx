@@ -69,7 +69,7 @@ const ArticleList: React.FC = () => {
           <CardHeader className="pb-2">
             <CardTitle className="text-xl">{article.title}</CardTitle>
             <CardDescription className="text-sm text-gray-500">
-              {new Date(article.created_at as Date).toLocaleDateString()} • {article.category}
+              {article.created_at ? new Date(article.created_at).toLocaleDateString() : 'No date'} • {article.category}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow">
@@ -78,7 +78,7 @@ const ArticleList: React.FC = () => {
             </p>
           </CardContent>
           <CardFooter className="pt-2 flex justify-between">
-            <span className="text-sm text-gray-500">By {article.author}</span>
+            <span className="text-sm text-gray-500">By {article.author || 'Unknown'}</span>
             <a 
               href={`/article/${article.id}`} 
               className="text-sm font-medium text-blue-600 hover:text-blue-800"

@@ -11,11 +11,11 @@ export interface Article {
   summary?: string;
   image_url?: string;
   category: string;
-  created_at?: string; // Changed from Date to string to match Supabase
-  updated_at?: string; // Changed from Date to string to match Supabase
+  created_at?: string;
+  updated_at?: string;
   author?: string;
-  language?: string; // Add language field
-  original_article_id?: string; // Reference to original article
+  language?: string;
+  original_article_id?: string;
 }
 
 // Language store to manage the current language
