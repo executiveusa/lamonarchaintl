@@ -89,6 +89,47 @@ const Index = () => {
         <AIInnovationSection />
       </div>
       
+      <div id="about" className="container mx-auto px-6 py-12">
+        <div className="bg-white p-8 rounded-lg shadow-sm">
+          <h2 className="text-3xl font-display mb-6 text-monarca-black">
+            {language === 'en' ? 'About Us' : 'Acerca de Nosotros'}
+          </h2>
+          <p className="text-monarca-black mb-4">
+            {language === 'en' 
+              ? 'LA Monarca International is a cultural platform dedicated to promoting art, music, and travel experiences across borders.'
+              : 'LA Monarca Internacional es una plataforma cultural dedicada a promover el arte, la música y las experiencias de viaje más allá de las fronteras.'}
+          </p>
+          <p className="text-monarca-black">
+            {language === 'en'
+              ? 'Our mission is to connect people through shared cultural experiences and innovative content.'
+              : 'Nuestra misión es conectar a las personas a través de experiencias culturales compartidas y contenido innovador.'}
+          </p>
+        </div>
+      </div>
+      
+      <div id="contact" className="container mx-auto px-6 py-12 mb-8">
+        <div className="bg-white p-8 rounded-lg shadow-sm">
+          <h2 className="text-3xl font-display mb-6 text-monarca-black">
+            {language === 'en' ? 'Contact Us' : 'Contáctanos'}
+          </h2>
+          <p className="text-monarca-black mb-6">
+            {language === 'en'
+              ? 'Have questions or feedback? Reach out to our team.'
+              : '¿Tienes preguntas o comentarios? Comunícate con nuestro equipo.'}
+          </p>
+          <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+            <input 
+              type="email" 
+              placeholder={language === 'en' ? 'Your email' : 'Tu correo electrónico'} 
+              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-monarca-amber"
+            />
+            <Button className="bg-monarca-terracotta hover:bg-monarca-orange">
+              {language === 'en' ? 'Send Message' : 'Enviar Mensaje'}
+            </Button>
+          </div>
+        </div>
+      </div>
+      
       <NewsletterSubscription />
       
       <Footer />
