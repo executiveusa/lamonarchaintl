@@ -1,91 +1,108 @@
-
 import React, { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
+import { Button, Card, CardContent, CardMedia, CardActions, Typography, Box } from '@mui/material';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
-import ArticleCard from '@/components/ArticleCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+const supabaseUrl = 'https://your-supabase-url.supabase.co';
+const supabaseKey = 'your-anon-key';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const Index = () => {
   const [articles, setArticles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Mock data fetch - in a real app, this would be a fetch to your API
-    const fetchArticles = () => {
-      setIsLoading(true);
-      
-      // Mock articles data
-      const mockArticles = [
-        {
-          id: 1,
-          title: 'Mexico leads advances in AI applied to climate change analysis',
-          excerpt: 'Mexican researchers develop an AI model that accurately predicts regional climate patterns, setting a new global standard.',
-          imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-          category: 'Science',
-          date: 'May 12, 2023'
-        },
-        {
-          id: 2,
-          title: 'The Digital Revolution in Contemporary Mexican Art',
-          excerpt: 'Mexican artists are redefining the national artistic landscape by integrating cutting-edge technologies into their creations.',
-          imageUrl: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-          category: 'Art',
-          date: 'April 28, 2023'
-        },
-        {
-          id: 3,
-          title: 'New Technology Innovation Policies in Mexico City',
-          excerpt: 'The capital\'s government announces major investments in digital infrastructure to transform CDMX into a Latin American technology hub.',
-          imageUrl: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-          category: 'Technology',
-          date: 'April 15, 2023'
-        },
-        {
-          id: 4,
-          title: 'The Impact of Monarch Migration on Digital Ecosystems',
-          excerpt: 'An innovative study establishes parallels between the migratory patterns of monarch butterflies and the dissemination of information on social networks.',
-          imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-          category: 'Monarchs',
-          date: 'April 3, 2023'
-        },
-        {
-          id: 5,
-          title: 'Mexican Startup Develops AI System for Cultural Preservation',
-          excerpt: 'An innovative platform uses machine learning algorithms to digitize and preserve endangered indigenous languages.',
-          imageUrl: 'https://images.unsplash.com/photo-1527576539890-dfa815648363?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-          category: 'Innovation',
-          date: 'March 22, 2023'
-        },
-        {
-          id: 6,
-          title: 'The Renaissance of Traditional Craftsmanship through Technology',
-          excerpt: 'Artisans from various regions of Mexico are incorporating digital tools to preserve and evolve ancestral techniques.',
-          imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-          category: 'Art',
-          date: 'March 10, 2023'
-        }
-      ];
-      
-      // Simulate network delay
-      setTimeout(() => {
-        setArticles(mockArticles);
-        setIsLoading(false);
-      }, 800);
-    };
-    
     fetchArticles();
   }, []);
+
+  async function fetchArticles() {
+    setIsLoading(true);
+    
+    try {
+      const { data, error } = await supabase.from('articles').select('*');
+      
+      if (error) {
+        console.error('Error fetching from Supabase:', error);
+        loadMockArticles();
+      } else if (data && data.length > 0) {
+        setArticles(data);
+        setIsLoading(false);
+      } else {
+        loadMockArticles();
+      }
+    } catch (err) {
+      console.error('Failed to fetch articles:', err);
+      loadMockArticles();
+    }
+  }
+  
+  const loadMockArticles = () => {
+    const mockArticles = [
+      {
+        id: 1,
+        title: 'Mexico leads advances in AI applied to climate change analysis',
+        content: 'Mexican researchers develop an AI model that accurately predicts regional climate patterns, setting a new global standard.',
+        image_url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+        category: 'Science',
+        date: 'May 12, 2023'
+      },
+      {
+        id: 2,
+        title: 'The Digital Revolution in Contemporary Mexican Art',
+        content: 'Mexican artists are redefining the national artistic landscape by integrating cutting-edge technologies into their creations.',
+        image_url: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+        category: 'Art',
+        date: 'April 28, 2023'
+      },
+      {
+        id: 3,
+        title: 'New Technology Innovation Policies in Mexico City',
+        content: 'The capital\'s government announces major investments in digital infrastructure to transform CDMX into a Latin American technology hub.',
+        image_url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+        category: 'Technology',
+        date: 'April 15, 2023'
+      },
+      {
+        id: 4,
+        title: 'The Impact of Monarch Migration on Digital Ecosystems',
+        content: 'An innovative study establishes parallels between the migratory patterns of monarch butterflies and the dissemination of information on social networks.',
+        image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+        category: 'Monarchs',
+        date: 'April 3, 2023'
+      },
+      {
+        id: 5,
+        title: 'Mexican Startup Develops AI System for Cultural Preservation',
+        content: 'An innovative platform uses machine learning algorithms to digitize and preserve endangered indigenous languages.',
+        image_url: 'https://images.unsplash.com/photo-1527576539890-dfa815648363?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+        category: 'Innovation',
+        date: 'March 22, 2023'
+      },
+      {
+        id: 6,
+        title: 'The Renaissance of Traditional Craftsmanship through Technology',
+        content: 'Artisans from various regions of Mexico are incorporating digital tools to preserve and evolve ancestral techniques.',
+        image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+        category: 'Art',
+        date: 'March 10, 2023'
+      }
+    ];
+    
+    setTimeout(() => {
+      setArticles(mockArticles);
+      setIsLoading(false);
+    }, 800);
+  };
   
   return (
     <div className="min-h-screen bg-monarca-cream">
-      {/* Navigation */}
       <Navigation transparent />
       
-      {/* Hero Section */}
       <Hero />
       
-      {/* News Section */}
       <section id="noticias" className="py-20">
         <div className="container mx-auto px-6">
           <Header 
@@ -111,31 +128,49 @@ const Index = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
               {articles.map((article, index) => (
-                <ArticleCard 
-                  key={article.id}
-                  title={article.title}
-                  excerpt={article.excerpt}
-                  imageUrl={article.imageUrl}
-                  category={article.category}
-                  date={article.date}
-                  index={index}
-                />
+                <Card key={article.id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={article.image_url}
+                    alt={article.title}
+                  />
+                  <Box sx={{ position: 'absolute', top: 16, left: 16, bgcolor: 'primary.main', color: 'white', px: 1, py: 0.5, borderRadius: 1 }}>
+                    {article.category}
+                  </Box>
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      {article.date}
+                    </Typography>
+                    <Typography variant="h5" component="h2" gutterBottom>
+                      {article.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {article.content}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary">
+                      Read More
+                    </Button>
+                  </CardActions>
+                </Card>
               ))}
             </div>
           )}
           
           <div className="text-center mt-12">
-            <a 
-              href="#" 
-              className="inline-block bg-monarca-terracotta hover:bg-monarca-orange text-white py-3 px-8 rounded-md transition-all duration-300 hover:shadow-lg"
+            <Button 
+              variant="contained" 
+              color="primary"
+              size="large"
             >
               View more news
-            </a>
+            </Button>
           </div>
         </div>
       </section>
       
-      {/* Featured Section */}
       <section id="arte" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -152,21 +187,23 @@ const Index = () => {
               <p className="text-monarca-gray/90 mb-8">
                 Through the application of artificial intelligence, virtual reality, and other emerging technologies, the national artistic landscape is being transformed, attracting international attention and establishing new creative paradigms.
               </p>
-              <a 
-                href="#" 
-                className="inline-flex items-center text-monarca-terracotta hover:text-monarca-orange transition-colors duration-300 group"
+              <Button 
+                variant="text" 
+                color="primary"
+                endIcon={
+                  <svg 
+                    className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                }
               >
                 Explore artistic trends
-                <svg 
-                  className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
+              </Button>
             </div>
             <div className="relative">
               <div className="absolute inset-0 -translate-x-4 -translate-y-4 bg-monarca-orange/20 rounded-lg"></div>
@@ -180,7 +217,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Music Section */}
       <section id="musica" className="py-20 bg-monarca-cream">
         <div className="container mx-auto px-6">
           <Header 
@@ -203,21 +239,23 @@ const Index = () => {
               <p className="text-monarca-gray/90 mb-8">
                 From AI-generated compositions based on indigenous melodies to virtual concerts that transport audiences to historical venues, technology is opening new dimensions for experiencing Mexican musical heritage.
               </p>
-              <a 
-                href="#" 
-                className="inline-flex items-center text-monarca-terracotta hover:text-monarca-orange transition-colors duration-300 group"
+              <Button 
+                variant="text" 
+                color="primary"
+                endIcon={
+                  <svg 
+                    className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                }
               >
                 Discover musical innovations
-                <svg 
-                  className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
+              </Button>
             </div>
             <div className="relative order-1 lg:order-2">
               <div className="absolute inset-0 translate-x-4 translate-y-4 bg-monarca-terracotta/20 rounded-lg"></div>
@@ -231,7 +269,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Travel Section */}
       <section id="viajes" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <Header 
@@ -292,7 +329,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* AI Section */}
       <section id="inteligencia-artificial" className="py-20 bg-monarca-cream relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-monarca-terracotta/10 to-transparent"></div>
         <div className="container mx-auto px-6 relative z-10">
@@ -384,7 +420,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Beauty Section */}
       <section id="belleza" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <Header 
@@ -476,7 +511,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Call to Action */}
       <section id="contacto" className="relative py-24">
         <div 
           className="absolute inset-0 bg-cover bg-center"
@@ -510,7 +544,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Footer */}
       <Footer />
     </div>
   );

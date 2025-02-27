@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { MenuIcon, X } from 'lucide-react';
+import { Button } from '@mui/material';
 
 interface NavigationProps {
   transparent?: boolean;
@@ -58,15 +59,15 @@ const Navigation: React.FC<NavigationProps> = ({ transparent = false }) => {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            <a href="#noticias" className="nav-link">News</a>
-            <a href="#arte" className="nav-link">Art</a>
-            <a href="#musica" className="nav-link">Music</a>
-            <a href="#viajes" className="nav-link">Travel</a>
-            <a href="#inteligencia-artificial" className="nav-link">AI</a>
-            <a href="#belleza" className="nav-link">Beauty</a>
-            <a href="#monarca" className="nav-link">Monarchs</a>
-            <a href="#contacto" className="nav-link">Contact</a>
+          <div className="hidden md:flex items-center space-x-2">
+            <Button href="#noticias" variant="contained" color="primary" size="small">News</Button>
+            <Button href="#arte" variant="contained" color="primary" size="small">Art</Button>
+            <Button href="#musica" variant="contained" color="primary" size="small">Music</Button>
+            <Button href="#viajes" variant="contained" color="primary" size="small">Travel</Button>
+            <Button href="#inteligencia-artificial" variant="contained" color="primary" size="small">AI</Button>
+            <Button href="#belleza" variant="contained" color="primary" size="small">Beauty</Button>
+            <Button href="#monarca" variant="contained" color="primary" size="small">Monarchs</Button>
+            <Button href="#contacto" variant="contained" color="primary" size="small">Contact</Button>
           </div>
 
           {/* Mobile menu button */}
@@ -91,63 +92,79 @@ const Navigation: React.FC<NavigationProps> = ({ transparent = false }) => {
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <div className="container mx-auto px-6 py-6 flex flex-col space-y-8 text-center">
-          <a 
+        <div className="container mx-auto px-6 py-6 flex flex-col space-y-4 text-center">
+          <Button 
             href="#noticias" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             News
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#arte" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             Art
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#musica" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             Music
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#viajes" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             Travel
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#inteligencia-artificial" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             AI
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#belleza" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             Beauty
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#monarca" 
-            className="text-2xl py-2 border-b border-monarca-cream"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             Monarchs
-          </a>
-          <a 
+          </Button>
+          <Button 
             href="#contacto" 
-            className="text-2xl py-2"
+            variant="contained" 
+            color="primary"
+            fullWidth
             onClick={toggleMenu}
           >
             Contact
-          </a>
+          </Button>
         </div>
       </div>
     </nav>

@@ -1,0 +1,50 @@
+
+/* Custom styles for Material UI integration */
+
+/* Light mode theme */
+.light-mode {
+  --background-color: #F8F7F3;
+  --primary-color: #E85D26;
+  --secondary-color: #F8B93B;
+  --text-color: #333333;
+  --accent-color: #D35930;
+  --light-accent: #F5E3DB;
+}
+
+/* Override Material UI styles */
+.MuiButton-contained {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+}
+
+.MuiButton-contained:hover {
+  background-color: var(--accent-color) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiCard-root {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  height: 100% !important;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiTypography-h5 {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure images have proper aspect ratio */
+.MuiCardMedia-root {
+  height: 200px !important;
+  object-fit: cover !important;
+}
