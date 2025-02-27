@@ -1,92 +1,106 @@
+
 import React, { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { Button, Card, CardContent, CardMedia, CardActions, Typography, Box } from '@mui/material';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-
-const supabaseUrl = 'https://your-supabase-url.supabase.co';
-const supabaseKey = 'your-anon-key';
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from '@/integrations/supabase/client';
+import { fetchArticles } from '@/services/articleService';
 
 const Index = () => {
   const [articles, setArticles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetchArticles();
+    loadArticles();
   }, []);
 
-  async function fetchArticles() {
+  async function loadArticles() {
     setIsLoading(true);
     
     try {
-      const { data, error } = await supabase.from('articles').select('*');
+      const articlesData = await fetchArticles();
       
-      if (error) {
-        console.error('Error fetching from Supabase:', error);
-        loadMockArticles();
-      } else if (data && data.length > 0) {
-        setArticles(data);
-        setIsLoading(false);
+      if (articlesData && articlesData.length > 0) {
+        setArticles(articlesData);
       } else {
         loadMockArticles();
       }
     } catch (err) {
       console.error('Failed to fetch articles:', err);
       loadMockArticles();
+    } finally {
+      setIsLoading(false);
     }
   }
   
   const loadMockArticles = () => {
     const mockArticles = [
       {
-        id: 1,
+        id: '1',
         title: 'Mexico leads advances in AI applied to climate change analysis',
         content: 'Mexican researchers develop an AI model that accurately predicts regional climate patterns, setting a new global standard.',
         image_url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         category: 'Science',
+        created_at: '2023-05-12T00:00:00.000Z',
+        updated_at: '2023-05-12T00:00:00.000Z',
+        author: 'La Monarca Internacional',
         date: 'May 12, 2023'
       },
       {
-        id: 2,
+        id: '2',
         title: 'The Digital Revolution in Contemporary Mexican Art',
         content: 'Mexican artists are redefining the national artistic landscape by integrating cutting-edge technologies into their creations.',
         image_url: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         category: 'Art',
+        created_at: '2023-04-28T00:00:00.000Z',
+        updated_at: '2023-04-28T00:00:00.000Z',
+        author: 'La Monarca Internacional',
         date: 'April 28, 2023'
       },
       {
-        id: 3,
+        id: '3',
         title: 'New Technology Innovation Policies in Mexico City',
         content: 'The capital\'s government announces major investments in digital infrastructure to transform CDMX into a Latin American technology hub.',
         image_url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         category: 'Technology',
+        created_at: '2023-04-15T00:00:00.000Z',
+        updated_at: '2023-04-15T00:00:00.000Z',
+        author: 'La Monarca Internacional',
         date: 'April 15, 2023'
       },
       {
-        id: 4,
+        id: '4',
         title: 'The Impact of Monarch Migration on Digital Ecosystems',
         content: 'An innovative study establishes parallels between the migratory patterns of monarch butterflies and the dissemination of information on social networks.',
         image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         category: 'Monarchs',
+        created_at: '2023-04-03T00:00:00.000Z',
+        updated_at: '2023-04-03T00:00:00.000Z',
+        author: 'La Monarca Internacional',
         date: 'April 3, 2023'
       },
       {
-        id: 5,
+        id: '5',
         title: 'Mexican Startup Develops AI System for Cultural Preservation',
         content: 'An innovative platform uses machine learning algorithms to digitize and preserve endangered indigenous languages.',
         image_url: 'https://images.unsplash.com/photo-1527576539890-dfa815648363?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         category: 'Innovation',
+        created_at: '2023-03-22T00:00:00.000Z',
+        updated_at: '2023-03-22T00:00:00.000Z',
+        author: 'La Monarca Internacional',
         date: 'March 22, 2023'
       },
       {
-        id: 6,
+        id: '6',
         title: 'The Renaissance of Traditional Craftsmanship through Technology',
         content: 'Artisans from various regions of Mexico are incorporating digital tools to preserve and evolve ancestral techniques.',
         image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         category: 'Art',
+        created_at: '2023-03-10T00:00:00.000Z',
+        updated_at: '2023-03-10T00:00:00.000Z',
+        author: 'La Monarca Internacional',
         date: 'March 10, 2023'
       }
     ];
@@ -99,7 +113,7 @@ const Index = () => {
   
   return (
     <div className="min-h-screen bg-monarca-cream">
-      <Navigation transparent />
+      <Navigation />
       
       <Hero />
       
@@ -140,7 +154,11 @@ const Index = () => {
                   </Box>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="caption" color="text.secondary">
-                      {article.date}
+                      {article.date || new Date(article.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
                     </Typography>
                     <Typography variant="h5" component="h2" gutterBottom>
                       {article.title}

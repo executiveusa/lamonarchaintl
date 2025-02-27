@@ -10,8 +10,8 @@ export interface Article {
   summary?: string;
   image_url?: string;
   category: string;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: string; // Changed from Date to string to match Supabase
+  updated_at?: string; // Changed from Date to string to match Supabase
   author?: string;
 }
 
