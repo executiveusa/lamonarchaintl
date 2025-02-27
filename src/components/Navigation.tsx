@@ -20,7 +20,9 @@ const Navigation: React.FC = () => {
     <nav className="bg-white border-b border-gray-200 px-4 lg:px-6 py-3">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <Link to="/" className="flex items-center">
-          <span className="self-center text-xl font-semibold whitespace-nowrap">La Monarca Internacional</span>
+          <span className="self-center text-xl font-semibold whitespace-nowrap">
+            {language === 'en' ? 'La Monarca International' : 'La Monarca Internacional'}
+          </span>
         </Link>
         <div className="flex items-center lg:order-2 gap-3">
           <LanguageSwitcher />
