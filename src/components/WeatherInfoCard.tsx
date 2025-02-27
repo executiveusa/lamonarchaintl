@@ -4,7 +4,7 @@ import { Sun, CloudRain, Cloud, CloudSnow, Snowflake } from "lucide-react";
 
 const WeatherInfoCard = () => {
   return (
-    <div className="max-w-md p-4 rounded-lg bg-white text-gray-800 border shadow-md scale-60 transform origin-top-right">
+    <div className="max-w-md p-4 rounded-lg bg-white text-gray-800 border shadow-md scale-[0.39] transform origin-top-right">
       <div className="flex justify-between space-x-4">
         <div className="flex flex-col items-center">
           <Sun className="w-14 h-14 p-1 text-yellow-500" />
