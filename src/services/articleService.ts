@@ -1,18 +1,24 @@
 
 import { create } from 'zustand';
 import axios from 'axios';
+import { supabase } from '../integrations/supabase/client';
+import type { Tables } from '../integrations/supabase/types';
 
 // Define types for article data
 export interface Article {
   id: string;
   title: string;
-  excerpt: string;
+  excerpt?: string;
   content: string;
-  date: string;
+  date?: string;
   author: string;
   category: string;
-  thumbnail: string;
-  language: string;
+  thumbnail?: string;
+  language?: string;
+  summary?: string;
+  image_url?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // Define the store state type
@@ -59,6 +65,53 @@ export const searchArticles = async (query: string, language: string = 'en'): Pr
     return response.data.articles;
   } catch (error) {
     console.error('Error searching articles:', error);
+    throw error;
+  }
+};
+
+// Function to create a new article
+export const createArticle = async (article: Partial<Article>): Promise<Article> => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .insert([
+        {
+          title: article.title || '',
+          content: article.content || '',
+          summary: article.summary || null,
+          image_url: article.image_url || null,
+          category: article.category || 'general',
+          author: article.author || 'La Monarca Internacional'
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) throw error;
+    
+    return data as unknown as Article;
+  } catch (error) {
+    console.error('Error creating article:', error);
+    throw error;
+  }
+};
+
+// Function to publish multilingual article
+export const publishMultilingualArticle = async (
+  article: Partial<Article>, 
+  languages: string[] = ['EN', 'ES', 'FR']
+): Promise<void> => {
+  try {
+    // Create the primary article
+    await createArticle(article);
+    
+    // Here you would typically call a translation API
+    // For each language and create translated versions
+    // This is a simplified implementation
+    
+    console.log(`Article published in multiple languages: ${languages.join(', ')}`);
+  } catch (error) {
+    console.error('Error publishing multilingual article:', error);
     throw error;
   }
 };

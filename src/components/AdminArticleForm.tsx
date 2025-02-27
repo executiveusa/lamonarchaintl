@@ -35,7 +35,7 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
     try {
       setIsLoading(true);
       
-      const article: Article = {
+      const article: Partial<Article> = {
         title,
         content,
         summary,
