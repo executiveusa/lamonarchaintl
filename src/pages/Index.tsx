@@ -9,6 +9,8 @@ import ArtSection from '@/components/ArtSection';
 import MusicSection from '@/components/MusicSection';
 import TravelSection from '@/components/TravelSection';
 import AIInnovationSection from '@/components/AIInnovationSection';
+import VolumeSlider from '@/components/VolumeSlider';
+import NewsletterSubscription from '@/components/NewsletterSubscription';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
 import { getMockArticles } from '@/utils/mockArticles';
 
@@ -59,11 +61,20 @@ const Index = () => {
       
       <ArtSection />
       
+      <div className="container mx-auto px-6 py-8">
+        <div className="bg-white p-6 rounded-lg shadow-sm">
+          <h3 className="text-xl font-display mb-4">Audio Settings</h3>
+          <VolumeSlider onChange={(vol) => console.log(`Volume set to ${vol}%`)} />
+        </div>
+      </div>
+      
       <MusicSection />
       
       <TravelSection />
       
       <AIInnovationSection />
+      
+      <NewsletterSubscription />
       
       <Footer />
     </div>
