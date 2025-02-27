@@ -144,7 +144,8 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
                 serif: ['Merriweather', 'serif'],
-                display: ['Playfair Display', 'serif']
+                display: ['Playfair Display', 'serif'],
+                montserrat: ['Montserrat', 'sans-serif']
             },
             transitionDuration: {
                 '2000': '2000ms',
