@@ -61,7 +61,10 @@ const Navigation: React.FC<NavigationProps> = ({ transparent = false }) => {
           <div className="hidden md:flex items-center space-x-1">
             <a href="#noticias" className="nav-link">News</a>
             <a href="#arte" className="nav-link">Art</a>
-            <a href="#ciencia" className="nav-link">Science</a>
+            <a href="#musica" className="nav-link">Music</a>
+            <a href="#viajes" className="nav-link">Travel</a>
+            <a href="#inteligencia-artificial" className="nav-link">AI</a>
+            <a href="#belleza" className="nav-link">Beauty</a>
             <a href="#monarca" className="nav-link">Monarchs</a>
             <a href="#contacto" className="nav-link">Contact</a>
           </div>
@@ -104,11 +107,32 @@ const Navigation: React.FC<NavigationProps> = ({ transparent = false }) => {
             Art
           </a>
           <a 
-            href="#ciencia" 
+            href="#musica" 
             className="text-2xl py-2 border-b border-monarca-cream"
             onClick={toggleMenu}
           >
-            Science
+            Music
+          </a>
+          <a 
+            href="#viajes" 
+            className="text-2xl py-2 border-b border-monarca-cream"
+            onClick={toggleMenu}
+          >
+            Travel
+          </a>
+          <a 
+            href="#inteligencia-artificial" 
+            className="text-2xl py-2 border-b border-monarca-cream"
+            onClick={toggleMenu}
+          >
+            AI
+          </a>
+          <a 
+            href="#belleza" 
+            className="text-2xl py-2 border-b border-monarca-cream"
+            onClick={toggleMenu}
+          >
+            Beauty
           </a>
           <a 
             href="#monarca" 
