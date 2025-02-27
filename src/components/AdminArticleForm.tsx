@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { createArticle, publishMultilingualArticle, Article } from '../services/articleService';
 import { toast } from 'sonner';
-import ArticleFormFields from './admin/ArticleFormFields';
+import ArticleFormFields, { ArticleFormValues } from './admin/ArticleFormFields';
 import LanguageSelector from './admin/LanguageSelector';
 
 interface AdminArticleFormProps {
@@ -12,13 +12,15 @@ interface AdminArticleFormProps {
 }
 
 const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [summary, setSummary] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [category, setCategory] = useState('general');
-  const [author, setAuthor] = useState('La Monarca Internacional');
-  const [isMultilingual, setIsMultilingual] = useState(false);
+  const [formValues, setFormValues] = useState<ArticleFormValues>({
+    title: '',
+    content: '',
+    summary: '',
+    imageUrl: '',
+    category: 'general',
+    author: 'La Monarca Internacional',
+    isMultilingual: false,
+  });
   const [languages, setLanguages] = useState(['ES', 'EN', 'FR']);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,45 +32,50 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
     { value: 'general', label: 'General' }
   ];
 
+  const handleFormValuesChange = (values: ArticleFormValues) => {
+    setFormValues(values);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!title || !content || !category) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
     
     try {
       setIsLoading(true);
       
       const article: Partial<Article> = {
-        title,
-        content,
-        summary,
-        image_url: imageUrl,
-        category,
-        author
+        title: formValues.title,
+        content: formValues.content,
+        summary: formValues.summary,
+        image_url: formValues.imageUrl,
+        category: formValues.category,
+        author: formValues.author
       };
       
-      if (isMultilingual) {
+      if (formValues.isMultilingual) {
         await publishMultilingualArticle(article, languages);
       } else {
         await createArticle(article);
       }
       
       // Reset form
-      setTitle('');
-      setContent('');
-      setSummary('');
-      setImageUrl('');
-      setCategory('general');
-      setAuthor('La Monarca Internacional');
+      setFormValues({
+        title: '',
+        content: '',
+        summary: '',
+        imageUrl: '',
+        category: 'general',
+        author: 'La Monarca Internacional',
+        isMultilingual: false,
+      });
       
       if (onSuccess) {
         onSuccess();
       }
+
+      toast.success("Article published successfully!");
     } catch (error) {
       console.error('Error creating article:', error);
+      toast.error("Failed to publish article");
     } finally {
       setIsLoading(false);
     }
@@ -85,24 +92,12 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
       <form onSubmit={handleSubmit}>
         <CardContent>
           <ArticleFormFields
-            title={title}
-            setTitle={setTitle}
-            content={content}
-            setContent={setContent}
-            summary={summary}
-            setSummary={setSummary}
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-            category={category}
-            setCategory={setCategory}
-            author={author}
-            setAuthor={setAuthor}
-            isMultilingual={isMultilingual}
-            setIsMultilingual={setIsMultilingual}
+            defaultValues={formValues}
+            onValuesChange={handleFormValuesChange}
             categories={categories}
           />
           
-          {isMultilingual && <LanguageSelector languages={languages} />}
+          {formValues.isMultilingual && <LanguageSelector languages={languages} />}
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isLoading} className="w-full">
