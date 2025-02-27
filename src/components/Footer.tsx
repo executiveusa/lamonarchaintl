@@ -1,8 +1,32 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useLanguageStore } from '@/services/articleService';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { language } = useLanguageStore();
+  
+  // Footer translations
+  const footerText = {
+    about: language === 'en' 
+      ? 'Exploring the intersection between technology, art, and science in Mexico. A platform dedicated to highlighting the innovation and creativity that defines the spirit of our country.' 
+      : 'Explorando la intersección entre tecnología, arte y ciencia en México. Una plataforma dedicada a resaltar la innovación y creatividad que define el espíritu de nuestro país.',
+    navigation: language === 'en' ? 'Navigation' : 'Navegación',
+    news: language === 'en' ? 'News' : 'Noticias',
+    art: language === 'en' ? 'Art' : 'Arte',
+    music: language === 'en' ? 'Music' : 'Música',
+    travel: language === 'en' ? 'Travel' : 'Viajes',
+    innovation: language === 'en' ? 'AI Innovation' : 'Innovación IA',
+    contact: language === 'en' ? 'Contact' : 'Contacto',
+    subscribe: language === 'en' ? 'Subscribe' : 'Suscríbete',
+    subscribeText: language === 'en' 
+      ? 'Receive our latest news and updates directly in your email.' 
+      : 'Recibe nuestras últimas noticias y actualizaciones directamente en tu correo.',
+    emailPlaceholder: language === 'en' ? 'Your email address' : 'Tu correo electrónico',
+    subscribeButton: language === 'en' ? 'Subscribe' : 'Suscribirse',
+    rights: language === 'en' ? 'All rights reserved' : 'Todos los derechos reservados'
+  };
   
   return (
     <footer className="bg-monarca-black text-white py-16">
@@ -10,11 +34,11 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* About */}
           <div>
-            <h3 className="text-xl font-display font-medium mb-4">La Monarca International</h3>
+            <h3 className="text-xl font-display font-medium mb-4">
+              {language === 'en' ? 'La Monarca International' : 'La Monarca Internacional'}
+            </h3>
             <p className="text-monarca-gray/90 mb-4">
-              Exploring the intersection between technology, art, and science in Mexico.
-              A platform dedicated to highlighting the innovation and creativity that defines
-              the spirit of our country.
+              {footerText.about}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-monarca-gray hover:text-white transition-colors">
@@ -24,8 +48,7 @@ const Footer: React.FC = () => {
               </a>
               <a href="#" className="text-monarca-gray hover:text-white transition-colors">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0
-                  01.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 01.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </a>
               <a href="#" className="text-monarca-gray hover:text-white transition-colors">
@@ -38,50 +61,65 @@ const Footer: React.FC = () => {
           
           {/* Navigation */}
           <div>
-            <h3 className="text-xl font-display font-medium mb-4">Navigation</h3>
+            <h3 className="text-xl font-display font-medium mb-4">{footerText.navigation}</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#noticias" className="text-monarca-gray hover:text-white transition-colors">News</a>
+                <a href="#articles" className="text-monarca-gray hover:text-white transition-colors">
+                  {footerText.news}
+                </a>
               </li>
               <li>
-                <a href="#arte" className="text-monarca-gray hover:text-white transition-colors">Art</a>
+                <a href="#art" className="text-monarca-gray hover:text-white transition-colors">
+                  {footerText.art}
+                </a>
               </li>
               <li>
-                <a href="#ciencia" className="text-monarca-gray hover:text-white transition-colors">Science</a>
+                <a href="#music" className="text-monarca-gray hover:text-white transition-colors">
+                  {footerText.music}
+                </a>
               </li>
               <li>
-                <a href="#monarca" className="text-monarca-gray hover:text-white transition-colors">Monarchs</a>
+                <a href="#travel" className="text-monarca-gray hover:text-white transition-colors">
+                  {footerText.travel}
+                </a>
               </li>
               <li>
-                <a href="#contacto" className="text-monarca-gray hover:text-white transition-colors">Contact</a>
+                <a href="#innovation" className="text-monarca-gray hover:text-white transition-colors">
+                  {footerText.innovation}
+                </a>
+              </li>
+              <li>
+                <Link to="/contact" className="text-monarca-gray hover:text-white transition-colors">
+                  {footerText.contact}
+                </Link>
               </li>
             </ul>
           </div>
           
           {/* Subscribe */}
           <div>
-            <h3 className="text-xl font-display font-medium mb-4">Subscribe</h3>
+            <h3 className="text-xl font-display font-medium mb-4">{footerText.subscribe}</h3>
             <p className="text-monarca-gray/90 mb-4">
-              Receive our latest news and updates directly in your email.
+              {footerText.subscribeText}
             </p>
             <form className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
-                placeholder="Your email address"
+                placeholder={footerText.emailPlaceholder}
                 className="px-4 py-2 bg-monarca-black/60 border border-monarca-gray/30 rounded-md focus:outline-none focus:border-monarca-terracotta transition-colors"
               />
               <button 
                 type="submit" 
                 className="px-4 py-2 bg-monarca-terracotta hover:bg-monarca-orange text-white rounded-md transition-colors"
               >
-                Subscribe
+                {footerText.subscribeButton}
               </button>
             </form>
           </div>
         </div>
         
         <div className="mt-12 pt-8 border-t border-white/10 text-center text-monarca-gray/70">
-          <p>© {currentYear} La Monarca International - All rights reserved.</p>
+          <p>© {currentYear} La Monarca {language === 'en' ? 'International' : 'Internacional'} - {footerText.rights}.</p>
         </div>
       </div>
     </footer>

@@ -12,6 +12,10 @@ const Navigation: React.FC = () => {
   const menuItems = {
     home: language === 'en' ? 'Home' : 'Inicio',
     articles: language === 'en' ? 'Articles' : 'Artículos',
+    art: language === 'en' ? 'Art' : 'Arte',
+    music: language === 'en' ? 'Music' : 'Música',
+    travel: language === 'en' ? 'Travel' : 'Viajes',
+    innovation: language === 'en' ? 'AI Innovation' : 'Innovación IA',
     about: language === 'en' ? 'About' : 'Acerca de',
     contact: language === 'en' ? 'Contact' : 'Contacto'
   };
@@ -36,19 +40,29 @@ const Navigation: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link to="/articles" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
+              <a href="#articles" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
                 {menuItems.articles}
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/about" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
-                {menuItems.about}
-              </Link>
+              <a href="#art" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
+                {menuItems.art}
+              </a>
             </li>
             <li>
-              <Link to="/contact" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
-                {menuItems.contact}
-              </Link>
+              <a href="#music" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
+                {menuItems.music}
+              </a>
+            </li>
+            <li>
+              <a href="#travel" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
+                {menuItems.travel}
+              </a>
+            </li>
+            <li>
+              <a href="#innovation" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">
+                {menuItems.innovation}
+              </a>
             </li>
           </ul>
         </div>

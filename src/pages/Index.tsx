@@ -57,9 +57,13 @@ const Index = () => {
       
       <Hero />
       
-      <ArticleSection articles={articles} isLoading={isLoading} />
+      <div id="articles">
+        <ArticleSection articles={articles} isLoading={isLoading} />
+      </div>
       
-      <ArtSection />
+      <div id="art">
+        <ArtSection />
+      </div>
       
       <div className="container mx-auto px-6 py-8">
         <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -68,11 +72,17 @@ const Index = () => {
         </div>
       </div>
       
-      <MusicSection />
+      <div id="music">
+        <MusicSection />
+      </div>
       
-      <TravelSection />
+      <div id="travel">
+        <TravelSection />
+      </div>
       
-      <AIInnovationSection />
+      <div id="innovation">
+        <AIInnovationSection />
+      </div>
       
       <NewsletterSubscription />
       
