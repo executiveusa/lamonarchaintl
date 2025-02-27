@@ -8,7 +8,7 @@ import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Checkbox, CheckboxWithText } from '@/components/ui/checkbox';
 
 // Define validation schema
 const formSchema = z.object({
@@ -81,6 +81,9 @@ const ArticleFormFields: React.FC<ArticleFormFieldsProps> = ({
               <FormControl>
                 <Textarea placeholder="Brief summary of the article" rows={2} {...field} />
               </FormControl>
+              <FormDescription>
+                A good summary improves SEO and reader engagement
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -109,6 +112,9 @@ const ArticleFormFields: React.FC<ArticleFormFieldsProps> = ({
               <FormControl>
                 <Input placeholder="Enter image URL" {...field} />
               </FormControl>
+              <FormDescription>
+                Use high-quality images to make your article more engaging
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -159,18 +165,16 @@ const ArticleFormFields: React.FC<ArticleFormFieldsProps> = ({
           control={form.control}
           name="isMultilingual"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-2">
+            <FormItem className="py-2">
               <FormControl>
-                <Checkbox 
-                  checked={field.value} 
+                <CheckboxWithText
+                  checked={field.value}
                   onCheckedChange={field.onChange}
+                  label="Publish in multiple languages"
+                  description="Article will be automatically translated to all selected languages"
                 />
               </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel className="font-normal cursor-pointer">
-                  Publish in multiple languages
-                </FormLabel>
-              </div>
+              <FormMessage />
             </FormItem>
           )}
         />

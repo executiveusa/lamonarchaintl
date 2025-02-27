@@ -28,4 +28,46 @@ const Checkbox = React.forwardRef<
 ))
 Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
-export { Checkbox }
+// Create a more accessible checkbox group component that includes label and optional description
+interface CheckboxWithTextProps extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
+  label?: React.ReactNode
+  description?: React.ReactNode
+}
+
+const CheckboxWithText = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>, 
+  CheckboxWithTextProps
+>(({ className, label, description, id, ...props }, ref) => {
+  const checkboxId = id || React.useId()
+  
+  return (
+    <div className="flex items-start space-x-2">
+      <Checkbox
+        ref={ref}
+        id={checkboxId}
+        className={className}
+        {...props}
+      />
+      {(label || description) && (
+        <div className="grid gap-1.5 leading-none">
+          {label && (
+            <label
+              htmlFor={checkboxId}
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            >
+              {label}
+            </label>
+          )}
+          {description && (
+            <p className="text-sm text-muted-foreground">
+              {description}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+})
+CheckboxWithText.displayName = "CheckboxWithText"
+
+export { Checkbox, CheckboxWithText }

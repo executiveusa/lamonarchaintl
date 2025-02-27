@@ -36,6 +36,10 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
     setFormValues(values);
   };
 
+  const handleLanguagesChange = (newLanguages: string[]) => {
+    setLanguages(newLanguages);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -53,8 +57,10 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
       
       if (formValues.isMultilingual) {
         await publishMultilingualArticle(article, languages);
+        toast.success(`Article published in ${languages.length} languages!`);
       } else {
         await createArticle(article);
+        toast.success("Article published successfully!");
       }
       
       // Reset form
@@ -71,8 +77,6 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
       if (onSuccess) {
         onSuccess();
       }
-
-      toast.success("Article published successfully!");
     } catch (error) {
       console.error('Error creating article:', error);
       toast.error("Failed to publish article");
@@ -90,17 +94,26 @@ const AdminArticleForm: React.FC<AdminArticleFormProps> = ({ onSuccess }) => {
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent>
+        <CardContent className="space-y-6">
           <ArticleFormFields
             defaultValues={formValues}
             onValuesChange={handleFormValuesChange}
             categories={categories}
           />
           
-          {formValues.isMultilingual && <LanguageSelector languages={languages} />}
+          {formValues.isMultilingual && (
+            <LanguageSelector 
+              languages={languages} 
+              onChange={handleLanguagesChange}
+            />
+          )}
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={isLoading} className="w-full">
+          <Button 
+            type="submit" 
+            disabled={isLoading} 
+            className="w-full"
+          >
             {isLoading ? 'Publishing...' : 'Publish Article'}
           </Button>
         </CardFooter>
