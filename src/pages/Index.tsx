@@ -25,17 +25,21 @@ const Index = () => {
 
   useEffect(() => {
     loadArticles();
+    console.log("Index component mounted");
   }, [language]);
 
   async function loadArticles() {
     setIsLoading(true);
+    console.log("Loading articles...");
     
     try {
       const articlesData = await fetchArticles(language);
+      console.log("Articles fetched:", articlesData);
       
       if (articlesData && articlesData.length > 0) {
         setArticles(articlesData);
       } else {
+        console.log("No articles found, loading mock data");
         loadMockArticles();
       }
     } catch (err) {
@@ -48,6 +52,7 @@ const Index = () => {
   
   const loadMockArticles = () => {
     const mockArticles = getMockArticles(language);
+    console.log("Mock articles:", mockArticles);
     
     setTimeout(() => {
       setArticles(mockArticles);

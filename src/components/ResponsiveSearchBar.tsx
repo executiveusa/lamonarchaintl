@@ -1,26 +1,47 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Search } from "lucide-react";
 import { useLanguageStore } from '@/services/articleService';
 
 const ResponsiveSearchBar = () => {
   const { language } = useLanguageStore();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Searching for:", searchTerm);
+    
+    // Simulate search process
+    if (searchTerm.trim()) {
+      setIsSearching(true);
+      setTimeout(() => {
+        setIsSearching(false);
+        // In a real application, this would trigger actual search functionality
+      }, 1000);
+    }
+  };
   
   return (
-    <label
-      className="mx-auto my-20 relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300"
-      htmlFor="search-bar"
+    <form 
+      onSubmit={handleSearch}
+      className="mx-auto my-16 relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-lg focus-within:border-gray-300 transition-all duration-300 hover:shadow-xl"
     >
       <input
-        id="search-bar"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         placeholder={language === 'en' ? "Enter your search term..." : "Ingrese su término de búsqueda..."}
-        className="px-6 py-2 w-full rounded-md flex-1 outline-none bg-white"
+        className="px-6 py-3 w-full rounded-md flex-1 outline-none bg-white"
       />
-      <button className="w-full md:w-auto px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white fill-white active:scale-95 duration-100 border border-monarca-terracotta will-change-transform overflow-hidden relative rounded-xl transition-all disabled:opacity-70 flex items-center justify-center">
+      <button 
+        type="submit" 
+        className="w-full md:w-auto px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white fill-white active:scale-95 duration-100 border border-monarca-terracotta will-change-transform overflow-hidden relative rounded-xl transition-all disabled:opacity-70 flex items-center justify-center"
+        disabled={isSearching}
+      >
         <div className="relative">
-          <div className="flex items-center justify-center h-3 w-3 absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
+          <div className={`flex items-center justify-center h-3 w-3 absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ${isSearching ? 'opacity-100' : 'opacity-0'}`}>
             <svg
-              className="opacity-0 animate-spin w-full h-full"
+              className="animate-spin w-full h-full"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -41,7 +62,7 @@ const ResponsiveSearchBar = () => {
             </svg>
           </div>
 
-          <div className="flex items-center transition-all opacity-1 gap-2">
+          <div className={`flex items-center transition-all ${isSearching ? 'opacity-0' : 'opacity-100'} gap-2`}>
             <span className="text-sm font-semibold whitespace-nowrap truncate mx-auto">
               {language === 'en' ? "Search" : "Buscar"}
             </span>
@@ -49,7 +70,7 @@ const ResponsiveSearchBar = () => {
           </div>
         </div>
       </button>
-    </label>
+    </form>
   );
 };
 

@@ -27,6 +27,9 @@ const Navigation: React.FC = () => {
     if (typeof window !== 'undefined' && window.HSStaticMethods) {
       // @ts-ignore
       window.HSStaticMethods.autoInit();
+      console.log('Preline initialized');
+    } else {
+      console.log('Preline not available');
     }
   }, []);
 
@@ -36,7 +39,7 @@ const Navigation: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-display text-monarca-black hover:text-monarca-terracotta transition-colors uppercase tracking-wider">
+            <Link to="/" className="text-2xl font-display text-monarca-black hover:text-monarca-terracotta transition-colors uppercase tracking-wider font-medium">
               LA MONARCA INTERNACIONAL
             </Link>
           </div>
