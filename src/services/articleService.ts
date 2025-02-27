@@ -1,43 +1,110 @@
 
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from "../integrations/supabase/client";
 import axios from 'axios';
 import { toast } from 'sonner';
 
-// Initialize Supabase client
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL || '',
-  import.meta.env.VITE_SUPABASE_ANON_KEY || ''
-);
-
-interface Article {
-  section: string;
+export interface Article {
+  id?: string;
   title: string;
   content: string;
-  published_at?: Date;
-  language?: string;
+  summary?: string;
+  image_url?: string;
+  category: string;
+  created_at?: Date;
+  updated_at?: Date;
+  author?: string;
 }
 
-export const generateAndPostArticle = async (article: Article) => {
+export const fetchArticles = async () => {
   try {
     const { data, error } = await supabase
       .from('articles')
-      .insert([{
-        ...article,
-        published_at: new Date(),
-      }]);
+      .select('*')
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
-
-    toast.success('Article posted successfully');
     return data;
   } catch (error) {
-    console.error('Error posting article:', error);
-    toast.error('Failed to post article');
+    console.error('Error fetching articles:', error);
+    toast.error('Failed to fetch articles');
     throw error;
   }
 };
 
-export const translateArticle = async (text: string, targetLang: string) => {
+export const fetchArticleById = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Error fetching article:', error);
+    toast.error('Failed to fetch article');
+    throw error;
+  }
+};
+
+export const createArticle = async (article: Article) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .insert([article])
+      .select();
+
+    if (error) throw error;
+    
+    toast.success('Article created successfully');
+    return data[0];
+  } catch (error) {
+    console.error('Error creating article:', error);
+    toast.error('Failed to create article');
+    throw error;
+  }
+};
+
+export const updateArticle = async (id: string, article: Partial<Article>) => {
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .update(article)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    
+    toast.success('Article updated successfully');
+    return data;
+  } catch (error) {
+    console.error('Error updating article:', error);
+    toast.error('Failed to update article');
+    throw error;
+  }
+};
+
+export const deleteArticle = async (id: string) => {
+  try {
+    const { error } = await supabase
+      .from('articles')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
+    
+    toast.success('Article deleted successfully');
+    return true;
+  } catch (error) {
+    console.error('Error deleting article:', error);
+    toast.error('Failed to delete article');
+    throw error;
+  }
+};
+
+export const translateContent = async (text: string, targetLang: string) => {
   try {
     const deeplApiKey = import.meta.env.VITE_DEEPL_API_KEY;
     if (!deeplApiKey) {
@@ -60,7 +127,7 @@ export const translateArticle = async (text: string, targetLang: string) => {
   }
 };
 
-export const triggerMakeWebhook = async () => {
+export const triggerMakeWebhook = async (articleId: string) => {
   try {
     const webhookUrl = import.meta.env.VITE_MAKE_WEBHOOK_URL;
     if (!webhookUrl) {
@@ -68,7 +135,8 @@ export const triggerMakeWebhook = async () => {
     }
 
     await axios.post(webhookUrl, {
-      message: 'New articles posted successfully',
+      message: 'New article published successfully',
+      articleId,
       timestamp: new Date().toISOString(),
     });
 
@@ -80,31 +148,47 @@ export const triggerMakeWebhook = async () => {
   }
 };
 
-export const postDailyArticles = async (article: Article) => {
+export const publishMultilingualArticle = async (article: Article, languages: string[]) => {
   try {
-    // Post original article
-    await generateAndPostArticle(article);
-
-    // Translate and post in other languages
-    const languages = { 'EN': 'EN', 'FR': 'FR', 'PT': 'PT' };
+    // Create the original article first
+    const originalArticle = await createArticle(article);
     
-    for (const [langCode, deeplLang] of Object.entries(languages)) {
-      const translatedContent = await translateArticle(article.content, deeplLang);
-      await generateAndPostArticle({
-        ...article,
-        title: `${article.title} (${langCode})`,
-        content: translatedContent,
-        language: langCode,
-      });
+    if (!originalArticle || !originalArticle.id) {
+      throw new Error('Failed to create original article');
     }
-
-    // Trigger Make.com automation
-    await triggerMakeWebhook();
-
-    toast.success('All articles have been posted and translated successfully');
+    
+    // For each language, translate and create a new article
+    const translationPromises = languages.map(async (langCode) => {
+      const translatedTitle = await translateContent(article.title, langCode);
+      const translatedContent = await translateContent(article.content, langCode);
+      let translatedSummary = article.summary;
+      
+      if (article.summary) {
+        translatedSummary = await translateContent(article.summary, langCode);
+      }
+      
+      // Create translated article with reference to original
+      return createArticle({
+        title: translatedTitle,
+        content: translatedContent,
+        summary: translatedSummary,
+        image_url: article.image_url,
+        category: article.category,
+        author: article.author,
+      });
+    });
+    
+    // Wait for all translations to complete
+    await Promise.all(translationPromises);
+    
+    // Trigger Make.com webhook with the original article ID
+    await triggerMakeWebhook(originalArticle.id);
+    
+    toast.success('Article published in multiple languages');
+    return originalArticle;
   } catch (error) {
-    console.error('Error in postDailyArticles:', error);
-    toast.error('Failed to complete article posting process');
+    console.error('Error in publishMultilingualArticle:', error);
+    toast.error('Failed to publish multilingual article');
     throw error;
   }
 };
