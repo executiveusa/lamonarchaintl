@@ -11,6 +11,7 @@ import {
 import { Button as MuiButton } from '@mui/material';
 import { Button } from '@/components/ui/button';
 import { useLanguageStore } from '@/services/articleService';
+import { Link } from 'react-router-dom';
 
 interface ArticleSectionProps {
   articles: any[];
@@ -94,14 +95,16 @@ const ArticleSection: React.FC<ArticleSectionProps> = ({ articles, isLoading }) 
                   <Typography variant="h5" component="h2" gutterBottom>
                     {article.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {article.content}
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {article.summary || article.content?.substring(0, 120) + '...'}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <MuiButton size="small" color="primary">
-                    {getTranslatedContent('read_more')}
-                  </MuiButton>
+                  <Link to={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
+                    <MuiButton size="small" color="primary">
+                      {getTranslatedContent('read_more')}
+                    </MuiButton>
+                  </Link>
                 </CardActions>
               </Card>
             ))}
@@ -109,13 +112,15 @@ const ArticleSection: React.FC<ArticleSectionProps> = ({ articles, isLoading }) 
         )}
         
         <div className="text-center mt-12">
-          <Button 
-            variant="default" 
-            size="lg"
-            className="bg-monarca-terracotta hover:bg-monarca-orange text-white py-3 px-6 rounded-md"
-          >
-            {getTranslatedContent('view_more')}
-          </Button>
+          <Link to="/articles">
+            <Button 
+              variant="default" 
+              size="lg"
+              className="bg-monarca-terracotta hover:bg-monarca-orange text-white py-3 px-6 rounded-md"
+            >
+              {getTranslatedContent('view_more')}
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
