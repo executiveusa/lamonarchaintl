@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import { useLanguageStore } from '@/services/articleService';
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const ResponsiveSearchBar = () => {
   const { language } = useLanguageStore();
@@ -17,8 +19,20 @@ const ResponsiveSearchBar = () => {
       setIsSearching(true);
       setTimeout(() => {
         setIsSearching(false);
+        // Show a toast notification
+        toast.success(
+          language === 'en' 
+            ? `Search complete for: ${searchTerm}` 
+            : `Búsqueda completa para: ${searchTerm}`
+        );
         // In a real application, this would trigger actual search functionality
       }, 1000);
+    } else {
+      toast.error(
+        language === 'en' 
+          ? 'Please enter a search term' 
+          : 'Por favor ingrese un término de búsqueda'
+      );
     }
   };
   
@@ -33,9 +47,9 @@ const ResponsiveSearchBar = () => {
         placeholder={language === 'en' ? "Enter your search term..." : "Ingrese su término de búsqueda..."}
         className="px-6 py-3 w-full rounded-md flex-1 outline-none bg-white"
       />
-      <button 
+      <Button 
         type="submit" 
-        className="w-full md:w-auto px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white fill-white active:scale-95 duration-100 border border-monarca-terracotta will-change-transform overflow-hidden relative rounded-xl transition-all disabled:opacity-70 flex items-center justify-center"
+        className="w-full md:w-auto px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white fill-white active:scale-95 duration-100 border border-monarca-terracotta overflow-hidden relative rounded-xl transition-all disabled:opacity-70 flex items-center justify-center"
         disabled={isSearching}
       >
         <div className="relative">
@@ -69,7 +83,7 @@ const ResponsiveSearchBar = () => {
             <Search className="h-4 w-4" />
           </div>
         </div>
-      </button>
+      </Button>
     </form>
   );
 };

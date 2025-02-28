@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   title: string;
@@ -9,6 +10,8 @@ interface HeaderProps {
   overlay?: boolean;
   centered?: boolean;
   smallPadding?: boolean;
+  buttonLink?: string;
+  buttonText?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -18,6 +21,8 @@ const Header: React.FC<HeaderProps> = ({
   overlay = true,
   centered = true,
   smallPadding = false,
+  buttonLink,
+  buttonText,
 }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -73,6 +78,28 @@ const Header: React.FC<HeaderProps> = ({
             >
               {subtitle}
             </p>
+          )}
+          
+          {buttonLink && buttonText && (
+            <div className="mt-8">
+              {buttonLink.startsWith('http') ? (
+                <a 
+                  href={buttonLink}
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="inline-block px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white rounded-lg transition-colors"
+                >
+                  {buttonText}
+                </a>
+              ) : (
+                <Link 
+                  to={buttonLink}
+                  className="inline-block px-6 py-3 bg-monarca-terracotta hover:bg-monarca-orange text-white rounded-lg transition-colors"
+                >
+                  {buttonText}
+                </Link>
+              )}
+            </div>
           )}
         </div>
       </div>
