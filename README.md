@@ -1,69 +1,59 @@
-# Welcome to your Lovable project
 
-## Project info
+# Universal Translator App
 
-**URL**: https://lovable.dev/projects/b6ad2f84-ba64-4677-9d67-e3804bed9074
+This application provides real-time translation services through a React frontend and Flask backend API.
 
-## How can I edit this code?
+## Prerequisites
 
-There are several ways of editing your application.
+- Node.js and npm for the React frontend
+- Python 3.7+ for the Flask backend
+- pip (Python package installer)
 
-**Use Lovable**
+## Setup Instructions
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b6ad2f84-ba64-4677-9d67-e3804bed9074) and start prompting.
+### Frontend Setup
+The frontend is already configured in the React application.
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Backend Setup
+1. Install the required Python packages:
+```bash
+pip install flask flask-cors
 ```
 
-**Edit a file directly in GitHub**
+2. Run the Flask API:
+```bash
+python universal_translator.py
+```
+The API will run on http://localhost:5000.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Using the Application
 
-**Use GitHub Codespaces**
+1. Navigate to the Translator page in the application
+2. Enter text to be translated
+3. Select the target language
+4. Click the "Translate" button
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## API Endpoints
 
-## What technologies are used for this project?
+### POST /translate
+Translates text to a specified language.
 
-This project is built with .
+**Request Body:**
+```json
+{
+  "text": "Hello world",
+  "target_language": "es"
+}
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+**Response:**
+```json
+{
+  "original_text": "Hello world",
+  "translated_text": "Hola mundo",
+  "target_language": "es"
+}
+```
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/b6ad2f84-ba64-4677-9d67-e3804bed9074) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## Note
+This implementation uses mock translations for demonstration purposes. To integrate with a real translation service, you would need to update the Flask backend to use a service like Google Translate API, DeepL, or another translation provider.

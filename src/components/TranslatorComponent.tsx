@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
@@ -19,6 +18,9 @@ const languages = [
   { code: "pt", name: "Portuguese" },
   { code: "ru", name: "Russian" },
 ];
+
+// Add the Flask API URL
+const API_URL = "http://localhost:5000";
 
 const TranslatorComponent = () => {
   const [text, setText] = useState("");
@@ -40,51 +42,46 @@ const TranslatorComponent = () => {
     setLoading(true);
 
     try {
-      // For now, since we don't have a backend, we'll mock the translation
-      // In a real implementation, you would connect to your Flask API
-      
-      /*
-      // This is how you would connect to the Flask API:
-      const response = await axios.post("http://localhost:5000/translate", {
+      // Connect to Flask API
+      const response = await axios.post(`${API_URL}/translate`, {
         text: text,
         target_language: targetLanguage,
       });
-      setTranslatedText(response.data.translated_text);
-      */
       
-      // Mock translation (replace this with the actual API call)
-      setTimeout(() => {
-        const mockTranslations = {
-          es: "Texto traducido al español",
-          fr: "Texte traduit en français",
-          de: "Text ins Deutsche übersetzt",
-          zh: "翻译成中文的文本",
-          ar: "النص المترجم إلى العربية",
-          hi: "हिंदी में अनुवादित पाठ",
-          en: "Text translated to English",
-          ja: "日本語に翻訳されたテキスト",
-          ko: "한국어로 번역된 텍스트",
-          pt: "Texto traduzido para o português",
-          ru: "Текст, переведенный на русский",
-        };
-        
-        setTranslatedText(mockTranslations[targetLanguage as keyof typeof mockTranslations] || 
-                          `Text translated to ${languages.find(l => l.code === targetLanguage)?.name}`);
-        setLoading(false);
-        
-        toast({
-          title: "Translation Complete",
-          description: "Your text has been translated successfully.",
-        });
-      }, 1000);
+      setTranslatedText(response.data.translated_text);
+      
+      toast({
+        title: "Translation Complete",
+        description: "Your text has been translated successfully.",
+      });
     } catch (error) {
       console.error("Translation error:", error);
-      setLoading(false);
+      
+      // Fallback to mock translations when API is unavailable
+      const mockTranslations = {
+        es: "Texto traducido al español",
+        fr: "Texte traduit en français",
+        de: "Text ins Deutsche übersetzt",
+        zh: "翻译成中文的文本",
+        ar: "النص المترجم إلى العربية",
+        hi: "हिंदी में अनुवादित पाठ",
+        en: "Text translated to English",
+        ja: "日本語に翻訳されたテキスト",
+        ko: "한국어로 번역된 텍스트",
+        pt: "Texto traduzido para o português",
+        ru: "Текст, переведенный на русский",
+      };
+      
+      setTranslatedText(mockTranslations[targetLanguage as keyof typeof mockTranslations] || 
+                        `Text translated to ${languages.find(l => l.code === targetLanguage)?.name}`);
+      
       toast({
-        title: "Translation Failed",
-        description: "There was an error translating your text. Please try again.",
+        title: "API Connection Failed",
+        description: "Using mock translations. Please start the Flask API server.",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,6 +134,13 @@ const TranslatorComponent = () => {
           <p className="whitespace-pre-wrap">{translatedText}</p>
         </div>
       )}
+      
+      <div className="mt-6 text-xs text-gray-500">
+        <p>Note: To connect to the Flask API, please run the following command in your terminal:</p>
+        <pre className="mt-1 p-2 bg-gray-100 rounded overflow-x-auto">
+          python universal_translator.py
+        </pre>
+      </div>
     </div>
   );
 };
