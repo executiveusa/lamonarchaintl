@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
               textShadow: '0 2px 10px rgba(0,0,0,0.2)'
             }}
           >
-            Monarca Internacional
+            La Monarca Internacional
           </Typography>
           
           <Typography
@@ -151,7 +151,7 @@ const Hero: React.FC = () => {
               lineHeight: 1.4
             }}
           >
-            The heart of innovation and cultural transformation in Mexico
+            The heart of innovation and cultural transformation in México
           </Typography>
           
           <Box sx={{ 
