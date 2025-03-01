@@ -82,9 +82,9 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#music" className="text-monarca-gray hover:text-white transition-colors">
+                <Link to="/music-blogs" className="text-monarca-gray hover:text-white transition-colors">
                   {footerText.music}
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#travel" className="text-monarca-gray hover:text-white transition-colors">
