@@ -26,7 +26,8 @@ const Footer: React.FC = () => {
       : 'Recibe nuestras últimas noticias y actualizaciones directamente en tu correo.',
     emailPlaceholder: language === 'en' ? 'Your email address' : 'Tu correo electrónico',
     subscribeButton: language === 'en' ? 'Subscribe' : 'Suscribirse',
-    rights: language === 'en' ? 'All rights reserved' : 'Todos los derechos reservados'
+    rights: language === 'en' ? 'All rights reserved' : 'Todos los derechos reservados',
+    adminLogin: language === 'en' ? 'Admin Login' : 'Acceso Administrador'
   };
   
   const handleSubscribe = (e: React.FormEvent) => {
@@ -128,6 +129,11 @@ const Footer: React.FC = () => {
         
         <div className="mt-12 pt-8 border-t border-white/10 text-center text-monarca-gray/70">
           <p>© {currentYear} La Monarca {language === 'en' ? 'International' : 'Internacional'} - {footerText.rights}.</p>
+          <div className="mt-2">
+            <Link to="/admin" className="text-monarca-gray/50 hover:text-white text-sm transition-colors">
+              {footerText.adminLogin}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
