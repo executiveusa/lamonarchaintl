@@ -1,8 +1,8 @@
 
 import React from "react";
 import TranslatorComponent from "@/components/TranslatorComponent";
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const Translator = () => {
   return (
