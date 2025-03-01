@@ -27,6 +27,7 @@ const TranslatorComponent = () => {
   const [targetLanguage, setTargetLanguage] = useState("es");
   const [translatedText, setTranslatedText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [translationService, setTranslationService] = useState("");
   const { toast } = useToast();
 
   const handleTranslate = async () => {
@@ -49,6 +50,7 @@ const TranslatorComponent = () => {
       });
       
       setTranslatedText(response.data.translated_text);
+      setTranslationService(response.data.service || "Unknown");
       
       toast({
         title: "Translation Complete",
@@ -74,6 +76,7 @@ const TranslatorComponent = () => {
       
       setTranslatedText(mockTranslations[targetLanguage as keyof typeof mockTranslations] || 
                         `Text translated to ${languages.find(l => l.code === targetLanguage)?.name}`);
+      setTranslationService("Frontend Fallback");
       
       toast({
         title: "API Connection Failed",
@@ -132,6 +135,9 @@ const TranslatorComponent = () => {
         <div className="mt-8 p-4 bg-gray-50 rounded-md">
           <h3 className="font-medium mb-2">Translated Text:</h3>
           <p className="whitespace-pre-wrap">{translatedText}</p>
+          {translationService && (
+            <p className="mt-2 text-xs text-gray-500">Powered by: {translationService}</p>
+          )}
         </div>
       )}
       

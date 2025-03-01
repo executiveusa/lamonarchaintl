@@ -1,7 +1,7 @@
 
 # Universal Translator App
 
-This application provides real-time translation services through a React frontend and Flask backend API.
+This application provides real-time translation services through a React frontend and Flask backend API, using the DeepL translation service.
 
 ## Prerequisites
 
@@ -17,10 +17,14 @@ The frontend is already configured in the React application.
 ### Backend Setup
 1. Install the required Python packages:
 ```bash
-pip install flask flask-cors
+pip install flask flask-cors requests
 ```
 
-2. Run the Flask API:
+2. DeepL API
+The application is configured to use the DeepL translation API. A DeepL API key is already configured in the code:
+- API Key: `5ad15edc-f0f2-4eab-8334-600a984b8915:fx`
+
+3. Run the Flask API:
 ```bash
 python universal_translator.py
 ```
@@ -42,7 +46,8 @@ Translates text to a specified language.
 ```json
 {
   "text": "Hello world",
-  "target_language": "es"
+  "target_language": "es",
+  "source_language": "en" // Optional
 }
 ```
 
@@ -51,9 +56,26 @@ Translates text to a specified language.
 {
   "original_text": "Hello world",
   "translated_text": "Hola mundo",
-  "target_language": "es"
+  "target_language": "es",
+  "service": "DeepL API"
 }
 ```
 
-## Note
-This implementation uses mock translations for demonstration purposes. To integrate with a real translation service, you would need to update the Flask backend to use a service like Google Translate API, DeepL, or another translation provider.
+## Fallback Mechanism
+If the DeepL API is unavailable or doesn't support a requested language, the application will automatically fall back to using mock translations for demonstration purposes.
+
+## Supported Languages
+The following languages are supported through DeepL:
+- English (en)
+- Spanish (es)
+- French (fr)
+- German (de)
+- Japanese (ja)
+- Chinese (zh)
+- Portuguese (pt)
+- Russian (ru)
+- Korean (ko)
+
+Additional languages are supported through mock translations:
+- Arabic (ar)
+- Hindi (hi)
