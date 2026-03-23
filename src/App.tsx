@@ -7,6 +7,7 @@ import Admin from '@/pages/Admin';
 import NotFound from '@/pages/NotFound';
 import { Toaster } from 'sonner';
 import MusicBlogs from '@/pages/MusicBlogs';
+import Suscribirse from '@/pages/Suscribirse';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/translator" element={<Translator />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/music-blogs" element={<MusicBlogs />} />
+        <Route path="/suscribirse" element={<Suscribirse />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
