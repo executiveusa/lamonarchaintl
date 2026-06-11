@@ -1,54 +1,44 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface AnimatedBackgroundProps {
   videoUrl: string;
 }
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ videoUrl }) => {
-  const videoContainerRef = useRef<HTMLDivElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  
-  useEffect(() => {
-    // Simulate video loading
-    const timer = setTimeout(() => {
-      setIsVideoLoaded(true);
-    }, 800);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (videoContainerRef.current) {
-      videoContainerRef.current.classList.add('animate-blur-in');
-    }
+    const timer = setTimeout(() => setVisible(true), 300);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      {/* YouTube video background with enhanced loading state */}
-      <div 
-        ref={videoContainerRef}
-        className="absolute inset-0 w-full h-full opacity-0 pointer-events-none"
+      <div
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: visible ? 1 : 0, transition: 'opacity 1.2s ease-in-out' }}
       >
         <div className="relative w-full h-full overflow-hidden">
-          {!isVideoLoaded && (
-            <div className="absolute inset-0 bg-monarca-terracotta/20 animate-pulse"></div>
+          {!visible && (
+            <div className="absolute inset-0 bg-monarca-black animate-pulse" />
           )}
-          <iframe 
+          <iframe
             src={videoUrl}
-            className="absolute top-1/2 left-1/2 min-w-[150%] min-h-[150%] w-auto h-auto transform -translate-x-1/2 -translate-y-1/2 scale-125"
-            style={{ filter: 'brightness(0.7)' }}
-            title="Monarca Internacional Background"
+            className="absolute top-1/2 left-1/2 min-w-[177.78vh] min-h-[56.25vw] w-full h-full transform -translate-x-1/2 -translate-y-1/2"
+            style={{ filter: 'brightness(0.55) saturate(1.1)' }}
+            title="Monarca Internacional Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-          ></iframe>
+          />
         </div>
       </div>
-      
-      {/* Enhanced overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-10" />
+
+      {/* Dark gradient overlay - keeps text readable */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/30 z-10" />
+      {/* Side vignette */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 z-10" />
     </>
   );
 };

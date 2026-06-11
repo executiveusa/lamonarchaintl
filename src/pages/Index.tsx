@@ -16,6 +16,8 @@ import ResponsiveSearchBar from '@/components/ResponsiveSearchBar';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
 import { getMockArticles } from '@/utils/mockArticles';
 import { Calendar, MapPin, ArrowRight, Star, Users, Newspaper, Heart } from 'lucide-react';
+import EditorialTeamSection from '@/components/EditorialTeamSection';
+import SocialDistributionPanel from '@/components/SocialDistributionPanel';
 
 const Index = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -60,6 +62,34 @@ const Index = () => {
       </div>
 
       <Hero />
+
+      {/* Auto Newsroom Status Bar */}
+      <div className="bg-monarca-black text-white border-b border-white/10">
+        <div className="container mx-auto px-6 py-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5 font-bold uppercase tracking-widest text-monarca-amber">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                {isEn ? 'Newsroom Live' : 'Redacción en Vivo'}
+              </span>
+              <span className="text-white/40">
+                {isEn ? 'AI editorial team active · Powered by Paperclip' : 'Equipo editorial IA activo · Con Paperclip'}
+              </span>
+            </div>
+            <div className="flex items-center gap-3 text-white/50">
+              <span>📸 Instagram</span>
+              <span>👥 Facebook</span>
+              <span>✕ X</span>
+              <span>🧵 Threads</span>
+              <span>🦋 Bluesky</span>
+              <span className="text-white/30">·</span>
+              <span className="text-green-400">
+                {isEn ? 'Auto-posting via Postiz' : 'Auto-publicando vía Postiz'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* First Issue Banner */}
       <div className="bg-monarca-black text-white">
@@ -273,6 +303,12 @@ const Index = () => {
           </p>
         </div>
       </div>
+
+      {/* Editorial Team — Paperclip AI agents */}
+      <EditorialTeamSection />
+
+      {/* Social Distribution — Postiz */}
+      <SocialDistributionPanel />
 
       <NewsletterSubscription />
 
