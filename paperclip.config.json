@@ -1,0 +1,170 @@
+{
+  "organization": {
+    "name": "La Monarca Internacional Editorial",
+    "mission": "Deliver positive, bilingual stories from Mexico and Latin America — community, art, music, youth, travel, and innovation — daily, automatically.",
+    "timezone": "America/Mexico_City",
+    "languages": ["es", "en"]
+  },
+  "team": [
+    {
+      "id": "chief-editor",
+      "name": "Elena Vázquez",
+      "role": "Chief Editor",
+      "type": "claude-agent",
+      "model": "claude-opus-4-8",
+      "budget_monthly_usd": 150,
+      "schedule": "0 6 * * *",
+      "responsibilities": [
+        "Curate top 5 daily stories from Latin American press",
+        "Assign stories to section editors",
+        "Approve content before publication",
+        "Maintain editorial voice and brand standards"
+      ],
+      "tools": ["web_search", "content_approval", "article_create"],
+      "reports_to": null
+    },
+    {
+      "id": "community-editor",
+      "name": "Sofía Reyes",
+      "role": "Community & Culture Editor",
+      "type": "claude-agent",
+      "model": "claude-sonnet-4-6",
+      "budget_monthly_usd": 80,
+      "schedule": "0 7 * * *",
+      "responsibilities": [
+        "Write community spotlight articles",
+        "Source stories from Barrio Santa María and CDMX neighborhoods",
+        "Cover youth organizations and grassroots movements",
+        "Translate approved stories to bilingual format"
+      ],
+      "tools": ["web_search", "article_create", "image_source", "translate"],
+      "reports_to": "chief-editor"
+    },
+    {
+      "id": "arts-editor",
+      "name": "Diego Morales",
+      "role": "Arts & Music Editor",
+      "type": "claude-agent",
+      "model": "claude-sonnet-4-6",
+      "budget_monthly_usd": 80,
+      "schedule": "0 8 * * MON,WED,FRI",
+      "responsibilities": [
+        "Cover emerging Mexican artists and musicians",
+        "Write album reviews and art exhibition previews",
+        "Source high-quality artwork images",
+        "Interview artists for feature profiles"
+      ],
+      "tools": ["web_search", "article_create", "image_source", "translate"],
+      "reports_to": "chief-editor"
+    },
+    {
+      "id": "travel-editor",
+      "name": "Camila Torres",
+      "role": "Travel & Innovation Editor",
+      "type": "claude-agent",
+      "model": "claude-haiku-4-5-20251001",
+      "budget_monthly_usd": 50,
+      "schedule": "0 9 * * TUE,THU",
+      "responsibilities": [
+        "Write travel guides to Mexican destinations",
+        "Cover innovation and tech stories from Latin America",
+        "Feature entrepreneurs and changemakers",
+        "Curate Puerto Vallarta first-issue content"
+      ],
+      "tools": ["web_search", "article_create", "translate"],
+      "reports_to": "chief-editor"
+    },
+    {
+      "id": "social-manager",
+      "name": "Luna García",
+      "role": "Social Media & Distribution Manager",
+      "type": "claude-agent",
+      "model": "claude-haiku-4-5-20251001",
+      "budget_monthly_usd": 40,
+      "schedule": "0 10,15,19 * * *",
+      "responsibilities": [
+        "Schedule and post approved articles to Instagram, Facebook, X, and Threads via Postiz",
+        "Write platform-optimized captions in EN and ES",
+        "Monitor social engagement and report weekly",
+        "Cross-post to Bluesky and LinkedIn"
+      ],
+      "tools": ["postiz_publish", "social_analytics", "translate"],
+      "reports_to": "chief-editor",
+      "integrations": {
+        "postiz": {
+          "enabled": true,
+          "platforms": ["instagram", "facebook", "x", "threads", "bluesky", "linkedin"],
+          "auto_schedule": true,
+          "caption_tone": "warm, positive, community-focused",
+          "hashtag_strategy": "branded + local + category"
+        }
+      }
+    },
+    {
+      "id": "photo-editor",
+      "name": "Mateo Fuentes",
+      "role": "Visual Editor",
+      "type": "claude-agent",
+      "model": "claude-haiku-4-5-20251001",
+      "budget_monthly_usd": 40,
+      "schedule": "0 11 * * *",
+      "responsibilities": [
+        "Source and caption cover images for each article",
+        "Ensure image rights and attribution",
+        "Create social media image variants",
+        "Maintain visual consistency with brand guidelines"
+      ],
+      "tools": ["image_source", "image_generate", "article_update"],
+      "reports_to": "chief-editor"
+    }
+  ],
+  "workflows": {
+    "daily_edition": {
+      "name": "Daily Edition Pipeline",
+      "trigger": "schedule",
+      "schedule": "0 6 * * *",
+      "steps": [
+        { "agent": "chief-editor", "task": "curate_daily_stories" },
+        { "agent": "community-editor", "task": "write_assigned_stories", "depends_on": "curate_daily_stories" },
+        { "agent": "arts-editor", "task": "write_assigned_stories", "depends_on": "curate_daily_stories" },
+        { "agent": "travel-editor", "task": "write_assigned_stories", "depends_on": "curate_daily_stories" },
+        { "agent": "photo-editor", "task": "source_images", "depends_on": "write_assigned_stories" },
+        { "agent": "chief-editor", "task": "review_and_approve", "depends_on": "source_images" },
+        { "agent": "social-manager", "task": "schedule_social_posts", "depends_on": "review_and_approve" }
+      ]
+    },
+    "breaking_story": {
+      "name": "Breaking Story Fast-Track",
+      "trigger": "webhook",
+      "webhook_url": "/api/paperclip/breaking",
+      "steps": [
+        { "agent": "chief-editor", "task": "assess_and_assign" },
+        { "agent": "community-editor", "task": "write_fast_draft", "depends_on": "assess_and_assign" },
+        { "agent": "chief-editor", "task": "quick_approve", "depends_on": "write_fast_draft" },
+        { "agent": "social-manager", "task": "immediate_post", "depends_on": "quick_approve" }
+      ]
+    }
+  },
+  "postiz": {
+    "base_url": "${POSTIZ_BASE_URL}",
+    "api_key": "${POSTIZ_API_KEY}",
+    "default_schedule_offset_hours": 2,
+    "platforms": {
+      "instagram": { "account_id": "${POSTIZ_IG_ID}", "enabled": true },
+      "facebook": { "account_id": "${POSTIZ_FB_ID}", "enabled": true },
+      "x": { "account_id": "${POSTIZ_X_ID}", "enabled": true },
+      "threads": { "account_id": "${POSTIZ_THREADS_ID}", "enabled": true },
+      "bluesky": { "account_id": "${POSTIZ_BSKY_ID}", "enabled": true },
+      "linkedin": { "account_id": "${POSTIZ_LI_ID}", "enabled": false }
+    }
+  },
+  "supabase": {
+    "project_url": "${VITE_SUPABASE_URL}",
+    "service_role_key": "${SUPABASE_SERVICE_ROLE_KEY}",
+    "tables": {
+      "articles": "articles",
+      "editorial_queue": "editorial_queue",
+      "social_posts": "social_posts"
+    }
+  }
+}

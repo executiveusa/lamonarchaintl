@@ -122,14 +122,18 @@ export default {
                     }
                 },
                 'blur-in': {
-                    '0%': { 
+                    '0%': {
                         opacity: '0',
                         filter: 'blur(8px)'
                     },
-                    '100%': { 
+                    '100%': {
                         opacity: '1',
                         filter: 'blur(0)'
                     }
+                },
+                'ticker': {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-50%)' }
                 }
 			},
 			animation: {
@@ -139,7 +143,8 @@ export default {
                 'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
                 'fade-in-down': 'fade-in-down 0.7s ease-out forwards',
                 'slide-in-right': 'slide-in-right 0.7s ease-out forwards',
-                'blur-in': 'blur-in 0.7s ease-out forwards'
+                'blur-in': 'blur-in 0.7s ease-out forwards',
+                'ticker': 'ticker 35s linear infinite'
 			},
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
