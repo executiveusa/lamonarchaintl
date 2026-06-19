@@ -1,14 +1,30 @@
 import axios from 'axios';
 
-const POSTIZ_BASE_URL = import.meta.env.VITE_POSTIZ_BASE_URL || 'https://app.postiz.com';
+const POSTIZ_BASE_URL = import.meta.env.VITE_POSTIZ_BASE_URL || 'https://api.postiz.com/public/v1';
 const POSTIZ_API_KEY = import.meta.env.VITE_POSTIZ_API_KEY || '';
 
+const POSTIZ_INTEGRATION_IDS: Record<string, string> = {
+  instagram: import.meta.env.VITE_POSTIZ_IG_ID || '',
+  facebook: import.meta.env.VITE_POSTIZ_FB_ID || '',
+  x: import.meta.env.VITE_POSTIZ_X_ID || '',
+  threads: import.meta.env.VITE_POSTIZ_THREADS_ID || '',
+  bluesky: import.meta.env.VITE_POSTIZ_BSKY_ID || '',
+  linkedin: import.meta.env.VITE_POSTIZ_LI_ID || '',
+};
+
 interface PostizPost {
-  content: string;
-  platforms: string[];
-  scheduledAt?: string;
-  media?: string[];
-  tags?: string[];
+  type: 'now' | 'schedule';
+  date: string;
+  shortLink: boolean;
+  tags: string[];
+  posts: Array<{
+    integration: { id: string };
+    value: Array<{
+      content: string;
+      image: Array<{ id?: string; path: string }>;
+    }>;
+    settings: Record<string, unknown>;
+  }>;
 }
 
 interface PostizScheduleResult {
@@ -19,9 +35,9 @@ interface PostizScheduleResult {
 }
 
 const postizApi = axios.create({
-  baseURL: `${POSTIZ_BASE_URL}/api/v1`,
+  baseURL: POSTIZ_BASE_URL.replace(/\/$/, ''),
   headers: {
-    Authorization: `Bearer ${POSTIZ_API_KEY}`,
+    Authorization: POSTIZ_API_KEY,
     'Content-Type': 'application/json',
   },
 });
@@ -43,20 +59,41 @@ export async function scheduleArticlePost(
     return null;
   }
 
+  const configuredPlatforms = platforms.filter((platform) => POSTIZ_INTEGRATION_IDS[platform]);
+  if (configuredPlatforms.length === 0) {
+    console.warn('[Postiz] No integration IDs configured for selected platforms.');
+    return null;
+  }
+
   const hashtags = buildHashtags(article.category, article.language);
   const caption = buildCaption(article, hashtags);
   const scheduleTime = scheduledAt || getNextSlot();
 
   try {
     const payload: PostizPost = {
-      content: caption,
-      platforms,
-      scheduledAt: scheduleTime.toISOString(),
-      ...(article.imageUrl ? { media: [article.imageUrl] } : {}),
+      type: scheduledAt ? 'schedule' : 'now',
+      date: scheduleTime.toISOString(),
+      shortLink: false,
+      tags: [],
+      posts: configuredPlatforms.map((platform) => ({
+        integration: { id: POSTIZ_INTEGRATION_IDS[platform] },
+        value: [
+          {
+            content: caption,
+            image: article.imageUrl ? [{ path: article.imageUrl }] : [],
+          },
+        ],
+        settings: getPlatformSettings(platform),
+      })),
     };
 
     const { data } = await postizApi.post('/posts', payload);
-    return data as PostizScheduleResult;
+    return {
+      id: data?.id ?? data?.posts?.[0]?.id ?? `postiz-${Date.now()}`,
+      status: scheduledAt ? 'scheduled' : 'published',
+      scheduledAt: scheduleTime.toISOString(),
+      platforms: configuredPlatforms,
+    };
   } catch (err) {
     console.error('[Postiz] Failed to schedule post:', err);
     return null;
@@ -88,8 +125,8 @@ function buildCaption(
   hashtags: string
 ): string {
   const cta = article.language === 'es'
-    ? `Lee más en el enlace de nuestra bio 🦋\n\n${hashtags}`
-    : `Full story at the link in our bio 🦋\n\n${hashtags}`;
+    ? `Lee más: ${article.url}\n\n${hashtags}`
+    : `Full story: ${article.url}\n\n${hashtags}`;
 
   return `${article.title}\n\n${article.summary}\n\n${cta}`;
 }
@@ -119,6 +156,19 @@ function getNextSlot(): Date {
   if (nextSlotHour <= cdmxHour) next.setDate(next.getDate() + 1);
   next.setUTCHours(nextSlotHour - cdmxOffset, 0, 0, 0);
   return next;
+}
+
+function getPlatformSettings(platform: string): Record<string, unknown> {
+  const settings: Record<string, Record<string, unknown>> = {
+    instagram: { __type: 'instagram', post_type: 'post' },
+    facebook: { __type: 'facebook' },
+    x: { __type: 'x', who_can_reply_post: 'everyone' },
+    threads: { __type: 'threads' },
+    bluesky: { __type: 'bluesky' },
+    linkedin: { __type: 'linkedin' },
+  };
+
+  return settings[platform] ?? { __type: platform };
 }
 
 function getMockScheduledPosts(): PostizScheduleResult[] {
