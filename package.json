@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postiz:check": "node scripts/check-postiz-setup.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

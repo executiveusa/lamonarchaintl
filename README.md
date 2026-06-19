@@ -14,6 +14,10 @@ This application provides real-time translation services through a React fronten
 ### Frontend Setup
 The frontend is already configured in the React application.
 
+### Postiz Setup
+
+Social publishing is configured through Postiz environment variables. Copy `.env.example` to `.env.local`, fill in the Postiz API key and channel IDs, and follow `docs/postiz-setup.md` for the manual OAuth checklist.
+
 ### Backend Setup
 1. Install the required Python packages:
 ```bash
@@ -21,8 +25,7 @@ pip install flask flask-cors requests
 ```
 
 2. DeepL API
-The application is configured to use the DeepL translation API. A DeepL API key is already configured in the code:
-- API Key: `5ad15edc-f0f2-4eab-8334-600a984b8915:fx`
+The application is configured to use the DeepL translation API. Store the key in `DEEPL_API_KEY` or your deployment secret manager; do not commit real API keys.
 
 3. Run the Flask API:
 ```bash
