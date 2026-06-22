@@ -51,7 +51,7 @@ const ArticleSection: React.FC<ArticleSectionProps> = ({ articles, isLoading }) 
               {isEn ? 'From Mexico & the World' : 'De México y el Mundo'}
             </h2>
           </div>
-          <Link to="/categoria/comunidad" className="hidden sm:flex items-center gap-1.5 text-monarca-terracotta hover:text-monarca-orange text-sm font-medium transition-colors">
+          <Link to="/categoria/arte" className="hidden sm:flex items-center gap-1.5 text-monarca-terracotta hover:text-monarca-orange text-sm font-medium transition-colors">
             {isEn ? 'All stories' : 'Ver todo'}
             <ArrowRight className="h-4 w-4" />
           </Link>

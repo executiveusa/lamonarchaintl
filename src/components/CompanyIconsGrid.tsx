@@ -3,7 +3,7 @@ import React from "react";
 import { useLanguageStore } from "@/services/articleService";
 
 const partners = [
-  { name: "Kupari Media", tagline_en: "Publisher", tagline_es: "Editorial", color: "#D35400" },
+  { name: "Kupuri Media", tagline_en: "Publisher", tagline_es: "Editorial", color: "#D35400" },
   { name: "Barrio Santa María", tagline_en: "Our Roots", tagline_es: "Nuestras Raíces", color: "#1A1A1A" },
   { name: "Puerto Vallarta", tagline_en: "Issue 1 City", tagline_es: "Ciudad Edición 1", color: "#2980B9" },
   { name: "La Labyrinha", tagline_en: "CDMX", tagline_es: "CDMX", color: "#27AE60" },

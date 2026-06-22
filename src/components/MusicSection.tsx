@@ -56,7 +56,7 @@ const MusicSection: React.FC = () => {
               {isEn ? 'The Sound of Mexico' : 'El Sonido de México'}
             </h2>
           </div>
-          <Link to="/music-blogs" className="hidden sm:flex items-center gap-1.5 text-monarca-amber hover:text-white text-sm font-medium transition-colors">
+          <Link to="/categoria/musica" className="hidden sm:flex items-center gap-1.5 text-monarca-amber hover:text-white text-sm font-medium transition-colors">
             {isEn ? 'All music stories' : 'Todas las historias de música'}
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -81,7 +81,7 @@ const MusicSection: React.FC = () => {
                 </div>
                 <h3 className="font-display text-2xl font-bold mb-1">{artist.name}</h3>
                 <p className="text-white/70 text-sm mb-3">{isEn ? artist.desc_en : artist.desc_es}</p>
-                <Link to="/music-blogs" className="flex items-center gap-2 text-monarca-amber hover:text-white text-sm font-medium transition-colors">
+                <Link to="/categoria/musica" className="flex items-center gap-2 text-monarca-amber hover:text-white text-sm font-medium transition-colors">
                   <Play className="h-4 w-4" />
                   {isEn ? 'Read the story' : 'Leer la historia'}
                 </Link>
@@ -114,7 +114,7 @@ const MusicSection: React.FC = () => {
             {/* Discover more */}
             <div className="bg-monarca-terracotta/20 border border-monarca-terracotta/30 rounded-xl p-5">
               <h4 className="font-bold text-white mb-2">
-                {isEn ? 'Music Blogs' : 'Blogs de Música'}
+                {isEn ? 'More Music Stories' : 'Más Historias de Música'}
               </h4>
               <p className="text-white/60 text-sm mb-3">
                 {isEn
@@ -122,10 +122,10 @@ const MusicSection: React.FC = () => {
                   : 'Análisis profundos de los artistas y movimientos que dan forma a la música mexicana.'}
               </p>
               <Link
-                to="/music-blogs"
+                to="/categoria/musica"
                 className="flex items-center gap-1.5 text-monarca-amber hover:text-white text-sm font-medium transition-colors"
               >
-                {isEn ? 'Read music blogs' : 'Leer blogs de música'}
+                {isEn ? 'Explore music' : 'Explorar música'}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

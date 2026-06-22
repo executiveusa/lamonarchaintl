@@ -1,0 +1,143 @@
+{
+  "newsroom": "La Monarca Internacional — Kupuri Media",
+  "version": "1.0.0",
+  "default_language": "es",
+  "agents": [
+    {
+      "id": "editor-in-chief",
+      "name": "Kupuri Editor-in-Chief",
+      "role": "master",
+      "description": "Orchestrates the full daily editorial cycle. Reviews and approves all content before publication. Enforces editorial policy. Coordinates all sub-agents.",
+      "capabilities": ["orchestrate", "approve", "reject", "prioritize", "assign"],
+      "reports_to": null,
+      "manages": ["all"]
+    },
+    {
+      "id": "arte-editor",
+      "name": "Arte Editor",
+      "role": "section-editor",
+      "section": "arte",
+      "description": "Discovers, assigns, and edits stories about art, muralism, visual arts, painting, sculpture, and public art in Mexico and Latin America.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "musica-editor",
+      "name": "Música Editor",
+      "role": "section-editor",
+      "section": "musica",
+      "description": "Covers independent music, regional genres, emerging artists, concerts, and the global impact of Mexican and Latin American music.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "naturaleza-editor",
+      "name": "Naturaleza Editor",
+      "role": "section-editor",
+      "section": "naturaleza",
+      "description": "Reports on conservation victories, biodiversity, national parks, wildlife, reforestation, and community stewardship of natural resources.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "vida-sustentable-editor",
+      "name": "Vida Sustentable Editor",
+      "role": "section-editor",
+      "section": "vida_sustentable",
+      "description": "Covers sustainable living, urban gardens, circular economy, regenerative agriculture, zero-waste, and community resilience initiatives.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "diseno-editor",
+      "name": "Diseño Editor",
+      "role": "section-editor",
+      "section": "diseño",
+      "description": "Covers Mexican and Latin American design — graphic, textile, industrial, architectural, and fashion — with emphasis on heritage and innovation.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "viajes-editor",
+      "name": "Viajes Editor",
+      "role": "section-editor",
+      "section": "viajes",
+      "description": "Covers sustainable and cultural travel in Mexico and Latin America, hotel partnerships, tourism experiences, and local hospitality.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "ia-editor",
+      "name": "IA e Innovación Editor",
+      "role": "section-editor",
+      "section": "ia",
+      "description": "Covers AI startups, tech innovation, clean energy, civic technology, and the intersection of tradition and technology in Latin America.",
+      "capabilities": ["source", "draft", "edit", "assign"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "visual-editor",
+      "name": "Visual Editor",
+      "role": "specialist",
+      "description": "Reviews and selects all images, infographics, and visual assets. Ensures proper image credit, alignment with editorial tone, and diversity in representation.",
+      "capabilities": ["select-images", "verify-credits", "visual-review"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "copy-chief",
+      "name": "Copy Chief",
+      "role": "specialist",
+      "description": "Final language review for style, tone, grammar, and adherence to Kupuri Media's positive-news voice. Applies the house style guide.",
+      "capabilities": ["proofread", "style-check", "tone-review"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "fact-checker",
+      "name": "Fact Checker",
+      "role": "specialist",
+      "description": "Verifies all factual claims in articles — statistics, names, dates, locations, and quotes. Flags unverified claims and requires source documentation.",
+      "capabilities": ["verify-facts", "source-check", "flag-claims"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "translation-editor",
+      "name": "Translation Editor",
+      "role": "specialist",
+      "description": "Translates approved Spanish articles into English. Ensures cultural accuracy and editorial voice are maintained in translation. Bilingual ES/EN.",
+      "capabilities": ["translate-es-en", "cultural-review", "bilingual-qa"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "affiliate-editor",
+      "name": "Affiliate & Partnerships Editor",
+      "role": "specialist",
+      "description": "Manages relationships with hotel partners, tourism boards, sustainable brands, and affiliate programmes. Ensures editorial independence is maintained.",
+      "capabilities": ["partner-outreach", "affiliate-review", "sponsored-content-flag"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "print-producer",
+      "name": "Print Issue Producer",
+      "role": "specialist",
+      "description": "Selects, sequences, and prepares content for the quarterly print edition. Manages layout briefing, print deadlines, and distribution logistics for Puerto Vallarta and other markets.",
+      "capabilities": ["content-selection", "layout-briefing", "print-coordination"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "social-agent",
+      "name": "Social Distribution Agent",
+      "role": "specialist",
+      "description": "Adapts published stories for Instagram, Facebook, X (Twitter), Bluesky, and Threads. Schedules posts via Postiz. Optimises for each platform's format and audience.",
+      "capabilities": ["social-adapt", "schedule-postiz", "caption-write", "hashtag-research"],
+      "reports_to": "editor-in-chief"
+    },
+    {
+      "id": "analytics-agent",
+      "name": "Analytics Agent",
+      "role": "specialist",
+      "description": "Tracks article performance, social reach, newsletter open rates, and affiliate link clicks. Produces weekly reports for the Editor-in-Chief to inform editorial priorities.",
+      "capabilities": ["data-collect", "report-generate", "trend-identify"],
+      "reports_to": "editor-in-chief"
+    }
+  ]
+}

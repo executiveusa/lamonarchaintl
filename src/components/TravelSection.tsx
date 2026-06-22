@@ -25,7 +25,7 @@ const destinations = [
     desc_en: 'Where La Monarca was born. Barrio Santa María is a neighborhood of artists, taqueros, and community builders — the creative heartbeat of the capital.',
     desc_es: 'Donde nació La Monarca. El Barrio Santa María es un barrio de artistas, taqueros y constructores de comunidad, el latido creativo de la capital.',
     highlight: false,
-    path: '/categoria/comunidad',
+    path: '/categoria/naturaleza',
   },
   {
     image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
@@ -36,7 +36,7 @@ const destinations = [
     desc_en: 'Home of the Monarch butterfly reserve. Every winter, 100 million butterflies return — one of the great natural spectacles on Earth.',
     desc_es: 'Sede de la reserva de la mariposa monarca. Cada invierno, 100 millones de mariposas regresan, uno de los grandes espectáculos naturales de la Tierra.',
     highlight: false,
-    path: '/categoria/comunidad',
+    path: '/categoria/naturaleza',
   },
 ];
 

@@ -9,6 +9,7 @@ import { Toaster } from 'sonner';
 import MusicBlogs from '@/pages/MusicBlogs';
 import Suscribirse from '@/pages/Suscribirse';
 import PrimeraEdicion from '@/pages/PrimeraEdicion';
+import PapelPrivado from '@/pages/PapelPrivado';
 import TrabajaConNosotros from '@/pages/TrabajaConNosotros';
 import CategoriaPage from '@/pages/CategoriaPage';
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/music-blogs" element={<MusicBlogs />} />
         <Route path="/suscribirse" element={<Suscribirse />} />
         <Route path="/primera-edicion" element={<PrimeraEdicion />} />
+        <Route path="/papel-privado" element={<PapelPrivado />} />
         <Route path="/trabaja-con-nosotros" element={<TrabajaConNosotros />} />
         <Route path="/categoria/:categoria" element={<CategoriaPage />} />
         <Route path="*" element={<NotFound />} />

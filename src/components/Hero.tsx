@@ -4,8 +4,16 @@ import AnimatedBackground from './hero/AnimatedBackground';
 import HeroContent from './hero/HeroContent';
 import ScrollIndicator from './hero/ScrollIndicator';
 
-const VIDEO_URL =
-  'https://www.youtube.com/embed/V9Zv3ZsX4A8?autoplay=1&mute=1&loop=1&playlist=V9Zv3ZsX4A8&controls=0&showinfo=0&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&playsinline=1&enablejsapi=0';
+const positiveFacts = [
+  'México es el país con más diversidad biológica por km² en América Latina · · ·',
+  'El 70% de las artesanías mexicanas son creadas por mujeres · · ·',
+  'Puerto Vallarta es pionera en turismo sustentable en el Pacífico mexicano · · ·',
+  'La música mexicana independiente suma 400M+ streams globales al mes · · ·',
+  'Más de 200 comunidades indígenas custodian bosques templados en México · · ·',
+  'El movimiento muralista mexicano inspira arte público en 40 países · · ·',
+  'Guadalajara es reconocida como Ciudad Creativa UNESCO · · ·',
+  'México produce el 60% del aguacate orgánico del mundo · · ·',
+];
 
 const Hero: React.FC = () => {
   return (
@@ -13,7 +21,7 @@ const Hero: React.FC = () => {
       className="relative w-full overflow-hidden bg-monarca-black"
       style={{ height: '100dvh', minHeight: '600px' }}
     >
-      <AnimatedBackground videoUrl={VIDEO_URL} />
+      <AnimatedBackground />
 
       {/* Central content */}
       <div className="relative z-20 flex flex-col items-center justify-center h-full px-4 text-center">
@@ -22,23 +30,18 @@ const Hero: React.FC = () => {
 
       <ScrollIndicator />
 
-      {/* Breaking news ticker bar at the bottom of hero */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 bg-monarca-terracotta/90 backdrop-blur-sm border-t border-white/10">
+      {/* Positive micro-facts ticker at the bottom of hero */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 bg-monarca-black/80 backdrop-blur-sm border-t border-white/10">
         <div className="flex items-center overflow-hidden h-9">
-          <span className="flex-shrink-0 bg-monarca-black text-white text-[10px] font-black uppercase tracking-[0.2em] px-3 h-full flex items-center border-r border-white/20">
-            LIVE
+          <span className="flex-shrink-0 bg-monarca-amber text-monarca-black text-[10px] font-black uppercase tracking-[0.2em] px-3 h-full flex items-center border-r border-black/20">
+            ✦ HOY
           </span>
           <div className="overflow-hidden flex-1">
-            <div className="whitespace-nowrap animate-[ticker_35s_linear_infinite] text-white text-xs font-medium inline-block">
+            <div className="whitespace-nowrap animate-[ticker_45s_linear_infinite] text-white/80 text-xs font-medium inline-block">
               &nbsp;&nbsp;&nbsp;
-              Arte comunitario transforma Barrio Santa María · · ·&nbsp;&nbsp;
-              Músicos de Guadalajara rompen récords en Spotify · · ·&nbsp;&nbsp;
-              Puerto Vallarta: primer destino sustentable de México · · ·&nbsp;&nbsp;
-              Jóvenes emprendedores de CDMX lanzan 40 startups en 2026 · · ·&nbsp;&nbsp;
-              Artistas latinoamericanos triunfan en bienal internacional · · ·&nbsp;&nbsp;
-              Community art transforms Barrio Santa María · · ·&nbsp;&nbsp;
-              Musicians from Guadalajara break Spotify records · · ·&nbsp;&nbsp;
-              Puerto Vallarta named Mexico's first sustainable destination · · ·
+              {positiveFacts.map((fact, i) => (
+                <span key={i}>{fact}&nbsp;&nbsp;</span>
+              ))}
               &nbsp;&nbsp;&nbsp;
             </div>
           </div>
