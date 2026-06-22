@@ -70,7 +70,9 @@ export default {
                     black: '#1A1A1A',
                     white: '#FAFAFA',
                     cream: '#F5F5F0',
-                    gray: '#888888'
+                    gray: '#888888',
+                    green: '#2D6A4F',
+                    'green-light': '#52B788',
                 }
 			},
 			borderRadius: {

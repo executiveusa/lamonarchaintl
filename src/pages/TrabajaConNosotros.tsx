@@ -60,10 +60,10 @@ const opportunities = [
   },
   {
     icon: Briefcase,
-    title_en: 'Partner With Kupari Media',
-    title_es: 'Asociarte con Kupari Media',
-    desc_en: 'Kupari Media produces content, events, and digital experiences rooted in LATAM culture. Explore strategic partnership opportunities.',
-    desc_es: 'Kupari Media produce contenido, eventos y experiencias digitales arraigadas en la cultura LATAM. Explora oportunidades de alianza estratégica.',
+    title_en: 'Partner With Kupuri Media',
+    title_es: 'Asociarte con Kupuri Media',
+    desc_en: 'Kupuri Media produces content, events, and digital experiences rooted in LATAM culture. Explore strategic partnership opportunities.',
+    desc_es: 'Kupuri Media produce contenido, eventos y experiencias digitales arraigadas en la cultura LATAM. Explora oportunidades de alianza estratégica.',
     cta_en: 'Explore Partnership',
     cta_es: 'Explorar Alianza',
     tag_en: 'Partnership',
@@ -103,34 +103,34 @@ const TrabajaConNosotros: React.FC = () => {
       <div className="bg-monarca-black text-white">
         <div className="container mx-auto px-6 py-16 max-w-4xl text-center">
           <span className="inline-block bg-monarca-terracotta text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded mb-4">
-            {isEn ? 'A Kupari Media Publication' : 'Una Publicación de Kupari Media'}
+            {isEn ? 'A Kupuri Media Publication' : 'Una Publicación de Kupuri Media'}
           </span>
           <h1 className="font-display text-4xl md:text-5xl font-black mb-4 leading-tight">
             {isEn ? 'Work With Us' : 'Trabaja Con Nosotros'}
           </h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
             {isEn
-              ? 'La Monarca Internacional is the official newspaper of Kupari Media. We are building a media platform that celebrates the real stories of Mexico. Join us.'
-              : 'La Monarca Internacional es el periódico oficial de Kupari Media. Estamos construyendo una plataforma de medios que celebra las historias reales de México. Únete a nosotros.'}
+              ? 'La Monarca Internacional is the official newspaper of Kupuri Media. We are building a media platform that celebrates the real stories of Mexico. Join us.'
+              : 'La Monarca Internacional es el periódico oficial de Kupuri Media. Estamos construyendo una plataforma de medios que celebra las historias reales de México. Únete a nosotros.'}
           </p>
         </div>
       </div>
 
-      {/* About Kupari Media */}
+      {/* About Kupuri Media */}
       <div className="bg-white border-b border-monarca-amber/20">
         <div className="container mx-auto px-6 py-12 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
               <span className="inline-block bg-monarca-amber/20 text-monarca-terracotta text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
-                {isEn ? 'About Kupari Media' : 'Sobre Kupari Media'}
+                {isEn ? 'About Kupuri Media' : 'Sobre Kupuri Media'}
               </span>
               <h2 className="font-display text-3xl font-bold text-monarca-black mb-4">
                 {isEn ? 'The Story Behind the Magazine' : 'La Historia Detrás de la Revista'}
               </h2>
               <p className="text-monarca-gray mb-4">
                 {isEn
-                  ? 'Kupari Media was born in Barrio Santa María, La Labyrinha, Mexico City — a neighborhood that has always punched above its weight in creativity, community, and culture.'
-                  : 'Kupari Media nació en el Barrio Santa María, La Labyrinha, Ciudad de México, un barrio que siempre ha estado a la altura en creatividad, comunidad y cultura.'}
+                  ? 'Kupuri Media was born in Barrio Santa María, La Labyrinha, Mexico City — a neighborhood that has always punched above its weight in creativity, community, and culture.'
+                  : 'Kupuri Media nació en el Barrio Santa María, La Labyrinha, Ciudad de México, un barrio que siempre ha estado a la altura en creatividad, comunidad y cultura.'}
               </p>
               <p className="text-monarca-gray mb-4">
                 {isEn
@@ -177,8 +177,8 @@ const TrabajaConNosotros: React.FC = () => {
           </h2>
           <p className="text-monarca-gray max-w-xl mx-auto">
             {isEn
-              ? 'There are many ways to work with La Monarca and Kupari Media — from submitting your writing to advertising your business.'
-              : 'Hay muchas formas de trabajar con La Monarca y Kupari Media, desde enviar tu escritura hasta anunciar tu negocio.'}
+              ? 'There are many ways to work with La Monarca and Kupuri Media — from submitting your writing to advertising your business.'
+              : 'Hay muchas formas de trabajar con La Monarca y Kupuri Media, desde enviar tu escritura hasta anunciar tu negocio.'}
           </p>
         </div>
 
@@ -221,8 +221,8 @@ const TrabajaConNosotros: React.FC = () => {
             </h2>
             <p className="text-monarca-gray">
               {isEn
-                ? 'Tell us what you have in mind and the team at Kupari Media will respond within 48 hours.'
-                : 'Cuéntanos lo que tienes en mente y el equipo de Kupari Media responderá en 48 horas.'}
+                ? 'Tell us what you have in mind and the team at Kupuri Media will respond within 48 hours.'
+                : 'Cuéntanos lo que tienes en mente y el equipo de Kupuri Media responderá en 48 horas.'}
             </p>
           </div>
 

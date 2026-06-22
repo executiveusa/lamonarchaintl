@@ -11,13 +11,26 @@ import MusicSection from '@/components/MusicSection';
 import TravelSection from '@/components/TravelSection';
 import AIInnovationSection from '@/components/AIInnovationSection';
 import NewsletterSubscription from '@/components/NewsletterSubscription';
-import WeatherInfoCard from '@/components/WeatherInfoCard';
 import ResponsiveSearchBar from '@/components/ResponsiveSearchBar';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
 import { getMockArticles } from '@/utils/mockArticles';
-import { Calendar, MapPin, ArrowRight, Star, Users, Newspaper, Heart } from 'lucide-react';
+import {
+  Calendar, MapPin, ArrowRight, Star, Users, Newspaper,
+  Heart, Lock, Leaf, Palette, Music, Globe, Cpu
+} from 'lucide-react';
 import EditorialTeamSection from '@/components/EditorialTeamSection';
 import SocialDistributionPanel from '@/components/SocialDistributionPanel';
+
+const CATEGORIES = [
+  { es: 'Todo', en: 'All', path: '/', icon: null },
+  { es: 'Arte', en: 'Art', path: '/categoria/arte', icon: Palette },
+  { es: 'Música', en: 'Music', path: '/categoria/musica', icon: Music },
+  { es: 'Naturaleza', en: 'Nature', path: '/categoria/naturaleza', icon: Leaf },
+  { es: 'Vida Sustentable', en: 'Sustainable Living', path: '/categoria/vida-sustentable', icon: Leaf },
+  { es: 'Diseño', en: 'Design', path: '/categoria/diseno', icon: Palette },
+  { es: 'Viajes', en: 'Travel', path: '/categoria/viajes', icon: Globe },
+  { es: 'IA e Innovación', en: 'AI & Innovation', path: '/categoria/ia', icon: Cpu },
+];
 
 const Index = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -38,7 +51,7 @@ const Index = () => {
       } else {
         loadMockArticles();
       }
-    } catch (err) {
+    } catch {
       loadMockArticles();
     } finally {
       setIsLoading(false);
@@ -57,34 +70,31 @@ const Index = () => {
     <div className="min-h-screen bg-monarca-cream relative">
       <Navigation />
 
-      <div className="fixed top-24 right-4 z-10 w-32 md:w-36 lg:w-40">
-        <WeatherInfoCard />
-      </div>
-
       <Hero />
 
-      {/* Auto Newsroom Status Bar */}
+      {/* Subtle editorial status bar */}
       <div className="bg-monarca-black text-white border-b border-white/10">
         <div className="container mx-auto px-6 py-3">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1.5 font-bold uppercase tracking-widest text-monarca-amber">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                {isEn ? 'Newsroom Live' : 'Redacción en Vivo'}
+                {isEn ? 'Kupuri AI Newsroom' : 'Redacción IA Kupuri'}
               </span>
               <span className="text-white/40">
-                {isEn ? 'AI editorial team active · Powered by Paperclip' : 'Equipo editorial IA activo · Con Paperclip'}
+                {isEn
+                  ? 'Writing new positive stories · Powered by Paperclip'
+                  : 'Escribiendo nuevas historias positivas · Con Paperclip'}
               </span>
             </div>
             <div className="flex items-center gap-3 text-white/50">
               <span>📸 Instagram</span>
               <span>👥 Facebook</span>
               <span>✕ X</span>
-              <span>🧵 Threads</span>
               <span>🦋 Bluesky</span>
               <span className="text-white/30">·</span>
               <span className="text-green-400">
-                {isEn ? 'Auto-posting via Postiz' : 'Auto-publicando vía Postiz'}
+                {isEn ? 'Auto-distributing via Postiz' : 'Distribución automática vía Postiz'}
               </span>
             </div>
           </div>
@@ -102,7 +112,7 @@ const Index = () => {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="bg-monarca-amber text-monarca-black text-xs font-black uppercase tracking-widest px-2 py-0.5 rounded">
-                    {isEn ? 'Coming Sept 2026' : 'Llega Sept 2026'}
+                    {isEn ? 'Coming September 2026' : 'Llega Septiembre 2026'}
                   </span>
                 </div>
                 <h3 className="font-display text-lg font-bold leading-tight">
@@ -114,7 +124,7 @@ const Index = () => {
                   <MapPin className="h-3.5 w-3.5" />
                   {isEn
                     ? 'Featuring the artists, musicians, and community heroes of PV'
-                    : 'Presentando los artistas, músicos y héroes comunitarios de PV'}
+                    : 'Presentando artistas, músicos y voces comunitarias de Puerto Vallarta'}
                 </p>
               </div>
             </div>
@@ -131,24 +141,14 @@ const Index = () => {
       {/* Category Navigation Bar */}
       <div className="bg-white border-b border-monarca-amber/20">
         <div className="container mx-auto px-6">
-          <div className="flex items-center gap-1 overflow-x-auto py-3 scrollbar-hide">
-            {[
-              { label: isEn ? 'All' : 'Todo', path: '/' },
-              { label: isEn ? 'Community' : 'Comunidad', path: '/categoria/comunidad' },
-              { label: isEn ? 'Art & Culture' : 'Arte y Cultura', path: '/categoria/arte' },
-              { label: isEn ? 'Music' : 'Música', path: '/music-blogs' },
-              { label: isEn ? 'Youth' : 'Juventud', path: '/categoria/juventud' },
-              { label: isEn ? 'Travel' : 'Viajes', path: '/categoria/viajes' },
-              { label: isEn ? 'Innovation' : 'Innovación', path: '/categoria/innovacion' },
-              { label: isEn ? 'Interviews' : 'Entrevistas', path: '/categoria/entrevistas' },
-              { label: isEn ? 'Business' : 'Negocios', path: '/categoria/negocios' },
-            ].map((cat) => (
+          <div className="flex items-center gap-1.5 overflow-x-auto py-3 scrollbar-hide">
+            {CATEGORIES.map((cat) => (
               <Link
                 key={cat.path}
                 to={cat.path}
                 className="flex-shrink-0 px-4 py-1.5 text-sm font-medium rounded-full border border-monarca-amber/20 text-monarca-gray hover:bg-monarca-terracotta hover:text-white hover:border-monarca-terracotta transition-colors duration-200"
               >
-                {cat.label}
+                {isEn ? cat.en : cat.es}
               </Link>
             ))}
           </div>
@@ -159,29 +159,114 @@ const Index = () => {
         <ResponsiveSearchBar />
       </div>
 
-      {/* Articles */}
+      {/* Articles — Selección de hoy */}
       <div id="articles">
         <ArticleSection articles={articles} isLoading={isLoading} />
       </div>
 
       {/* Art Section */}
-      <div id="art">
+      <div id="arte">
         <ArtSection />
       </div>
 
       {/* Music */}
-      <div id="music">
+      <div id="musica">
         <MusicSection />
       </div>
 
       {/* Travel */}
-      <div id="travel">
+      <div id="viajes">
         <TravelSection />
       </div>
 
       {/* Innovation */}
-      <div id="innovation">
+      <div id="ia">
         <AIInnovationSection />
+      </div>
+
+      {/* Puerto Vallarta Print Edition Feature */}
+      <div className="bg-gradient-to-br from-monarca-terracotta to-monarca-black text-white">
+        <div className="container mx-auto px-6 py-16 max-w-5xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block bg-monarca-amber text-monarca-black text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded mb-4">
+                {isEn ? 'September 2026 · Puerto Vallarta' : 'Septiembre 2026 · Puerto Vallarta'}
+              </span>
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                {isEn
+                  ? 'The first print issue celebrates Puerto Vallarta'
+                  : 'La primera edición impresa celebra Puerto Vallarta'}
+              </h2>
+              <p className="text-white/80 mb-4">
+                {isEn
+                  ? 'We spotlight the painters of Zona Romántica, the musicians redefining the Pacific sound, the chefs elevating Jalisco cuisine, and the surf culture shaping PV\'s creative identity.'
+                  : 'Destacamos a los pintores de la Zona Romántica, los músicos que redefinen el sonido del Pacífico, los chefs que elevan la cocina jalisciense, y la cultura del surf que moldea la identidad creativa de PV.'}
+              </p>
+              <p className="text-white/70 mb-6 text-sm">
+                {isEn
+                  ? 'Distributed at select hotels, galleries, and cultural spaces across Puerto Vallarta. A collectors\' edition — limited print run.'
+                  : 'Distribuida en hoteles selectos, galerías y espacios culturales de Puerto Vallarta. Edición de coleccionista — tiraje limitado.'}
+              </p>
+              <div className="flex gap-3 flex-wrap">
+                <Link to="/primera-edicion">
+                  <Button className="bg-white text-monarca-terracotta hover:bg-white/90 font-bold">
+                    {isEn ? 'Explore the Issue' : 'Explorar la Edición'}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+                <div className="font-display text-3xl font-black text-monarca-amber mb-1">PV</div>
+                <div className="text-white/70 text-sm">{isEn ? 'Puerto Vallarta, Jalisco' : 'Puerto Vallarta, Jalisco'}</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+                <div className="font-display text-3xl font-black text-white mb-1">Sep</div>
+                <div className="text-white/70 text-sm">{isEn ? 'First print 2026' : 'Primera edición 2026'}</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+                <div className="font-display text-3xl font-black text-white mb-1">~30</div>
+                <div className="text-white/70 text-sm">{isEn ? 'Pages per issue' : 'Páginas por número'}</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+                <div className="font-display text-3xl font-black text-monarca-amber mb-1">ES/EN</div>
+                <div className="text-white/70 text-sm">{isEn ? 'Bilingual edition' : 'Edición bilingüe'}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Papel Privado / Membresía teaser */}
+      <div className="bg-monarca-cream border-y border-monarca-amber/20">
+        <div className="container mx-auto px-6 py-14 max-w-4xl text-center">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <Lock className="h-4 w-4 text-monarca-terracotta" />
+            <span className="text-xs font-black uppercase tracking-widest text-monarca-terracotta">
+              {isEn ? 'Exclusive · Members Only' : 'Exclusivo · Solo para Miembros'}
+            </span>
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-monarca-black mb-3 leading-tight">
+            {isEn ? 'Papel Privado' : 'Papel Privado'}
+          </h2>
+          <p className="text-monarca-gray mb-3 max-w-xl mx-auto">
+            {isEn
+              ? 'A private dossier for hotels, collectors, partners, and brands who believe in Mexico\'s creative culture. Exclusive intelligence. Real relationships.'
+              : 'Un dossier privado para hoteles, coleccionistas, socios y marcas que creen en la cultura creativa de México. Inteligencia exclusiva. Relaciones reales.'}
+          </p>
+          <p className="text-monarca-gray/60 text-sm mb-6 max-w-lg mx-auto italic">
+            {isEn
+              ? 'A limited publication — not available on newsstands. By invitation or membership only.'
+              : 'Una publicación limitada — no disponible en quioscos. Solo por invitación o membresía.'}
+          </p>
+          <Link to="/papel-privado">
+            <Button className="bg-monarca-black text-white hover:bg-monarca-terracotta font-semibold px-8">
+              {isEn ? 'Learn more about Papel Privado' : 'Conoce el Papel Privado'}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* About Section */}
@@ -190,7 +275,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-block bg-monarca-amber/20 text-monarca-terracotta text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-                {isEn ? 'Our Story' : 'Nuestra Historia'}
+                {isEn ? 'About Us' : 'Quiénes Somos'}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-monarca-black mb-4 leading-tight">
                 {isEn
@@ -199,13 +284,13 @@ const Index = () => {
               </h2>
               <p className="text-monarca-gray mb-4">
                 {isEn
-                  ? 'La Monarca Internacional started as an idea in La Labyrinha — one of Mexico City\'s most vibrant and overlooked neighborhoods. We wanted to create a media platform that celebrated what\'s great about Mexico, not what\'s wrong.'
-                  : 'La Monarca Internacional nació como una idea en La Labyrinha, uno de los barrios más vibrantes y subestimados de la Ciudad de México. Queríamos crear una plataforma de medios que celebrara lo grandioso de México, no lo que está mal.'}
+                  ? 'La Monarca Internacional started as an idea in La Labyrinha — one of Mexico City\'s most vibrant neighborhoods. We wanted to create a media platform that celebrated what\'s great about Mexico through arts, culture, nature, and human stories.'
+                  : 'La Monarca Internacional nació como una idea en La Labyrinha, uno de los barrios más vibrantes de la Ciudad de México. Quisimos crear una plataforma que celebrara lo grandioso de México a través del arte, la cultura, la naturaleza y las historias humanas.'}
               </p>
               <p className="text-monarca-gray mb-6">
                 {isEn
-                  ? 'Today, as a Kupari Media publication, we cover artists, youth, community heroes, musicians, entrepreneurs, and anyone building something beautiful in Mexico and Latin America.'
-                  : 'Hoy, como publicación de Kupari Media, cubrimos artistas, jóvenes, héroes comunitarios, músicos, empresarios y cualquier persona que construya algo hermoso en México y América Latina.'}
+                  ? 'Today, as a Kupuri Media publication, we cover artists, musicians, nature conservationists, designers, and anyone building something beautiful and sustainable in Mexico and Latin America.'
+                  : 'Hoy, como publicación de Kupuri Media, cubrimos artistas, músicos, conservacionistas, diseñadores y cualquier persona que construya algo hermoso y sustentable en México y Latinoamérica.'}
               </p>
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2">
@@ -217,32 +302,32 @@ const Index = () => {
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-monarca-terracotta" />
                   <span className="text-sm text-monarca-gray">
-                    {isEn ? 'Community first' : 'La comunidad primero'}
+                    {isEn ? 'Community-centred' : 'La comunidad primero'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="h-4 w-4 text-monarca-terracotta" />
                   <span className="text-sm text-monarca-gray">
-                    {isEn ? 'A Kupari Media publication' : 'Una publicación Kupari Media'}
+                    {isEn ? 'A Kupuri Media publication' : 'Una publicación de Kupuri Media'}
                   </span>
                 </div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-monarca-terracotta/10 rounded-xl p-6 text-center">
-                <div className="font-display text-4xl font-black text-monarca-terracotta mb-1">12+</div>
-                <div className="text-monarca-gray text-sm">{isEn ? 'Content categories' : 'Categorías de contenido'}</div>
+                <div className="font-display text-4xl font-black text-monarca-terracotta mb-1">7</div>
+                <div className="text-monarca-gray text-sm">{isEn ? 'Positive categories' : 'Categorías positivas'}</div>
               </div>
               <div className="bg-monarca-amber/10 rounded-xl p-6 text-center">
                 <div className="font-display text-4xl font-black text-monarca-black mb-1">2</div>
-                <div className="text-monarca-gray text-sm">{isEn ? 'Languages (EN/ES)' : 'Idiomas (EN/ES)'}</div>
-              </div>
-              <div className="bg-monarca-black/5 rounded-xl p-6 text-center">
-                <div className="font-display text-4xl font-black text-monarca-black mb-1">~30</div>
-                <div className="text-monarca-gray text-sm">{isEn ? 'Pages per issue' : 'Páginas por edición'}</div>
+                <div className="text-monarca-gray text-sm">{isEn ? 'Languages (ES/EN)' : 'Idiomas (ES/EN)'}</div>
               </div>
               <div className="bg-green-50 rounded-xl p-6 text-center">
-                <div className="font-display text-4xl font-black text-green-700 mb-1">Sep</div>
+                <div className="font-display text-4xl font-black text-green-700 mb-1">~30</div>
+                <div className="text-monarca-gray text-sm">{isEn ? 'Pages per issue' : 'Páginas por edición'}</div>
+              </div>
+              <div className="bg-monarca-black/5 rounded-xl p-6 text-center">
+                <div className="font-display text-4xl font-black text-monarca-black mb-1">Sep</div>
                 <div className="text-monarca-gray text-sm">{isEn ? 'First print issue 2026' : 'Primera edición impresa 2026'}</div>
               </div>
             </div>
@@ -250,21 +335,29 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Work With Us CTA */}
+      {/* Work With Kupuri Media CTA */}
       <div className="bg-monarca-terracotta text-white">
         <div className="container mx-auto px-6 py-12 max-w-4xl text-center">
+          <span className="inline-block bg-white/20 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+            {isEn ? 'Kupuri Media · Partnerships' : 'Kupuri Media · Alianzas'}
+          </span>
           <h2 className="font-display text-3xl font-bold mb-3">
-            {isEn ? 'Have a Story to Tell?' : '¿Tienes una Historia que Contar?'}
+            {isEn ? 'Partner with Kupuri Media' : '¿Trabajamos juntos?'}
           </h2>
-          <p className="text-white/80 mb-6 max-w-xl mx-auto">
+          <p className="text-white/80 mb-2 max-w-2xl mx-auto">
             {isEn
-              ? 'Whether you\'re an artist, a business owner, a youth organizer, or just someone doing great things in your community — we want to hear from you.'
-              : 'Ya seas artista, propietario de negocio, organizador juvenil o simplemente alguien que hace grandes cosas en su comunidad, queremos saber de ti.'}
+              ? 'La Monarca Internacional is a Kupuri Media product. We invite hotels, tourism boards, artists, sustainable brands, and cultural organizations to join our community.'
+              : 'La Monarca Internacional es un producto de Kupuri Media. Invitamos a hoteles, organismos de turismo, artistas, marcas sustentables y organizaciones culturales a unirse a nuestra comunidad.'}
+          </p>
+          <p className="text-white/60 text-sm mb-6 max-w-xl mx-auto">
+            {isEn
+              ? 'Affiliate partnerships, sponsored features, print placements, and digital campaigns rooted in authentic storytelling.'
+              : 'Alianzas de afiliados, reportajes patrocinados, espacios en impreso y campañas digitales basadas en narrativa auténtica.'}
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Link to="/trabaja-con-nosotros">
               <Button className="bg-white text-monarca-terracotta hover:bg-white/90 font-bold">
-                {isEn ? 'Work With Us' : 'Trabaja Con Nosotros'}
+                {isEn ? 'Work With Kupuri Media' : 'Trabaja Con Kupuri Media'}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -285,8 +378,8 @@ const Index = () => {
           </h2>
           <p className="text-monarca-gray mb-6 text-sm">
             {isEn
-              ? 'Questions, tips, or feedback? We read every message.'
-              : '¿Preguntas, sugerencias o comentarios? Leemos todos los mensajes.'}
+              ? 'Questions, story tips, or partnership inquiries? We read every message.'
+              : '¿Preguntas, sugerencias de historias o consultas de alianzas? Leemos todos los mensajes.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <input
@@ -299,7 +392,7 @@ const Index = () => {
             </Button>
           </div>
           <p className="text-xs text-monarca-gray mt-3">
-            hola@lamonarcainternacional.com · @lamonarcaintl
+            hola@lamonarcainternacional.com · @lamonarcaintl · kupurimedia.com
           </p>
         </div>
       </div>

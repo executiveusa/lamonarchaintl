@@ -1,0 +1,176 @@
+{
+  "workflow": "daily-positive-edition",
+  "version": "1.0.0",
+  "description": "Daily editorial cycle for La Monarca Internacional — Kupuri Media",
+  "timezone": "America/Mexico_City",
+  "trigger": "daily",
+  "schedule": "0 7 * * *",
+  "steps": [
+    {
+      "id": "morning-briefing",
+      "time": "07:00",
+      "agent": "editor-in-chief",
+      "action": "generate-daily-brief",
+      "params": {
+        "sections": ["arte", "musica", "naturaleza", "vida_sustentable", "diseño", "viajes", "ia"],
+        "language": "es",
+        "stories_per_section": 1
+      }
+    },
+    {
+      "id": "assign-stories",
+      "time": "07:15",
+      "agent": "editor-in-chief",
+      "action": "assign-to-section-editors",
+      "depends_on": ["morning-briefing"],
+      "params": {
+        "assignment_strategy": "category-match",
+        "deadline": "10:00"
+      }
+    },
+    {
+      "id": "draft-arte",
+      "time": "07:30",
+      "agent": "arte-editor",
+      "action": "draft-story",
+      "params": { "section": "arte", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "draft-musica",
+      "time": "07:30",
+      "agent": "musica-editor",
+      "action": "draft-story",
+      "params": { "section": "musica", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "draft-naturaleza",
+      "time": "07:30",
+      "agent": "naturaleza-editor",
+      "action": "draft-story",
+      "params": { "section": "naturaleza", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "draft-vida-sustentable",
+      "time": "07:30",
+      "agent": "vida-sustentable-editor",
+      "action": "draft-story",
+      "params": { "section": "vida_sustentable", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "draft-diseno",
+      "time": "07:30",
+      "agent": "diseno-editor",
+      "action": "draft-story",
+      "params": { "section": "diseño", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "draft-viajes",
+      "time": "07:30",
+      "agent": "viajes-editor",
+      "action": "draft-story",
+      "params": { "section": "viajes", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "draft-ia",
+      "time": "07:30",
+      "agent": "ia-editor",
+      "action": "draft-story",
+      "params": { "section": "ia", "status": "drafting", "language": "es" }
+    },
+    {
+      "id": "copy-review",
+      "time": "10:00",
+      "agent": "copy-chief",
+      "action": "style-review",
+      "depends_on": ["draft-arte", "draft-musica", "draft-naturaleza", "draft-vida-sustentable", "draft-diseno", "draft-viajes", "draft-ia"],
+      "params": { "update_status": "editing" }
+    },
+    {
+      "id": "fact-check",
+      "time": "10:30",
+      "agent": "fact-checker",
+      "action": "verify-all-claims",
+      "depends_on": ["copy-review"],
+      "params": {
+        "update_status": "fact_check",
+        "flag_unverified": true,
+        "max_unverified_allowed": 1
+      }
+    },
+    {
+      "id": "translation",
+      "time": "13:00",
+      "agent": "translation-editor",
+      "action": "translate-es-to-en",
+      "depends_on": ["fact-check"],
+      "params": {
+        "source_language": "es",
+        "target_language": "en",
+        "update_status": "translation",
+        "fields": ["title_en", "dek_en", "content_en"]
+      }
+    },
+    {
+      "id": "visual-review",
+      "time": "13:30",
+      "agent": "visual-editor",
+      "action": "select-and-credit-images",
+      "depends_on": ["fact-check"],
+      "params": {
+        "update_status": "visual_ready",
+        "require_image_credit": true,
+        "diversity_check": true
+      }
+    },
+    {
+      "id": "affiliate-check",
+      "time": "14:00",
+      "agent": "affiliate-editor",
+      "action": "review-affiliate-opportunities",
+      "depends_on": ["visual-review"],
+      "params": {
+        "flag_if_non_null_affiliate": true,
+        "editorial_independence_check": true
+      }
+    },
+    {
+      "id": "final-approval",
+      "time": "17:00",
+      "agent": "editor-in-chief",
+      "action": "final-review-and-approve",
+      "depends_on": ["translation", "visual-review", "affiliate-check"],
+      "params": {
+        "approved_status": "approved",
+        "publish_to_supabase": true,
+        "notify_social_agent": true
+      }
+    },
+    {
+      "id": "social-distribution",
+      "time": "17:30",
+      "agent": "social-agent",
+      "action": "schedule-social-posts",
+      "depends_on": ["final-approval"],
+      "params": {
+        "platforms": ["instagram", "facebook", "x", "bluesky", "threads"],
+        "scheduler": "postiz",
+        "optimal_time": true
+      }
+    },
+    {
+      "id": "analytics-digest",
+      "time": "18:00",
+      "agent": "analytics-agent",
+      "action": "generate-daily-digest",
+      "params": {
+        "metrics": ["page_views", "social_reach", "newsletter_opens", "affiliate_clicks"],
+        "report_to": "editor-in-chief"
+      }
+    }
+  ],
+  "error_handling": {
+    "on_fact_check_failure": "return-to-section-editor",
+    "on_translation_failure": "flag-to-editor-in-chief",
+    "on_publish_failure": "retry-3-times-then-alert"
+  }
+}

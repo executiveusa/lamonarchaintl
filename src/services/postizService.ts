@@ -132,16 +132,15 @@ function buildCaption(
 }
 
 function buildHashtags(category: string, language: 'es' | 'en'): string {
-  const brandTags = '#LaMonarcaInternacional #KupariMedia #México #LatinAmerica';
+  const brandTags = '#LaMonarcaInternacional #KupuriMedia #México #LatinAmerica';
   const categoryMap: Record<string, string> = {
-    comunidad: '#Comunidad #Community #MexicoCity #CDMX',
     arte: '#Arte #ArteMexicano #Cultura #MexicanArt',
-    musica: '#Música #MúsicaMexicana #ArtistasLatinos',
-    juventud: '#Juventud #Jóvenes #YouthVoices #GenZ',
-    viajes: '#Viajes #Travel #VisitMexico #Turismo',
-    innovacion: '#Innovación #TechLatam #Emprendedores #Innovation',
-    entrevistas: '#Entrevistas #Interviews #Historias',
-    negocios: '#Negocios #Business #EmpresasMexicanas',
+    musica: '#Música #MúsicaMexicana #ArtistasLatinos #IndependienteMX',
+    naturaleza: '#Naturaleza #Conservación #BiodiversidadMX #NaturalezaMexicana',
+    vida_sustentable: '#VidaSustentable #SustainableLiving #EcoMéxico #Regenerativo',
+    diseño: '#Diseño #DiseñoMexicano #Artesanía #MexicanDesign',
+    viajes: '#Viajes #Travel #VisitMexico #TurismoSustentable',
+    ia: '#IA #InteligenciaArtificial #InnovaciónLatam #TechMexico',
   };
   return `${brandTags} ${categoryMap[category] || '#MexicoCity'}`;
 }

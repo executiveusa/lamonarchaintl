@@ -143,8 +143,8 @@ const Suscribirse: React.FC = () => {
           </h1>
           <p className="text-monarca-black/60 text-lg max-w-xl mx-auto">
             {language === 'en'
-              ? 'Positive bilingual journalism from Mexico — artists, community, youth, and culture. A Kupari Media publication. Cancel anytime.'
-              : 'Periodismo bilingüe positivo de México — artistas, comunidad, juventud y cultura. Una publicación de Kupari Media. Cancela cuando quieras.'}
+              ? 'Positive bilingual journalism from Mexico — art, music, nature, design, travel and innovation. A Kupuri Media publication. Cancel anytime.'
+              : 'Periodismo bilingüe positivo de México — arte, música, naturaleza, diseño, viajes e innovación. Una publicación de Kupuri Media. Cancela cuando quieras.'}
           </p>
         </div>
 

@@ -276,7 +276,7 @@ const PrimeraEdicion: React.FC = () => {
               { en: 'Food & Culture', es: 'Comida y Cultura', detail_en: 'The flavors defining Puerto Vallarta today', detail_es: 'Los sabores que definen Puerto Vallarta hoy', num: '5' },
               { en: 'Youth Section', es: 'Sección Juvenil', detail_en: 'Stories by and for young people', detail_es: 'Historias para y por jóvenes', num: '6' },
               { en: 'Business Directory', es: 'Directorio Comercial', detail_en: 'Local businesses worth supporting', detail_es: 'Negocios locales que merece la pena apoyar', num: '7' },
-              { en: 'Work With Kupari', es: 'Trabaja con Kupari', detail_en: 'How to get featured in Issue 2', detail_es: 'Cómo aparecer en la Edición 2', num: '8' },
+              { en: 'Work With Kupuri', es: 'Trabaja con Kupuri', detail_en: 'How to get featured in Issue 2', detail_es: 'Cómo aparecer en la Edición 2', num: '8' },
             ].map((section, i) => (
               <div key={i} className="border border-white/10 rounded-lg p-4">
                 <div className="text-monarca-amber font-black text-2xl mb-1">{section.num}</div>

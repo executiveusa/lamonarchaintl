@@ -15,14 +15,13 @@ const Footer: React.FC = () => {
   };
 
   const sections = [
-    { label: isEn ? 'Community' : 'Comunidad', path: '/categoria/comunidad' },
-    { label: isEn ? 'Art & Culture' : 'Arte y Cultura', path: '/categoria/arte' },
-    { label: isEn ? 'Music' : 'Música', path: '/music-blogs' },
-    { label: isEn ? 'Youth' : 'Juventud', path: '/categoria/juventud' },
+    { label: isEn ? 'Art' : 'Arte', path: '/categoria/arte' },
+    { label: isEn ? 'Music' : 'Música', path: '/categoria/musica' },
+    { label: isEn ? 'Nature' : 'Naturaleza', path: '/categoria/naturaleza' },
+    { label: isEn ? 'Sustainable Living' : 'Vida Sustentable', path: '/categoria/vida-sustentable' },
+    { label: isEn ? 'Design' : 'Diseño', path: '/categoria/diseno' },
     { label: isEn ? 'Travel' : 'Viajes', path: '/categoria/viajes' },
-    { label: isEn ? 'Innovation' : 'Innovación', path: '/categoria/innovacion' },
-    { label: isEn ? 'Interviews' : 'Entrevistas', path: '/categoria/entrevistas' },
-    { label: isEn ? 'Business' : 'Negocios', path: '/categoria/negocios' },
+    { label: isEn ? 'AI & Innovation' : 'IA e Innovación', path: '/categoria/ia' },
   ];
 
   return (
@@ -41,8 +40,8 @@ const Footer: React.FC = () => {
             </p>
             <p className="text-monarca-gray/80 text-sm mb-5 leading-relaxed">
               {isEn
-                ? 'Positive stories from Mexico and the world. A Kupari Media publication.'
-                : 'Historias positivas de México y el mundo. Una publicación de Kupari Media.'}
+                ? 'Positive stories from Mexico and the world. A Kupuri Media publication.'
+                : 'Historias positivas de México y el mundo. Una publicación de Kupuri Media.'}
             </p>
             <div className="flex space-x-3">
               <a href="https://instagram.com/lamonarcaintl" target="_blank" rel="noopener noreferrer"
@@ -62,10 +61,10 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Topics */}
+          {/* Sections */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-widest text-white/50 mb-4">
-              {isEn ? 'Topics' : 'Temas'}
+              {isEn ? 'Sections' : 'Secciones'}
             </h4>
             <ul className="space-y-2">
               {sections.map((s) => (
@@ -81,12 +80,17 @@ const Footer: React.FC = () => {
           {/* Company */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-widest text-white/50 mb-4">
-              {isEn ? 'Company' : 'Empresa'}
+              {isEn ? 'Kupuri Media' : 'Kupuri Media'}
             </h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/primera-edicion" className="text-monarca-gray hover:text-white text-sm transition-colors">
-                  {isEn ? 'First Issue' : 'Primera Edición'}
+                  {isEn ? 'First Issue — September 2026' : 'Primera Edición — Septiembre 2026'}
+                </Link>
+              </li>
+              <li>
+                <Link to="/papel-privado" className="text-monarca-amber hover:text-white text-sm transition-colors font-medium">
+                  {isEn ? 'Private Paper / Membership' : 'Papel Privado / Membresía'}
                 </Link>
               </li>
               <li>
@@ -100,18 +104,13 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/translator" className="text-monarca-gray hover:text-white text-sm transition-colors">
-                  {isEn ? 'Translator' : 'Traductor'}
-                </Link>
-              </li>
-              <li>
                 <a
                   href="https://directorio-kupuri.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-monarca-amber hover:text-white text-sm transition-colors font-medium"
                 >
-                  {isEn ? 'Kupari Directory™' : 'Directorio Kupari™'}
+                  {isEn ? 'Kupuri Directory™' : 'Directorio Kupuri™'}
                 </a>
               </li>
             </ul>
@@ -150,12 +149,12 @@ const Footer: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center gap-2 text-monarca-gray/60">
             <span>© {currentYear} La Monarca Internacional.</span>
             <span className="hidden md:inline">·</span>
-            <span>{isEn ? 'A Kupari Media Publication.' : 'Una Publicación de Kupari Media.'}</span>
+            <span>{isEn ? 'A Kupuri Media Publication.' : 'Una Publicación de Kupuri Media.'}</span>
             <span className="hidden md:inline">·</span>
             <span>{isEn ? 'All rights reserved.' : 'Todos los derechos reservados.'}</span>
           </div>
           <Link to="/admin" className="text-monarca-gray/30 hover:text-white text-xs transition-colors">
-            {isEn ? 'Admin' : 'Administrador'}
+            Admin
           </Link>
         </div>
       </div>
