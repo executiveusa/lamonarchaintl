@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import ArticleSection from '@/components/ArticleSection';
 import ArtSection from '@/components/ArtSection';
 import MusicSection from '@/components/MusicSection';
+import FoodSection from '@/components/FoodSection';
 import TravelSection from '@/components/TravelSection';
 import AIInnovationSection from '@/components/AIInnovationSection';
 import NewsletterSubscription from '@/components/NewsletterSubscription';
@@ -172,6 +173,11 @@ const Index = () => {
       {/* Music */}
       <div id="musica">
         <MusicSection />
+      </div>
+
+      {/* Food & Markets */}
+      <div id="comida">
+        <FoodSection />
       </div>
 
       {/* Travel */}
