@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import RudyDiazFeature from '@/components/RudyDiazFeature';
+import FoodMarketFeature from '@/components/FoodMarketFeature';
+import EffrainTourGuideFeature from '@/components/EffrainTourGuideFeature';
 import { useLanguageStore } from '@/services/articleService';
 import { useParams, Link } from 'react-router-dom';
 import { getMockArticles } from '@/utils/mockArticles';
@@ -106,6 +109,11 @@ const CategoriaPage: React.FC = () => {
           {desc && <p className="text-white/60 max-w-2xl">{desc}</p>}
         </div>
       </div>
+
+      {/* Featured Sections */}
+      {categoria === 'arte' && <RudyDiazFeature />}
+      {categoria === 'vida-sustentable' && <FoodMarketFeature />}
+      {categoria === 'viajes' && <EffrainTourGuideFeature />}
 
       {/* Articles */}
       <div className="container mx-auto px-6 py-12 max-w-5xl">
