@@ -87,8 +87,8 @@
       "id": "copy-chief",
       "name": "Copy Chief",
       "role": "specialist",
-      "description": "Final language review for style, tone, grammar, and adherence to Kupuri Media's positive-news voice. Applies the house style guide.",
-      "capabilities": ["proofread", "style-check", "tone-review"],
+      "description": "Final language review for style, tone, grammar, and adherence to Kupuri Media's positive-news voice. Applies the house style guide, including the anti-slop rubric: rejects filler, passive voice, vague claims, and formulaic AI phrasing.",
+      "capabilities": ["proofread", "style-check", "tone-review", "anti-slop-check"],
       "reports_to": "editor-in-chief"
     },
     {

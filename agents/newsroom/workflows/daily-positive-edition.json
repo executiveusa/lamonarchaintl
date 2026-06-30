@@ -83,7 +83,13 @@
       "agent": "copy-chief",
       "action": "style-review",
       "depends_on": ["draft-arte", "draft-musica", "draft-naturaleza", "draft-vida-sustentable", "draft-diseno", "draft-viajes", "draft-ia"],
-      "params": { "update_status": "editing" }
+      "params": {
+        "update_status": "editing",
+        "anti_slop_check": true,
+        "anti_slop_min_score": 35,
+        "anti_slop_dimensions": ["directness", "rhythm", "trust", "authenticity", "density"],
+        "on_fail": "return-to-section-editor"
+      }
     },
     {
       "id": "fact-check",
