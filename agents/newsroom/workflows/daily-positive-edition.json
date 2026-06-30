@@ -117,6 +117,21 @@
       }
     },
     {
+      "id": "copy-review-en",
+      "time": "13:15",
+      "agent": "copy-chief",
+      "action": "style-review-en",
+      "depends_on": ["translation"],
+      "params": {
+        "update_status": "translation",
+        "fields": ["title_en", "dek_en", "content_en"],
+        "anti_slop_check": true,
+        "anti_slop_min_score": 35,
+        "anti_slop_dimensions": ["directness", "rhythm", "trust", "authenticity", "density"],
+        "on_fail": "return-to-translation-editor"
+      }
+    },
+    {
       "id": "visual-review",
       "time": "13:30",
       "agent": "visual-editor",
@@ -144,7 +159,7 @@
       "time": "17:00",
       "agent": "editor-in-chief",
       "action": "final-review-and-approve",
-      "depends_on": ["translation", "visual-review", "affiliate-check"],
+      "depends_on": ["copy-review-en", "visual-review", "affiliate-check"],
       "params": {
         "approved_status": "approved",
         "publish_to_supabase": true,
@@ -177,6 +192,7 @@
   "error_handling": {
     "on_fact_check_failure": "return-to-section-editor",
     "on_translation_failure": "flag-to-editor-in-chief",
+    "on_copy_review_en_failure": "return-to-translation-editor",
     "on_publish_failure": "retry-3-times-then-alert"
   }
 }
