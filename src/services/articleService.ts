@@ -67,16 +67,16 @@ export const getArticleById = async (id: string, _language: string = 'es'): Prom
   return mapArticle(data);
 };
 
-export const searchArticles = async (query: string, _language: string = 'es'): Promise<Article[]> => {
-  const escaped = query.replace(/[%_]/g, '\\$&');
-  const { data, error } = await supabase
-    .from('articles')
-    .select('*')
-    .or(`title.ilike.%${escaped}%,content.ilike.%${escaped}%,summary.ilike.%${escaped}%`)
-    .order('created_at', { ascending: false });
+export const searchArticles = async (query: string, language: string = 'es'): Promise<Article[]> => {
+  const normalized = query.trim().toLocaleLowerCase();
+  if (!normalized) return fetchArticles(language);
 
-  if (error) throw error;
-  return (data ?? []).map(mapArticle);
+  const articles = await fetchArticles(language);
+  return articles.filter((article) =>
+    [article.title, article.content, article.summary]
+      .filter(Boolean)
+      .some((value) => String(value).toLocaleLowerCase().includes(normalized))
+  );
 };
 
 export const createArticle = async (article: Partial<Article>): Promise<Article> => {
