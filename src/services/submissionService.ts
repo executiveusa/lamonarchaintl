@@ -13,7 +13,7 @@ export async function subscribeToNewsletter(email: string, language: 'es' | 'en'
         source: 'website',
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'email' }
+      { onConflict: 'email', ignoreDuplicates: true }
     );
 
   if (error) throw error;
