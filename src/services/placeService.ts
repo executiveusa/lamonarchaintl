@@ -172,6 +172,18 @@ export async function addPlaceVerification(input: {
   if (placeError) throw placeError;
 }
 
+export async function publishVerifiedPlace(place: Place): Promise<Place> {
+  if (place.verification_status !== 'verified') {
+    throw new Error('Only verified places can be published.');
+  }
+
+  return updatePlace(place.id, { publication_status: 'published' } as Partial<PlaceInput>);
+}
+
+export async function unpublishPlace(placeId: string): Promise<Place> {
+  return updatePlace(placeId, { publication_status: 'draft' } as Partial<PlaceInput>);
+}
+
 export async function linkArticleToPlace(articleId: string, placeId: string, relationType: 'featured' | 'mentioned' | 'recommended' = 'mentioned') {
   const { error } = await db
     .from('article_places')
