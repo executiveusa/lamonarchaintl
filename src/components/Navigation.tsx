@@ -37,6 +37,7 @@ const Navigation = () => {
 
   const mainNavItems = [
     { label: language === 'en' ? 'Home' : 'Inicio', path: '/' },
+    { label: language === 'en' ? 'Local Guide' : 'La Guía', path: '/guia' },
     { label: language === 'en' ? 'First Issue' : 'Primera Edición', path: '/primera-edicion' },
     { label: language === 'en' ? 'Private Paper' : 'Papel Privado', path: '/papel-privado' },
     { label: language === 'en' ? 'Work With Us' : 'Trabaja con Nosotros', path: '/trabaja-con-nosotros' },
@@ -45,14 +46,12 @@ const Navigation = () => {
 
   return (
     <nav className="bg-monarca-cream text-monarca-black shadow-md sticky top-0 z-50">
-      {/* Top bar — brand + weather + lang toggle */}
       <div className="border-b border-monarca-amber/20">
         <div className="container mx-auto px-6 py-3 flex items-center justify-between gap-4">
           <Link to="/" className="font-display text-2xl md:text-3xl font-bold tracking-tight hover:text-monarca-terracotta transition-colors flex-shrink-0">
             La Monarca Internacional
           </Link>
 
-          {/* CDMX Hoy weather compact widget */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="hidden md:flex items-center gap-2 text-xs text-monarca-gray hover:text-monarca-terracotta transition-colors cursor-pointer bg-transparent border-none outline-none">
@@ -99,7 +98,6 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Main nav bar — desktop */}
       <div className="container mx-auto px-6">
         <div className="hidden md:flex items-center gap-1 py-2">
           {mainNavItems.map((item) => (
@@ -118,7 +116,6 @@ const Navigation = () => {
             </NavLink>
           ))}
 
-          {/* Categories dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="px-3 py-2 text-sm font-medium flex items-center gap-1 h-auto">
@@ -140,11 +137,8 @@ const Navigation = () => {
           </DropdownMenu>
         </div>
 
-        {/* Mobile nav */}
         <div className="md:hidden flex items-center justify-between py-2">
-          <span className="text-xs text-monarca-gray">
-            {language === 'en' ? 'Kupuri Media' : 'Kupuri Media'}
-          </span>
+          <span className="text-xs text-monarca-gray">Kupuri Media</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon" className="h-8 w-8">
