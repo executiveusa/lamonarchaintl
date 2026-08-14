@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { fetchAdminPlaces, Place } from '@/services/placeService';
+import AdminRouteTestForm from '@/components/AdminRouteTestForm';
 import {
   addTourStop,
   createWalkingTour,
@@ -145,7 +146,7 @@ const AdminTourForm = () => {
     try {
       setIsPublishing(true);
       await publishWalkingTour(tourId);
-      toast.success('Tour published. Database guard confirmed the minimum verified-stop requirements.');
+      toast.success('Tour published after verified-stop and real-world field-test gates passed.');
       await load();
     } catch (error) {
       console.error('Tour publishing failed:', error);
@@ -165,7 +166,7 @@ const AdminTourForm = () => {
           <div><Label htmlFor="tour-title-en">Title — English</Label><Input id="tour-title-en" value={titleEn} onChange={(e) => setTitleEn(e.target.value)} required /></div>
           <div><Label htmlFor="tour-slug">Slug</Label><Input id="tour-slug" value={slug} onChange={(e) => setSlug(e.target.value)} required /></div>
           <div><Label htmlFor="tour-neighborhood">Neighborhood / area</Label><Input id="tour-neighborhood" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} /></div>
-          <div><Label htmlFor="tour-duration">Duration (minutes)</Label><Input id="tour-duration" type="number" min="1" value={durationMinutes} onChange={(e) => setDurationMinutes(e.target.value)} /></div>
+          <div><Label htmlFor="tour-duration">Estimated duration (minutes)</Label><Input id="tour-duration" type="number" min="1" value={durationMinutes} onChange={(e) => setDurationMinutes(e.target.value)} /></div>
           <div><Label htmlFor="tour-meeting-point">Meeting point</Label><Input id="tour-meeting-point" value={meetingPoint} onChange={(e) => setMeetingPoint(e.target.value)} /></div>
           <div><Label htmlFor="tour-price-mxn">Price MXN</Label><Input id="tour-price-mxn" type="number" min="0" step="0.01" value={priceMxn} onChange={(e) => setPriceMxn(e.target.value)} /></div>
           <div><Label htmlFor="tour-price-usd">Price USD</Label><Input id="tour-price-usd" type="number" min="0" step="0.01" value={priceUsd} onChange={(e) => setPriceUsd(e.target.value)} /></div>
@@ -201,9 +202,11 @@ const AdminTourForm = () => {
         {eligiblePlaces.length === 0 && <p className="text-sm text-amber-700 mt-4">No eligible stops yet. Complete real place verification and publication first.</p>}
       </section>
 
+      <AdminRouteTestForm />
+
       <section className="bg-white rounded-lg border p-6">
         <h2 className="text-xl font-semibold">Publication gate</h2>
-        <p className="text-sm text-gray-600 mt-1">The database refuses publication unless the route has at least two stops and all stops still qualify as verified, published places.</p>
+        <p className="text-sm text-gray-600 mt-1">Publication requires at least two verified, published stops and a passing real-world field test recorded against the current stop count.</p>
         <Button type="button" onClick={handlePublish} disabled={!tourId || isPublishing} className="mt-4">{isPublishing ? 'Checking…' : 'Publish selected tour'}</Button>
       </section>
     </div>
