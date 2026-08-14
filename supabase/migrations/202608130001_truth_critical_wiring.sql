@@ -24,14 +24,16 @@ alter table public.newsletter_subscribers enable row level security;
 alter table public.contact_submissions enable row level security;
 
 -- Public visitors may subscribe themselves. No public SELECT/UPDATE/DELETE policy is created.
-create policy if not exists "public can subscribe"
+drop policy if exists "public can subscribe" on public.newsletter_subscribers;
+create policy "public can subscribe"
 on public.newsletter_subscribers
 for insert
 to anon, authenticated
 with check (char_length(email) between 3 and 320);
 
 -- Public visitors may submit an inquiry. No public SELECT/UPDATE/DELETE policy is created.
-create policy if not exists "public can submit contact"
+drop policy if exists "public can submit contact" on public.contact_submissions;
+create policy "public can submit contact"
 on public.contact_submissions
 for insert
 to anon, authenticated
