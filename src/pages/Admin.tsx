@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { checkIsAdmin } from '../services/adminService';
 import AdminArticleForm from '../components/AdminArticleForm';
+import AdminEditorialWorkflow from '../components/AdminEditorialWorkflow';
 import AdminInterviewForm from '../components/AdminInterviewForm';
 import AdminPlaceForm from '../components/AdminPlaceForm';
 import AdminTourForm from '../components/AdminTourForm';
@@ -12,7 +13,7 @@ import { Skeleton } from '../components/ui/skeleton';
 const Admin = () => {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [activeTab, setActiveTab] = useState("articles");
+  const [activeTab, setActiveTab] = useState("workflow");
 
   useEffect(() => {
     const verifyAdmin = async () => {
@@ -53,15 +54,19 @@ const Admin = () => {
       <Navigation />
       <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <h1 className="text-3xl font-bold mb-2">La Monarca Editorial Desk</h1>
-        <p className="text-gray-600 mb-6">Capture interviews, publish stories, verify places, and turn the trusted catalog into real walking-tour products.</p>
+        <p className="text-gray-600 mb-6">Move real interviews through evidence gates, publish verified local stories, maintain La Guía, and turn the trusted catalog into field-tested walking-tour products.</p>
 
         <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="mb-6">
+          <TabsList className="mb-6 flex flex-wrap h-auto">
+            <TabsTrigger value="workflow">Workflow</TabsTrigger>
             <TabsTrigger value="interviews">Interviews</TabsTrigger>
             <TabsTrigger value="articles">Stories</TabsTrigger>
             <TabsTrigger value="places">Verified Places</TabsTrigger>
             <TabsTrigger value="tours">Walking Tours</TabsTrigger>
           </TabsList>
+          <TabsContent value="workflow">
+            <AdminEditorialWorkflow />
+          </TabsContent>
           <TabsContent value="interviews">
             <AdminInterviewForm />
           </TabsContent>
@@ -77,8 +82,9 @@ const Admin = () => {
                   <li>Keep titles concise and descriptive.</li>
                   <li>Include a useful summary for discovery and SEO.</li>
                   <li>Do not present machine translation as human-reviewed translation.</li>
+                  <li>Do not mark a workflow approved until consent, source material, and facts are checked.</li>
                   <li>Link a place record only when the real-world entity has been checked.</li>
-                  <li>Interview-driven stories can become the narrative material for future tour stops.</li>
+                  <li>Only published stories tied to verified, published places may become route candidates.</li>
                 </ul>
               </div>
             </div>
