@@ -99,7 +99,7 @@ declare
   stop_count integer;
   invalid_stop_count integer;
 begin
-  if new.status = 'published' and old.status is distinct from 'published' then
+  if new.status = 'published' and (tg_op = 'INSERT' or old.status is distinct from 'published') then
     select count(*) into stop_count
     from public.walking_tour_stops
     where tour_id = new.id;
@@ -125,6 +125,6 @@ $$;
 
 drop trigger if exists walking_tour_publish_guard on public.walking_tours;
 create trigger walking_tour_publish_guard
-before update of status on public.walking_tours
+before insert or update of status on public.walking_tours
 for each row
 execute function public.validate_walking_tour_publish();
