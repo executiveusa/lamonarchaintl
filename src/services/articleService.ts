@@ -13,7 +13,7 @@ export interface Article {
   language?: string;
   summary?: string;
   image_url?: string;
-  status?: 'published' | 'draft' | 'archived';
+  publication_status?: 'published' | 'draft' | 'archived';
   created_at?: string;
   updated_at?: string;
 }
@@ -41,6 +41,7 @@ const mapArticle = (row: any): Article => ({
   thumbnail: row.image_url ?? undefined,
   category: row.category,
   author: row.author || 'La Monarca Internacional',
+  publication_status: row.publication_status ?? 'published',
   created_at: row.created_at,
   updated_at: row.updated_at,
   date: row.created_at,
@@ -50,7 +51,18 @@ export const fetchArticles = async (_language: string = 'es'): Promise<Article[]
   const { data, error } = await supabase
     .from('articles')
     .select('*')
+    .eq('publication_status', 'published')
     .order('created_at', { ascending: false });
+
+  if (error) throw error;
+  return (data ?? []).map(mapArticle);
+};
+
+export const fetchAdminArticles = async (): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from('articles')
+    .select('*')
+    .order('updated_at', { ascending: false });
 
   if (error) throw error;
   return (data ?? []).map(mapArticle);
@@ -61,6 +73,7 @@ export const getArticleById = async (id: string, _language: string = 'es'): Prom
     .from('articles')
     .select('*')
     .eq('id', id)
+    .eq('publication_status', 'published')
     .single();
 
   if (error) throw error;
@@ -90,6 +103,7 @@ export const createArticle = async (article: Partial<Article>): Promise<Article>
         image_url: article.image_url || null,
         category: article.category || 'general',
         author: article.author || 'La Monarca Internacional',
+        publication_status: 'draft',
       },
     ])
     .select()
@@ -104,5 +118,5 @@ export const publishMultilingualArticle = async (
   languages: string[] = ['ES', 'EN']
 ): Promise<void> => {
   await createArticle(article);
-  console.info(`Primary article saved. Requested language workflow: ${languages.join(', ')}`);
+  console.info(`Draft article saved. Requested language workflow: ${languages.join(', ')}. Publish through the governed editorial workflow after review.`);
 };
