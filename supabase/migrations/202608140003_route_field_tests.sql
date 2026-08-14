@@ -47,7 +47,7 @@ declare
   invalid_stop_count integer;
   passing_test_count integer;
 begin
-  if new.status = 'published' and old.status is distinct from 'published' then
+  if new.status = 'published' and (tg_op = 'INSERT' or old.status is distinct from 'published') then
     select count(*) into stop_count
     from public.walking_tour_stops
     where tour_id = new.id;
@@ -80,3 +80,11 @@ begin
   return new;
 end;
 $$;
+
+-- Recreate the trigger so the strengthened guard applies to both direct published inserts
+-- and later draft-to-published updates.
+drop trigger if exists walking_tour_publish_guard on public.walking_tours;
+create trigger walking_tour_publish_guard
+before insert or update of status on public.walking_tours
+for each row
+execute function public.validate_walking_tour_publish();
