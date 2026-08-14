@@ -1,84 +1,56 @@
+# La Monarca Internacional
 
-# Universal Translator App
+La Monarca Internacional is a bilingual local publication and verified cultural guide for Mexico, beginning with Puerto Vallarta.
 
-This application provides real-time translation services through a React frontend and Flask backend API, using the DeepL translation service.
+## North star
 
-## Prerequisites
+Real interview / local story → verified place → La Guía → curated route → real-world field test → paid walking tour → repeatable neighborhood routes.
 
-- Node.js and npm for the React frontend
-- Python 3.7+ for the Flask backend
-- pip (Python package installer)
+## Product model
 
-## Setup Instructions
+### Publication first
+Stories and interviews create trust. La Monarca is not a generic business directory and does not publish scraped listings, invented reviews, fake metrics, or unverified recommendations.
 
-### Frontend Setup
-The frontend is already configured in the React application.
+### Verified local guide
+Real-world places live in structured `places` records. A place must be verified and separately approved for publication before it can appear publicly in La Guía.
 
-### Postiz Setup
+### Editorial provenance
+Private interview records preserve source provenance, consent state, notes, transcript/recording links, and relationships to stories or places. These records are editorial infrastructure, not public content by default.
 
-Social publishing is configured through Postiz environment variables. Copy `.env.example` to `.env.local`, fill in the Postiz API key and channel IDs, and follow `docs/postiz-setup.md` for the manual OAuth checklist.
+### Walking tours
+Walking tours are monetization products built from the verified place catalog. Public tour stops must reference verified, published places.
 
-### Backend Setup
-1. Install the required Python packages:
-```bash
-pip install flask flask-cors requests
+A route is not considered sellable because it exists in software. Before publication it must pass a recorded real-world field test covering actual duration, route flow, safety, accessibility, heat/rest needs, and business readiness.
+
+## Current development gates
+
+1. Truth-critical wiring
+2. Verified local publishing engine
+3. First real interviews and verified place records
+4. First 3–5 stop route hypothesis
+5. Physical route test and corrections
+6. Pricing/booking only after the route works in the real world
+7. Production deployment after product gates are complete
+
+## Data principles
+
+- GitHub is the source of truth for application code and migrations.
+- Supabase/Postgres is the intended portable canonical data store.
+- Row Level Security is required for durable production use.
+- Public claims require evidence.
+- Human approval is required for real-world verification and publication decisions.
+
+## Development
+
+```sh
+npm install
+npm run dev
 ```
 
-2. DeepL API
-The application is configured to use the DeepL translation API. Store the key in `DEEPL_API_KEY` or your deployment secret manager; do not commit real API keys.
+Build:
 
-3. Run the Flask API:
-```bash
-python universal_translator.py
-```
-The API will run on http://localhost:5000.
-
-## Using the Application
-
-1. Navigate to the Translator page in the application
-2. Enter text to be translated
-3. Select the target language
-4. Click the "Translate" button
-
-## API Endpoints
-
-### POST /translate
-Translates text to a specified language.
-
-**Request Body:**
-```json
-{
-  "text": "Hello world",
-  "target_language": "es",
-  "source_language": "en" // Optional
-}
+```sh
+npm run build
 ```
 
-**Response:**
-```json
-{
-  "original_text": "Hello world",
-  "translated_text": "Hola mundo",
-  "target_language": "es",
-  "service": "DeepL API"
-}
-```
-
-## Fallback Mechanism
-If the DeepL API is unavailable or doesn't support a requested language, the application will automatically fall back to using mock translations for demonstration purposes.
-
-## Supported Languages
-The following languages are supported through DeepL:
-- English (en)
-- Spanish (es)
-- French (fr)
-- German (de)
-- Japanese (ja)
-- Chinese (zh)
-- Portuguese (pt)
-- Russian (ru)
-- Korean (ko)
-
-Additional languages are supported through mock translations:
-- Arabic (ar)
-- Hindi (hi)
+Vercel output directory: `dist`.
