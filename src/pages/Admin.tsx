@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 import { checkIsAdmin } from '../services/adminService';
 import AdminArticleForm from '../components/AdminArticleForm';
 import AdminPlaceForm from '../components/AdminPlaceForm';
+import AdminTourForm from '../components/AdminTourForm';
 import Navigation from '../components/Navigation';
 import { Skeleton } from '../components/ui/skeleton';
 
@@ -51,12 +52,13 @@ const Admin = () => {
       <Navigation />
       <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <h1 className="text-3xl font-bold mb-2">La Monarca Editorial Desk</h1>
-        <p className="text-gray-600 mb-6">Publish stories and manage the human verification queue for La Guía Monarca.</p>
+        <p className="text-gray-600 mb-6">Publish stories, manage verified places, and turn the verified catalog into real walking-tour products.</p>
 
         <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="mb-6">
             <TabsTrigger value="articles">Stories</TabsTrigger>
             <TabsTrigger value="places">Verified Places</TabsTrigger>
+            <TabsTrigger value="tours">Walking Tours</TabsTrigger>
           </TabsList>
           <TabsContent value="articles" className="space-y-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -66,17 +68,21 @@ const Admin = () => {
               <div className="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
                 <h3 className="text-lg font-semibold mb-4">Editorial checklist</h3>
                 <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                  <li>Use real people, places, sources, and images.</li>
+                  <li>Use real people, places, sources, interviews, and images.</li>
                   <li>Keep titles concise and descriptive.</li>
                   <li>Include a useful summary for discovery and SEO.</li>
                   <li>Do not present machine translation as human-reviewed translation.</li>
                   <li>Link a place record only when the real-world entity has been checked.</li>
+                  <li>Interview-driven stories can become the narrative material for future tour stops.</li>
                 </ul>
               </div>
             </div>
           </TabsContent>
           <TabsContent value="places">
             <AdminPlaceForm />
+          </TabsContent>
+          <TabsContent value="tours">
+            <AdminTourForm />
           </TabsContent>
         </Tabs>
       </div>
