@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useLanguageStore } from '@/services/articleService';
-import { Moon, Sun, ChevronDown, Menu, Newspaper, Sun as SunIcon, Wind, Droplets } from 'lucide-react';
+import { Moon, Sun, ChevronDown, Menu, Newspaper } from 'lucide-react';
 import { Button } from './ui/button';
 import {
   DropdownMenu,
@@ -38,6 +38,7 @@ const Navigation = () => {
   const mainNavItems = [
     { label: language === 'en' ? 'Home' : 'Inicio', path: '/' },
     { label: language === 'en' ? 'Local Guide' : 'La Guía', path: '/guia' },
+    { label: language === 'en' ? 'Walking Tours' : 'Recorridos', path: '/recorridos' },
     { label: language === 'en' ? 'First Issue' : 'Primera Edición', path: '/primera-edicion' },
     { label: language === 'en' ? 'Private Paper' : 'Papel Privado', path: '/papel-privado' },
     { label: language === 'en' ? 'Work With Us' : 'Trabaja con Nosotros', path: '/trabaja-con-nosotros' },
@@ -51,31 +52,6 @@ const Navigation = () => {
           <Link to="/" className="font-display text-2xl md:text-3xl font-bold tracking-tight hover:text-monarca-terracotta transition-colors flex-shrink-0">
             La Monarca Internacional
           </Link>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="hidden md:flex items-center gap-2 text-xs text-monarca-gray hover:text-monarca-terracotta transition-colors cursor-pointer bg-transparent border-none outline-none">
-                <SunIcon className="h-3.5 w-3.5 text-monarca-amber" />
-                <span className="font-semibold text-monarca-black">26°C</span>
-                <span className="text-monarca-gray/70">CDMX</span>
-                <ChevronDown className="h-3 w-3" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-52 p-3">
-              <div className="text-xs font-bold text-monarca-black mb-1">
-                {language === 'en' ? 'Mexico City Today' : 'CDMX Hoy'}
-              </div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-3xl font-black text-monarca-terracotta">26°</span>
-                <span className="text-monarca-gray text-xs">{language === 'en' ? 'Sunny' : 'Soleado'}</span>
-              </div>
-              <div className="flex items-center justify-between text-monarca-gray/70 text-xs pt-2 border-t border-gray-100">
-                <span className="flex items-center gap-1"><SunIcon className="h-3 w-3 text-monarca-amber" /> UV 6</span>
-                <span className="flex items-center gap-1"><Wind className="h-3 w-3" /> 12km/h</span>
-                <span className="flex items-center gap-1"><Droplets className="h-3 w-3" /> 45%</span>
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
 
           <div className="hidden md:flex items-center gap-1 text-xs text-monarca-gray">
             <Newspaper className="h-3 w-3" />
