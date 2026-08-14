@@ -6,6 +6,7 @@ import ResetPassword from '@/pages/ResetPassword';
 import Translator from '@/pages/Translator';
 import Admin from '@/pages/Admin';
 import Guide from '@/pages/Guide';
+import WalkingTours from '@/pages/WalkingTours';
 import NotFound from '@/pages/NotFound';
 import { Toaster } from 'sonner';
 import MusicBlogs from '@/pages/MusicBlogs';
@@ -25,6 +26,7 @@ function App() {
         <Route path="/translator" element={<Translator />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/guia" element={<Guide />} />
+        <Route path="/recorridos" element={<WalkingTours />} />
         <Route path="/music-blogs" element={<MusicBlogs />} />
         <Route path="/suscribirse" element={<Suscribirse />} />
         <Route path="/primera-edicion" element={<PrimeraEdicion />} />
