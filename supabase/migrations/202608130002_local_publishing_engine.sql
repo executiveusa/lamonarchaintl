@@ -32,7 +32,8 @@ create table if not exists public.places (
   verified_at timestamptz,
   last_checked_at timestamptz,
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  constraint places_publish_requires_verification check (publication_status <> 'published' or verification_status = 'verified')
 );
 
 create table if not exists public.place_verifications (
@@ -73,7 +74,6 @@ alter table public.place_verifications enable row level security;
 alter table public.article_places enable row level security;
 alter table public.place_category_links enable row level security;
 
--- Public readers can browse categories and only places that have passed the editorial verification gate.
 drop policy if exists "public can read place categories" on public.place_categories;
 create policy "public can read place categories"
 on public.place_categories
@@ -88,7 +88,6 @@ for select
 to anon, authenticated
 using (publication_status = 'published' and verification_status = 'verified');
 
--- Relationship rows expose IDs only; the place table still enforces the public verification gate.
 drop policy if exists "public can read article place links" on public.article_places;
 create policy "public can read article place links"
 on public.article_places
@@ -145,7 +144,7 @@ to authenticated
 using (public.is_admin(auth.uid()))
 with check (public.is_admin(auth.uid()));
 
--- Seed only taxonomy, never businesses. Business records must be researched and verified before publication.
+-- Seed taxonomy only. No business record is preloaded or scraped.
 insert into public.place_categories (slug, name_es, name_en)
 values
   ('comer', 'Comer', 'Eat'),
