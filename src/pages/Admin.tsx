@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { checkIsAdmin } from '../services/adminService';
 import AdminArticleForm from '../components/AdminArticleForm';
+import AdminInterviewForm from '../components/AdminInterviewForm';
 import AdminPlaceForm from '../components/AdminPlaceForm';
 import AdminTourForm from '../components/AdminTourForm';
 import Navigation from '../components/Navigation';
@@ -52,14 +53,18 @@ const Admin = () => {
       <Navigation />
       <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <h1 className="text-3xl font-bold mb-2">La Monarca Editorial Desk</h1>
-        <p className="text-gray-600 mb-6">Publish stories, manage verified places, and turn the verified catalog into real walking-tour products.</p>
+        <p className="text-gray-600 mb-6">Capture interviews, publish stories, verify places, and turn the trusted catalog into real walking-tour products.</p>
 
         <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="mb-6">
+            <TabsTrigger value="interviews">Interviews</TabsTrigger>
             <TabsTrigger value="articles">Stories</TabsTrigger>
             <TabsTrigger value="places">Verified Places</TabsTrigger>
             <TabsTrigger value="tours">Walking Tours</TabsTrigger>
           </TabsList>
+          <TabsContent value="interviews">
+            <AdminInterviewForm />
+          </TabsContent>
           <TabsContent value="articles" className="space-y-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
