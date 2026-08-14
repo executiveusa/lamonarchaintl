@@ -64,7 +64,10 @@ const AdminEditorialWorkflow = () => {
 
   const handleCreate = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!title.trim()) return toast.error('Working title is required.');
+    if (!title.trim()) {
+      toast.error('Working title is required.');
+      return;
+    }
     try {
       setIsCreating(true);
       await createEditorialWorkItem({
@@ -73,13 +76,18 @@ const AdminEditorialWorkflow = () => {
         placeId: placeId || undefined,
         notes: notes || undefined,
       });
-      setTitle(''); setInterviewId(''); setPlaceId(''); setNotes('');
+      setTitle('');
+      setInterviewId('');
+      setPlaceId('');
+      setNotes('');
       toast.success('Editorial work item created. Nothing is public yet.');
       await load();
     } catch (error) {
       console.error('Editorial work item creation failed:', error);
       toast.error('Could not create the work item.');
-    } finally { setIsCreating(false); }
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   const patch = async (id: string, value: Parameters<typeof updateEditorialWorkItem>[1]) => {
@@ -138,7 +146,7 @@ const AdminEditorialWorkflow = () => {
                     </div>
                   </div>
                   <select value={item.stage} onChange={(e) => patch(item.id, { stage: e.target.value as EditorialStage })} className="h-9 rounded-md border border-input bg-background px-3 text-sm">
-                    {STAGES.map((stage) => <option key={stage} value={stage}>{stage.replaceAll('_', ' ')}</option>)}
+                    {STAGES.map((stage) => <option key={stage} value={stage}>{stage.split('_').join(' ')}</option>)}
                   </select>
                 </div>
 
