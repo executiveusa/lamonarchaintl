@@ -1,84 +1,82 @@
+# La Monarca Internacional
 
-# Universal Translator App
+La Monarca Internacional is a bilingual cultural newspaper and editorial platform focused on the people, creativity, stories, and ideas shaping Mexico and Latin America.
 
-This application provides real-time translation services through a React frontend and Flask backend API, using the DeepL translation service.
+The platform publishes stories across arts, music, food, travel, design, nature, community, and innovation while supporting a modern editorial workflow for digital and print experiences.
 
-## Prerequisites
+## Product Overview
 
-- Node.js and npm for the React frontend
-- Python 3.7+ for the Flask backend
-- pip (Python package installer)
+La Monarca provides:
 
-## Setup Instructions
+- Bilingual editorial content (Spanish / English)
+- Article discovery and category browsing
+- Search and reader engagement
+- Newsletter subscriptions
+- Editorial team and contributor workflows
+- Print edition experiences
+- Private membership concepts through Papel Privado
+- Social distribution workflows
 
-### Frontend Setup
-The frontend is already configured in the React application.
+## Technology
 
-### Postiz Setup
+- React + TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- shadcn/Radix UI components
+- Supabase integration
 
-Social publishing is configured through Postiz environment variables. Copy `.env.example` to `.env.local`, fill in the Postiz API key and channel IDs, and follow `docs/postiz-setup.md` for the manual OAuth checklist.
+## Local Development
 
-### Backend Setup
-1. Install the required Python packages:
+Install dependencies:
+
 ```bash
-pip install flask flask-cors requests
+npm install
 ```
 
-2. DeepL API
-The application is configured to use the DeepL translation API. Store the key in `DEEPL_API_KEY` or your deployment secret manager; do not commit real API keys.
+Start development:
 
-3. Run the Flask API:
 ```bash
-python universal_translator.py
-```
-The API will run on http://localhost:5000.
-
-## Using the Application
-
-1. Navigate to the Translator page in the application
-2. Enter text to be translated
-3. Select the target language
-4. Click the "Translate" button
-
-## API Endpoints
-
-### POST /translate
-Translates text to a specified language.
-
-**Request Body:**
-```json
-{
-  "text": "Hello world",
-  "target_language": "es",
-  "source_language": "en" // Optional
-}
+npm run dev
 ```
 
-**Response:**
-```json
-{
-  "original_text": "Hello world",
-  "translated_text": "Hola mundo",
-  "target_language": "es",
-  "service": "DeepL API"
-}
+Build production assets:
+
+```bash
+npm run build
 ```
 
-## Fallback Mechanism
-If the DeepL API is unavailable or doesn't support a requested language, the application will automatically fall back to using mock translations for demonstration purposes.
+Run lint checks:
 
-## Supported Languages
-The following languages are supported through DeepL:
-- English (en)
-- Spanish (es)
-- French (fr)
-- German (de)
-- Japanese (ja)
-- Chinese (zh)
-- Portuguese (pt)
-- Russian (ru)
-- Korean (ko)
+```bash
+npm run lint
+```
 
-Additional languages are supported through mock translations:
-- Arabic (ar)
-- Hindi (hi)
+## Environment
+
+Copy `.env.example` to your local environment file and configure required services.
+
+Never commit production secrets or API keys.
+
+## Architecture Notes
+
+The application is organized around:
+
+- `src/pages` — application routes and experiences
+- `src/components` — reusable UI and editorial components
+- `src/services` — external data and application services
+- `src/lib` — shared utilities and integrations
+
+## Production Readiness Roadmap
+
+Current hardening work includes:
+
+- Verifying production data ownership
+- Completing database security review
+- Removing development-only content fallbacks
+- Improving editorial workflows
+- Maintaining documentation parity with the codebase
+
+## Mission
+
+To create a trusted bilingual publication celebrating the culture, creativity, and human stories of Mexico and Latin America.
