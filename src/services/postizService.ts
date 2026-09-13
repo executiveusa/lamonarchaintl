@@ -1,0 +1,194 @@
+import axios from 'axios';
+
+const POSTIZ_BASE_URL = import.meta.env.VITE_POSTIZ_BASE_URL || 'https://api.postiz.com/public/v1';
+const POSTIZ_API_KEY = import.meta.env.VITE_POSTIZ_API_KEY || '';
+
+const POSTIZ_INTEGRATION_IDS: Record<string, string> = {
+  instagram: import.meta.env.VITE_POSTIZ_IG_ID || '',
+  facebook: import.meta.env.VITE_POSTIZ_FB_ID || '',
+  x: import.meta.env.VITE_POSTIZ_X_ID || '',
+  threads: import.meta.env.VITE_POSTIZ_THREADS_ID || '',
+  bluesky: import.meta.env.VITE_POSTIZ_BSKY_ID || '',
+  linkedin: import.meta.env.VITE_POSTIZ_LI_ID || '',
+};
+
+interface PostizPost {
+  type: 'now' | 'schedule';
+  date: string;
+  shortLink: boolean;
+  tags: string[];
+  posts: Array<{
+    integration: { id: string };
+    value: Array<{
+      content: string;
+      image: Array<{ id?: string; path: string }>;
+    }>;
+    settings: Record<string, unknown>;
+  }>;
+}
+
+interface PostizScheduleResult {
+  id: string;
+  status: 'scheduled' | 'draft' | 'published';
+  scheduledAt: string;
+  platforms: string[];
+}
+
+const postizApi = axios.create({
+  baseURL: POSTIZ_BASE_URL.replace(/\/$/, ''),
+  headers: {
+    Authorization: POSTIZ_API_KEY,
+    'Content-Type': 'application/json',
+  },
+});
+
+export async function scheduleArticlePost(
+  article: {
+    title: string;
+    summary: string;
+    url: string;
+    imageUrl?: string;
+    category: string;
+    language: 'es' | 'en';
+  },
+  platforms: string[] = ['instagram', 'facebook', 'x', 'threads'],
+  scheduledAt?: Date
+): Promise<PostizScheduleResult | null> {
+  if (!POSTIZ_API_KEY) {
+    console.warn('[Postiz] No API key configured. Set VITE_POSTIZ_API_KEY to enable auto-publishing.');
+    return null;
+  }
+
+  const configuredPlatforms = platforms.filter((platform) => POSTIZ_INTEGRATION_IDS[platform]);
+  if (configuredPlatforms.length === 0) {
+    console.warn('[Postiz] No integration IDs configured for selected platforms.');
+    return null;
+  }
+
+  const hashtags = buildHashtags(article.category, article.language);
+  const caption = buildCaption(article, hashtags);
+  const scheduleTime = scheduledAt || getNextSlot();
+
+  try {
+    const payload: PostizPost = {
+      type: scheduledAt ? 'schedule' : 'now',
+      date: scheduleTime.toISOString(),
+      shortLink: false,
+      tags: [],
+      posts: configuredPlatforms.map((platform) => ({
+        integration: { id: POSTIZ_INTEGRATION_IDS[platform] },
+        value: [
+          {
+            content: caption,
+            image: article.imageUrl ? [{ path: article.imageUrl }] : [],
+          },
+        ],
+        settings: getPlatformSettings(platform),
+      })),
+    };
+
+    const { data } = await postizApi.post('/posts', payload);
+    return {
+      id: data?.id ?? data?.posts?.[0]?.id ?? `postiz-${Date.now()}`,
+      status: scheduledAt ? 'scheduled' : 'published',
+      scheduledAt: scheduleTime.toISOString(),
+      platforms: configuredPlatforms,
+    };
+  } catch (err) {
+    console.error('[Postiz] Failed to schedule post:', err);
+    return null;
+  }
+}
+
+export async function getScheduledPosts(limit = 10): Promise<PostizScheduleResult[]> {
+  if (!POSTIZ_API_KEY) return getMockScheduledPosts();
+  try {
+    const { data } = await postizApi.get('/posts', { params: { limit, status: 'scheduled' } });
+    return data?.posts ?? [];
+  } catch {
+    return getMockScheduledPosts();
+  }
+}
+
+export async function getPublishedPosts(limit = 6): Promise<PostizScheduleResult[]> {
+  if (!POSTIZ_API_KEY) return getMockPublishedPosts();
+  try {
+    const { data } = await postizApi.get('/posts', { params: { limit, status: 'published' } });
+    return data?.posts ?? [];
+  } catch {
+    return getMockPublishedPosts();
+  }
+}
+
+function buildCaption(
+  article: { title: string; summary: string; url: string; language: 'es' | 'en' },
+  hashtags: string
+): string {
+  const cta = article.language === 'es'
+    ? `Lee más: ${article.url}\n\n${hashtags}`
+    : `Full story: ${article.url}\n\n${hashtags}`;
+
+  return `${article.title}\n\n${article.summary}\n\n${cta}`;
+}
+
+function buildHashtags(category: string, language: 'es' | 'en'): string {
+  const brandTags = '#LaMonarcaInternacional #KupuriMedia #México #LatinAmerica';
+  const categoryMap: Record<string, string> = {
+    arte: '#Arte #ArteMexicano #Cultura #MexicanArt',
+    musica: '#Música #MúsicaMexicana #ArtistasLatinos #IndependienteMX',
+    naturaleza: '#Naturaleza #Conservación #BiodiversidadMX #NaturalezaMexicana',
+    vida_sustentable: '#VidaSustentable #SustainableLiving #EcoMéxico #Regenerativo',
+    diseño: '#Diseño #DiseñoMexicano #Artesanía #MexicanDesign',
+    viajes: '#Viajes #Travel #VisitMexico #TurismoSustentable',
+    ia: '#IA #InteligenciaArtificial #InnovaciónLatam #TechMexico',
+  };
+  return `${brandTags} ${categoryMap[category] || '#MexicoCity'}`;
+}
+
+function getNextSlot(): Date {
+  const now = new Date();
+  const slots = [10, 15, 19];
+  const cdmxOffset = -6;
+  const cdmxHour = (now.getUTCHours() + cdmxOffset + 24) % 24;
+  const nextSlotHour = slots.find((h) => h > cdmxHour) ?? slots[0];
+  const next = new Date(now);
+  if (nextSlotHour <= cdmxHour) next.setDate(next.getDate() + 1);
+  next.setUTCHours(nextSlotHour - cdmxOffset, 0, 0, 0);
+  return next;
+}
+
+function getPlatformSettings(platform: string): Record<string, unknown> {
+  const settings: Record<string, Record<string, unknown>> = {
+    instagram: { __type: 'instagram', post_type: 'post' },
+    facebook: { __type: 'facebook' },
+    x: { __type: 'x', who_can_reply_post: 'everyone' },
+    threads: { __type: 'threads' },
+    bluesky: { __type: 'bluesky' },
+    linkedin: { __type: 'linkedin' },
+  };
+
+  return settings[platform] ?? { __type: platform };
+}
+
+function getMockScheduledPosts(): PostizScheduleResult[] {
+  return [
+    { id: 'mock-1', status: 'scheduled', scheduledAt: getNextSlot().toISOString(), platforms: ['instagram', 'facebook'] },
+    { id: 'mock-2', status: 'scheduled', scheduledAt: new Date(Date.now() + 3600000 * 5).toISOString(), platforms: ['x', 'threads'] },
+  ];
+}
+
+function getMockPublishedPosts(): PostizScheduleResult[] {
+  return [
+    { id: 'pub-1', status: 'published', scheduledAt: new Date(Date.now() - 3600000 * 2).toISOString(), platforms: ['instagram', 'facebook', 'x'] },
+    { id: 'pub-2', status: 'published', scheduledAt: new Date(Date.now() - 3600000 * 6).toISOString(), platforms: ['threads', 'bluesky'] },
+  ];
+}
+
+export const POSTIZ_PLATFORMS = [
+  { id: 'instagram', label: 'Instagram', icon: '📸' },
+  { id: 'facebook', label: 'Facebook', icon: '👥' },
+  { id: 'x', label: 'X / Twitter', icon: '✕' },
+  { id: 'threads', label: 'Threads', icon: '🧵' },
+  { id: 'bluesky', label: 'Bluesky', icon: '🦋' },
+  { id: 'linkedin', label: 'LinkedIn', icon: '💼' },
+];

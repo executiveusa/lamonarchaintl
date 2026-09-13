@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "skills": {
+    "Agent-Media UGC Playbook": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/agent-media-ugc/SKILL.md",
+      "computedHash": "6dbf9c782e770cd586944d784dc4814e968117953e45093131c74172821e86f0"
+    },
+    "Make B-roll Talking Head": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-broll-talking-head/SKILL.md",
+      "computedHash": "7669318e22b8da7dbbf3c8e783017b592ea066e1da9f56e66da85f3d9ca4d24c"
+    },
+    "Make Character Sheet": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-character-sheet/SKILL.md",
+      "computedHash": "cfc86d85a40c328211ab605b10419544404cf175cc5050583a7d67ca6ab8729f"
+    },
+    "Make Lip Sync": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-lip-sync/SKILL.md",
+      "computedHash": "70eb3aac70a191546c9b24de1c642e2c4c42705061cad14c7ebdbb7d8aa914fd"
+    },
+    "Make Portrait": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-portrait/SKILL.md",
+      "computedHash": "6e9ac4e7c59383b9ca28ff792eefe4fc9e7770a5ff66ea6779580530d4d29207"
+    },
+    "Make Product In Hands": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-product-in-hands/SKILL.md",
+      "computedHash": "1a105af58b512be2e779497037c07d47c6b7fa0948c977ab84d6dfea89a0a4e2"
+    },
+    "Make Simple Selfie": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-simple-selfie/SKILL.md",
+      "computedHash": "9f00284aa79c4b0a40610eded8c5e92d863b4d121c2ce0790514f5fadfec650f"
+    },
+    "Make Subtitles": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-subtitles/SKILL.md",
+      "computedHash": "af50b493f0f857cf042b871a093e541e1bfee6696ffcec5580c84b5e5ce63506"
+    },
+    "Make UGC Video": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-ugc-video/SKILL.md",
+      "computedHash": "d17d7d8202500fb871a8979170b7d73c1e80502243da22a395fe5ee150c2e5c2"
+    },
+    "Make Wireframe": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/make-wireframe/SKILL.md",
+      "computedHash": "2230926b20209040715361defb060b8925ec44ee9e5aeb0d0c7b28926bb85bb5"
+    },
+    "Publish to Social": {
+      "source": "gitroomhq/agent-media",
+      "sourceType": "github",
+      "skillPath": "skills/publish-to-social/SKILL.md",
+      "computedHash": "ab0b601e3189da52419848e2982b822d79934b606e3e5b69972a2ff84733625c"
+    }
+  }
+}

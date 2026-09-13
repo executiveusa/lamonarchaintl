@@ -1,54 +1,79 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AnimatedBackgroundProps {
-  videoUrl: string;
+  desktopPoster?: string;
+  mobilePoster?: string;
 }
 
-const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ videoUrl }) => {
-  const videoContainerRef = useRef<HTMLDivElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  
-  useEffect(() => {
-    // Simulate video loading
-    const timer = setTimeout(() => {
-      setIsVideoLoaded(true);
-    }, 800);
-    
-    return () => clearTimeout(timer);
-  }, []);
+const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
+  desktopPoster = 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1920&q=80',
+  mobilePoster = 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=768&q=70',
+}) => {
+  const [visible, setVisible] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoContainerRef.current) {
-      videoContainerRef.current.classList.add('animate-blur-in');
-    }
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(motionQuery.matches);
+
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mobileQuery.matches);
+
+    const handleMobileChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mobileQuery.addEventListener('change', handleMobileChange);
+
+    const timer = setTimeout(() => setVisible(true), 200);
+    return () => {
+      clearTimeout(timer);
+      mobileQuery.removeEventListener('change', handleMobileChange);
+    };
   }, []);
+
+  const poster = isMobile ? mobilePoster : desktopPoster;
 
   return (
     <>
-      {/* YouTube video background with enhanced loading state */}
-      <div 
-        ref={videoContainerRef}
-        className="absolute inset-0 w-full h-full opacity-0 pointer-events-none"
+      <div
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: visible ? 1 : 0, transition: 'opacity 1.2s ease-in-out' }}
       >
-        <div className="relative w-full h-full overflow-hidden">
-          {!isVideoLoaded && (
-            <div className="absolute inset-0 bg-monarca-terracotta/20 animate-pulse"></div>
-          )}
-          <iframe 
-            src={videoUrl}
-            className="absolute top-1/2 left-1/2 min-w-[150%] min-h-[150%] w-auto h-auto transform -translate-x-1/2 -translate-y-1/2 scale-125"
-            style={{ filter: 'brightness(0.7)' }}
-            title="Monarca Internacional Background"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
+        {/* Poster fallback — always visible until video loads or reduced motion */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${poster})`,
+            filter: 'brightness(0.55) saturate(1.1)',
+          }}
+        />
+
+        {/* Native video — hidden when reduced motion is preferred */}
+        {!prefersReducedMotion && (
+          <video
+            ref={videoRef}
+            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2"
+            style={{ filter: 'brightness(0.55) saturate(1.1)' }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={poster}
+            onCanPlay={() => setVisible(true)}
+          >
+            {/* Prefer self-hosted video; falls back gracefully to poster if src is absent */}
+            <source src="/videos/hero-desktop.mp4" type="video/mp4" media="(min-width: 769px)" />
+            <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+          </video>
+        )}
       </div>
-      
-      {/* Enhanced overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-10" />
+
+      {/* Dark gradient overlay — keeps text readable */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/30 z-10" />
+      {/* Side vignette */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 z-10" />
     </>
   );
 };

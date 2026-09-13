@@ -8,17 +8,27 @@ import type { Tables } from '../integrations/supabase/types';
 export interface Article {
   id: string;
   title: string;
+  title_es?: string;
+  title_en?: string;
   excerpt?: string;
+  dek_es?: string;
+  dek_en?: string;
   content: string;
   date?: string;
   author: string;
-  category: string;
+  category: 'arte' | 'musica' | 'naturaleza' | 'vida_sustentable' | 'diseño' | 'viajes' | 'ia' | string;
+  location?: string;
   thumbnail?: string;
   language?: string;
   summary?: string;
   image_url?: string;
+  image_credit?: string;
+  positive_angle?: string;
+  affiliate_opportunity?: Record<string, unknown> | null;
+  status?: 'published' | 'draft' | 'archived';
   created_at?: string;
   updated_at?: string;
+  featured?: boolean;
 }
 
 // Define the store state type
@@ -29,7 +39,7 @@ interface LanguageState {
 
 // Create the language store with zustand
 export const useLanguageStore = create<LanguageState>((set) => ({
-  language: localStorage.getItem('preferredLanguage') as 'en' | 'es' || 'en',
+  language: localStorage.getItem('preferredLanguage') as 'en' | 'es' || 'es',
   setLanguage: (language: 'en' | 'es') => {
     localStorage.setItem('preferredLanguage', language);
     set({ language });
