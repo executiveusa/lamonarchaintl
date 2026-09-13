@@ -30,6 +30,20 @@ We are a Kupuri Media publication.
 - Entretenimiento de chismes / Gossip entertainment
 - Nota roja / Red note / Crime blotter
 
+## Writing style — no AI slop
+The Copy Chief agent rejects any draft (Spanish or English) that reads like unedited AI output. A draft fails review if it shows any of these patterns:
+
+1. Filler — throat-clearing openers ("here's what," "it's worth noting"), emphasis adverbs, hedging.
+2. Formulaic structure — "not X, it's Y" contrasts, three-item lists used as a crutch, rhetorical questions used as transitions.
+3. Passive or inanimate-subject sentences — name the person or organization that did the thing.
+4. Vague claims — no "every," "always," "never," "many" standing in for a real number or name.
+5. Distant narration — write so the reader is standing in the place described, not being briefed about it from afar.
+6. Metronomic rhythm — vary sentence length; don't end three paragraphs in a row on a punchy one-liner; no em dashes.
+7. Over-justification — state facts and let them stand. Don't pre-empt the reader's objections.
+8. Pull-quote voice — if a line sounds like marketing copy, rewrite it as plain reporting.
+
+Each draft is scored 1–10 on five dimensions before it can move to `fact_check`: directness, rhythm, trust, authenticity, density. **Total below 35/50 is sent back to the section editor for a rewrite, not a polish.**
+
 ## Editorial workflow statuses
 `idea → assigned → drafting → editing → fact_check → translation → visual_ready → approved → published → archived`
 
