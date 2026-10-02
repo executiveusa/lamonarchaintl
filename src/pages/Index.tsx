@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
@@ -14,9 +14,10 @@ import AIInnovationSection from '@/components/AIInnovationSection';
 import NewsletterSubscription from '@/components/NewsletterSubscription';
 import ResponsiveSearchBar from '@/components/ResponsiveSearchBar';
 import { fetchArticles, useLanguageStore } from '@/services/articleService';
+import { submitContact } from '@/services/submissionService';
 import { getMockArticles } from '@/utils/mockArticles';
 import {
-  Calendar, MapPin, ArrowRight, Star, Users, Newspaper,
+  MapPin, ArrowRight, Star, Users, Newspaper,
   Heart, Lock, Leaf, Palette, Music, Globe, Cpu
 } from 'lucide-react';
 import EditorialTeamSection from '@/components/EditorialTeamSection';
@@ -36,6 +37,8 @@ const CATEGORIES = [
 const Index = () => {
   const [articles, setArticles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [contactEmail, setContactEmail] = useState('');
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const { language } = useLanguageStore();
   const isEn = language === 'en';
 
@@ -67,6 +70,40 @@ const Index = () => {
     }, 500);
   };
 
+  const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const email = contactEmail.trim();
+
+    if (!email || !email.includes('@')) {
+      toast.error(isEn ? 'Enter a valid email address.' : 'Ingresa un correo electrónico válido.');
+      return;
+    }
+
+    setIsSubmittingContact(true);
+    try {
+      await submitContact({
+        email,
+        inquiryType: 'homepage_contact',
+        language,
+      });
+      setContactEmail('');
+      toast.success(
+        isEn
+          ? 'Thanks. Your inquiry was received.'
+          : 'Gracias. Recibimos tu consulta.'
+      );
+    } catch (error) {
+      console.error('Contact submission failed:', error);
+      toast.error(
+        isEn
+          ? 'We could not send your inquiry. Please try again.'
+          : 'No pudimos enviar tu consulta. Inténtalo de nuevo.'
+      );
+    } finally {
+      setIsSubmittingContact(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-monarca-cream relative">
       <Navigation />
@@ -79,23 +116,13 @@ const Index = () => {
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1.5 font-bold uppercase tracking-widest text-monarca-amber">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-monarca-amber" />
                 {isEn ? 'Kupuri AI Newsroom' : 'Redacción IA Kupuri'}
               </span>
               <span className="text-white/40">
                 {isEn
-                  ? 'Writing new positive stories · Powered by Paperclip'
-                  : 'Escribiendo nuevas historias positivas · Con Paperclip'}
-              </span>
-            </div>
-            <div className="flex items-center gap-3 text-white/50">
-              <span>📸 Instagram</span>
-              <span>👥 Facebook</span>
-              <span>✕ X</span>
-              <span>🦋 Bluesky</span>
-              <span className="text-white/30">·</span>
-              <span className="text-green-400">
-                {isEn ? 'Auto-distributing via Postiz' : 'Distribución automática vía Postiz'}
+                  ? 'Editorial automation is being verified before public status claims.'
+                  : 'La automatización editorial se está verificando antes de publicar estados operativos.'}
               </span>
             </div>
           </div>
@@ -160,32 +187,26 @@ const Index = () => {
         <ResponsiveSearchBar />
       </div>
 
-      {/* Articles — Selección de hoy */}
       <div id="articles">
         <ArticleSection articles={articles} isLoading={isLoading} />
       </div>
 
-      {/* Art Section */}
       <div id="arte">
         <ArtSection />
       </div>
 
-      {/* Music */}
       <div id="musica">
         <MusicSection />
       </div>
 
-      {/* Food & Markets */}
       <div id="comida">
         <FoodSection />
       </div>
 
-      {/* Travel */}
       <div id="viajes">
         <TravelSection />
       </div>
 
-      {/* Innovation */}
       <div id="ia">
         <AIInnovationSection />
       </div>
@@ -225,7 +246,7 @@ const Index = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
                 <div className="font-display text-3xl font-black text-monarca-amber mb-1">PV</div>
-                <div className="text-white/70 text-sm">{isEn ? 'Puerto Vallarta, Jalisco' : 'Puerto Vallarta, Jalisco'}</div>
+                <div className="text-white/70 text-sm">Puerto Vallarta, Jalisco</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
                 <div className="font-display text-3xl font-black text-white mb-1">Sep</div>
@@ -253,9 +274,7 @@ const Index = () => {
               {isEn ? 'Exclusive · Members Only' : 'Exclusivo · Solo para Miembros'}
             </span>
           </div>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-monarca-black mb-3 leading-tight">
-            {isEn ? 'Papel Privado' : 'Papel Privado'}
-          </h2>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-monarca-black mb-3 leading-tight">Papel Privado</h2>
           <p className="text-monarca-gray mb-3 max-w-xl mx-auto">
             {isEn
               ? 'A private dossier for hotels, collectors, partners, and brands who believe in Mexico\'s creative culture. Exclusive intelligence. Real relationships.'
@@ -284,9 +303,7 @@ const Index = () => {
                 {isEn ? 'About Us' : 'Quiénes Somos'}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-monarca-black mb-4 leading-tight">
-                {isEn
-                  ? 'Born in Barrio Santa María, Mexico City'
-                  : 'Nacida en el Barrio Santa María, Ciudad de México'}
+                {isEn ? 'Born in Barrio Santa María, Mexico City' : 'Nacida en el Barrio Santa María, Ciudad de México'}
               </h2>
               <p className="text-monarca-gray mb-4">
                 {isEn
@@ -301,21 +318,15 @@ const Index = () => {
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2">
                   <Heart className="h-4 w-4 text-monarca-terracotta" />
-                  <span className="text-sm text-monarca-gray">
-                    {isEn ? '100% positive stories' : '100% historias positivas'}
-                  </span>
+                  <span className="text-sm text-monarca-gray">{isEn ? '100% positive stories' : '100% historias positivas'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-monarca-terracotta" />
-                  <span className="text-sm text-monarca-gray">
-                    {isEn ? 'Community-centred' : 'La comunidad primero'}
-                  </span>
+                  <span className="text-sm text-monarca-gray">{isEn ? 'Community-centred' : 'La comunidad primero'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="h-4 w-4 text-monarca-terracotta" />
-                  <span className="text-sm text-monarca-gray">
-                    {isEn ? 'A Kupuri Media publication' : 'Una publicación de Kupuri Media'}
-                  </span>
+                  <span className="text-sm text-monarca-gray">{isEn ? 'A Kupuri Media publication' : 'Una publicación de Kupuri Media'}</span>
                 </div>
               </div>
             </div>
@@ -347,9 +358,7 @@ const Index = () => {
           <span className="inline-block bg-white/20 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
             {isEn ? 'Kupuri Media · Partnerships' : 'Kupuri Media · Alianzas'}
           </span>
-          <h2 className="font-display text-3xl font-bold mb-3">
-            {isEn ? 'Partner with Kupuri Media' : '¿Trabajamos juntos?'}
-          </h2>
+          <h2 className="font-display text-3xl font-bold mb-3">{isEn ? 'Partner with Kupuri Media' : '¿Trabajamos juntos?'}</h2>
           <p className="text-white/80 mb-2 max-w-2xl mx-auto">
             {isEn
               ? 'La Monarca Internacional is a Kupuri Media product. We invite hotels, tourism boards, artists, sustainable brands, and cultural organizations to join our community.'
@@ -379,38 +388,45 @@ const Index = () => {
       {/* Contact */}
       <div id="contact" className="container mx-auto px-6 py-12 max-w-3xl">
         <div className="bg-white rounded-xl border border-monarca-amber/20 p-8">
-          <h2 className="font-display text-2xl font-bold text-monarca-black mb-2">
-            {isEn ? 'Contact' : 'Contacto'}
-          </h2>
+          <h2 className="font-display text-2xl font-bold text-monarca-black mb-2">{isEn ? 'Contact' : 'Contacto'}</h2>
           <p className="text-monarca-gray mb-6 text-sm">
             {isEn
-              ? 'Questions, story tips, or partnership inquiries? We read every message.'
-              : '¿Preguntas, sugerencias de historias o consultas de alianzas? Leemos todos los mensajes.'}
+              ? 'Questions, story tips, or partnership inquiries? Leave your email and our team will follow up.'
+              : '¿Preguntas, sugerencias de historias o consultas de alianzas? Déjanos tu correo y nuestro equipo te contactará.'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-3">
+          <form onSubmit={handleContactSubmit} className="flex flex-col sm:flex-row gap-3">
+            <label htmlFor="homepage-contact-email" className="sr-only">
+              {isEn ? 'Your email address' : 'Tu correo electrónico'}
+            </label>
             <input
+              id="homepage-contact-email"
               type="email"
+              value={contactEmail}
+              onChange={(event) => setContactEmail(event.target.value)}
               placeholder={isEn ? 'Your email address' : 'Tu correo electrónico'}
+              autoComplete="email"
+              required
               className="flex-1 px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-monarca-amber/30 focus:border-monarca-amber text-sm"
             />
-            <Button className="bg-monarca-terracotta hover:bg-monarca-orange text-white flex-shrink-0">
-              {isEn ? 'Send Message' : 'Enviar Mensaje'}
+            <Button
+              type="submit"
+              disabled={isSubmittingContact}
+              className="bg-monarca-terracotta hover:bg-monarca-orange text-white flex-shrink-0"
+            >
+              {isSubmittingContact
+                ? (isEn ? 'Sending…' : 'Enviando…')
+                : (isEn ? 'Send Inquiry' : 'Enviar Consulta')}
             </Button>
-          </div>
+          </form>
           <p className="text-xs text-monarca-gray mt-3">
             hola@lamonarcainternacional.com · @lamonarcaintl · kupurimedia.com
           </p>
         </div>
       </div>
 
-      {/* Editorial Team — Paperclip AI agents */}
       <EditorialTeamSection />
-
-      {/* Social Distribution — Postiz */}
       <SocialDistributionPanel />
-
       <NewsletterSubscription />
-
       <Footer />
     </div>
   );

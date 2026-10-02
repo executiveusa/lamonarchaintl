@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Index from '@/pages/Index';
 import Auth from '@/pages/Auth';
+import ResetPassword from '@/pages/ResetPassword';
 import Translator from '@/pages/Translator';
 import Admin from '@/pages/Admin';
 import NotFound from '@/pages/NotFound';
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/translator" element={<Translator />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/music-blogs" element={<MusicBlogs />} />
